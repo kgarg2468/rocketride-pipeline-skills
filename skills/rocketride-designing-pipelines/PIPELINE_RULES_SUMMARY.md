@@ -82,5 +82,19 @@ Always read the node's `invoke` cardinality in the index and satisfy min/max.
   "version": 1
 }
 ```
-`components` **first**; `project_id` (a literal GUID), `viewport`, `version` at the bottom. The
-`source` field is optional and managed by the editor — omit it when hand-writing.
+`components` is the only required field. `project_id` (a literal GUID), `viewport`, `version`, and
+`source` are **optional** in the current schema — keep `components` first and include a literal-GUID
+`project_id` as an editor convention, but they aren't hard requirements. The `source` field is
+managed by the editor; omit it when hand-writing.
+
+## Freshness notes (reconcile against the live engine / docs)
+- **Env substitution:** the engine expands **any** `${VAR}` from the environment (e.g.
+  `${OPENAI_API_KEY}`) — a `ROCKETRIDE_` prefix is not required.
+- **Response node:** the current docs show a single `response` provider with `config.laneName`
+  (e.g. `{ "provider": "response", "config": { "laneName": "answers" } }`). Our bundled catalog
+  snapshot still lists lane-specific variants (`response_answers`, `response_text`, …). Use whatever
+  the **live index / `get_services()` / `validate()`** confirms for your engine — that's authoritative;
+  the bundled examples use `response_answers` to match the bundled catalog.
+- **Fan-in:** a node can merge the same lane from several upstream nodes by listing multiple `input`
+  entries, e.g. a `response` merging `answers` from two agents:
+  `"input": [{"lane":"answers","from":"agent_1"},{"lane":"answers","from":"agent_2"}]`.

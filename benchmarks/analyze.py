@@ -147,6 +147,26 @@ def main(run_dir):
         all_lower,
     ))
 
+    # ---- doc-layer (deep docs) discipline ----
+    inputs_lower = inputs_all.lower()
+    # ACTUAL ingestion of the monolith only — a WebFetch/Read of it, or a curl/wget/http GET.
+    # Merely searching (find/ls/grep "*llms-full*") does not ingest content and must not count.
+    # actual download verb followed by llms-full, OR a URL containing llms-full (not a find/ls path)
+    _fetch_full = re.compile(r"(curl|wget|urlopen|requests\.get)\s[^\n]*llms-full|https?://[^\s\"']*llms-full", re.I)
+    llms_full_fetched = (
+        any(n == "WebFetch" and "llms-full" in inp.lower() for n, inp in tool_calls)
+        or any(n == "Read" and "llms-full" in inp.lower() for n, inp in tool_calls)
+        or bool(_fetch_full.search(bash_all))
+    )
+    doc_map_consulted = ("rocketride_doc_map" in inputs_lower or "doc-map" in all_lower
+                         or "llms.txt" in (inputs_lower + all_lower))
+    doc_page_fetched = (
+        "fetch-doc" in bash_all
+        or "docs.rocketride.org" in inputs_lower
+        or ".rocketride/docs/pages" in (bash_all + reads_all)
+        or ("rocketride_doc_map" in reads_all.lower())
+    )
+
     skill_files_read = sorted({
         m.group(0)
         for _, inp in tool_calls
@@ -198,6 +218,9 @@ def main(run_dir):
         "cost_gate": cost_gate,
         "polling": polling,
         "count_line": count_line,
+        "llms_full_fetched": llms_full_fetched,
+        "doc_map_consulted": doc_map_consulted,
+        "doc_page_fetched": doc_page_fetched,
         "skills_invoked": skills_invoked,
         "skill_files_read": skill_files_read,
         "writes": writes,
@@ -214,6 +237,7 @@ def main(run_dir):
           f"bonus={[k for k, v in bonus_found.items() if v]}")
     print(f"- cited_index={cited_index} schema_fetched={schema_fetched} validate_called={validate_called}")
     print(f"- gate_stop={gate_stop} cost_gate={cost_gate} polling={polling} count_line={count_line}")
+    print(f"- doc: llms_full_fetched={llms_full_fetched} doc_page_fetched={doc_page_fetched} map_consulted={doc_map_consulted}")
     print(f"- skills invoked: {skills_invoked} | skill files read: {len(skill_files_read)}")
     print(f"- writes: {len(writes)} (pipe={pipe_written}) | mutation attempts: {mutation_attempts or 'NONE'}")
     return scorecard

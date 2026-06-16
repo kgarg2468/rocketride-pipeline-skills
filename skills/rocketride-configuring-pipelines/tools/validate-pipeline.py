@@ -68,19 +68,19 @@ def static_validate(path):
     # 1. extension
     if not path.endswith(".pipe"):
         errors.append("file must use the .pipe extension, not .json")
-    # 2. components first
+    # 2. components present (conventionally first; schema marks key order optional)
     keys = list(obj.keys())
-    if not keys or keys[0] != "components":
-        errors.append("`components` must be the first key in the pipeline JSON")
+    if "components" not in obj:
+        errors.append("pipeline must have a `components` array")
+    elif keys and keys[0] != "components":
+        warnings.append("`components` is conventionally the first key (editor convention; schema marks order optional)")
     comps = obj.get("components") or []
     if not comps:
         return errors + ["pipeline has no components"], warnings
-    # 3. project_id literal GUID
+    # 3. project_id (optional per schema; if present, should be a literal GUID, not a variable)
     pid = obj.get("project_id")
-    if pid is None:
-        errors.append("missing project_id")
-    elif not isinstance(pid, str) or "$" in pid or not GUID_RE.match(pid):
-        errors.append(f"project_id must be a literal GUID, got {pid!r}")
+    if pid is not None and (not isinstance(pid, str) or "$" in pid or not GUID_RE.match(pid)):
+        warnings.append(f"project_id should be a literal GUID, not a variable (editor convention); got {pid!r}")
 
     ids = [c.get("id") for c in comps]
     # 5. unique ids
@@ -132,10 +132,10 @@ def static_validate(path):
                     errors.append(f"lane {lane!r}: {frm!r} does not output it (edge {frm}->{cid})")
                 if lane not in in_lanes(entry) and in_lanes(entry):
                     errors.append(f"lane {lane!r}: {cid!r} does not accept it (edge {frm}->{cid})")
-        # 9. secrets via env
+        # 9. secrets via env substitution (any ${VAR}); flag hardcoded literals only
         for k, v in flatten(c.get("config") or {}):
-            if "apikey" in k.lower() and isinstance(v, str) and v and not v.startswith("${ROCKETRIDE_"):
-                errors.append(f"{cid!r} config {k}: hardcoded secret — use ${{ROCKETRIDE_*}}")
+            if "apikey" in k.lower() and isinstance(v, str) and v and not v.startswith("${"):
+                errors.append(f"{cid!r} config {k}: hardcoded secret — use ${{ENV_VAR}} substitution")
     # one source
     if len(sources) == 0:
         errors.append("no source component found (need exactly one)")

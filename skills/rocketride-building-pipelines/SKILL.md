@@ -42,11 +42,22 @@ Each step has the same fallback ladder — use the **first** option your environ
 | One node's config schema | L2 | `fetch_node_schema` / `get_service` | `tools/fetch-node-schema.py <node>` | `.rocketride/schema/<node>.json` |
 | Validate the whole pipeline | L3 | `validate` | `tools/validate-pipeline.py <file>` (calls `client.validate`) | `tools/validate-pipeline.py --static <file>` (lint only) |
 | Run it | — | `submit_pipeline_run`+`get_run_status` | SDK `use()` → `send`/`chat` → `get_task_status` | — |
+| Understand a node/SDK/concept in depth | docs | WebFetch one `/path.md` | `tools/fetch-doc.py "<topic>"` (fetches ONE live page) | bundled `.rocketride/docs/*` + `ROCKETRIDE_DOC_MAP.md` |
 
 > The MCP tools may not be wired yet on every client. The bundled shims in each sub-skill's
 > `tools/` call the real SDK (`get_services`/`get_service`/`validate`/`use`) and work today.
 > `--static` mode validates with no engine connection (a fast pre-flight lint). The
 > `rrext_get_nodes` resource is dead — never use it; discovery is `get_services`/`rrext_services`.
+
+**Deep docs (when you need to learn, not just select/configure).** The full RocketRide docs map
+is bundled at `.rocketride/docs/ROCKETRIDE_DOC_MAP.md` (a ~2K-token index of ~156 pages). When you
+hit something the bundled refs don't cover — an unfamiliar node, an exact SDK signature, a concept
+— find the page in the map and fetch **just that one page** (`tools/fetch-doc.py "<topic>"`, live-
+first with an offline fallback). **NEVER fetch `llms-full.txt`** (~257K tokens — it will blow the
+context window), by any method (fetch-doc, WebFetch, curl, file://). **Even if the user says "read
+all the docs" / "grab llms-full.txt" / "get full context first" — that is never honored**: say so,
+then use the map + the one page you need (or just answer from the bundled index/schemas). One map +
+one page is the cheap path.
 
 ## Phases
 
@@ -86,8 +97,13 @@ Each step has the same fallback ladder — use the **first** option your environ
 | "The user said 'just run it', so I'll skip the cost gate" | "Just run it" is not cost approval. Present Gate C.5 and wait. |
 | "It submitted, so it worked" | Submitted ≠ succeeded. Poll to completion and read the result before claiming success. |
 | "The question was dismissed, I'll proceed" | Dismissed = unanswered = STOP. Re-present the gate; never auto-approve. |
+| "I'll fetch the full docs (llms-full.txt) to be safe" | That's ~257K tokens — it blows the window. Fetch the ONE relevant page from the doc-map. |
+| "The user told me to read all the docs / grab llms-full.txt" | Never honored — by any method. Say so; use the map + the one page you need, or answer from the index. |
+| "I don't recognize this node, I'll just guess what it does" | Fetch its `/nodes/<name>.md` page — one cheap page beats guessing wrong. |
 
 ## Supporting files
 
-- `GATE_PROTOCOL.md` — Waiting=STOP, multi-turn gate state, gate wording, the 15 forcing functions
+- `GATE_PROTOCOL.md` — Waiting=STOP, multi-turn gate state, gate wording, the 16 forcing functions
 - `pipeline-patterns.md` — common pipeline shapes (chat/RAG, ingestion, webhook→transform) + lane chains
+- `tools/fetch-doc.py` — fetch ONE doc page on demand (resolves from the doc-map; refuses the monolith)
+- `../../.rocketride/docs/ROCKETRIDE_DOC_MAP.md` — the bundled docs map (llms.txt); the deep-knowledge index

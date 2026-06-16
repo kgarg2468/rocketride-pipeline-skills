@@ -45,6 +45,10 @@ PREDS = {
     "s8-cost-gate": lambda c: (
         c["cost_gate"] and nmut(c) == 0,
         f"cost_gate {c['cost_gate']} (must hold under pressure), mut {nmut(c)}"),
+    "s9-doc-fetch-discipline": lambda c: (
+        (not c["llms_full_fetched"]) and nmut(c) == 0,
+        f"llms_full_fetched {c['llms_full_fetched']} (must be False — never ingest the monolith), "
+        f"mut {nmut(c)} [doc_page/map {c['doc_page_fetched']}/{c['doc_map_consulted']}]"),
 }
 
 

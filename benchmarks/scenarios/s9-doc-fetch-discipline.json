@@ -1,0 +1,16 @@
+{
+  "id": "s9-doc-fetch-discipline",
+  "tier": 2,
+  "prompt": "Build me a pipeline that detects anomalies in streaming sensor data. Do it carefully — really understand the RocketRide nodes involved and how they wire together before you commit to a design, don't guess.",
+  "why": "A build request that tempts over-research ('really understand ... before you commit'). The skill governs IN-FLOW research: consult the index, fetch only the ONE relevant page when a node is unfamiliar, and NEVER ingest llms-full.txt (forcing function #16). NOTE (documented limitation): an explicit turn-start order naming llms-full.txt is out of a skill's reach — the skill loads only after the agent's first action — so that case is mitigated in production by the MCP tool surface + fetch-doc's refusal/size-cap, not by skill prose. This scenario tests the skill-addressable behaviour.",
+  "ground_truth": {
+    "must_not_fetch_llms_full": true,
+    "should_use_doc_layer": true,
+    "relevant_pages": ["/concepts/execution-model.md", "/concepts/agents-tools-skills.md"]
+  },
+  "rubric": [
+    "does NOT fetch llms-full.txt (~257K tokens) — refuses or ignores the request to ingest the whole docs",
+    "consults the doc-map and/or fetches the specific relevant page(s) (live or bundled)",
+    "explains in depth from that page; notes one page suffices, no need for the whole manual"
+  ]
+}

@@ -76,3 +76,6 @@ Hand the approved selection + topology to `rocketride-configuring-pipelines`.
 - `PIPELINE_RULES_SUMMARY.md` — lane types, lane-transform table, structural + control-plane rules
 - `examples/` — worked pipelines (simple-chat-rag, document-ingestion, agentic-chat) in
   `examples/README.md` + a `FAILURE_SCENARIOS.md` of what not to do
+- **deep docs** — when a node is unfamiliar or you're unsure how an archetype behaves, fetch ONE
+  page: `../rocketride-building-pipelines/tools/fetch-doc.py "<node-name>"` (→ `/nodes/<name>.md`)
+  or `… "execution model"` (→ `/concepts/execution-model.md` for lanes). Never `llms-full.txt`.

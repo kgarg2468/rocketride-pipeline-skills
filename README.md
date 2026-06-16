@@ -21,7 +21,7 @@ git pull               # updates installed skills in place (they're symlinks)
 
 | Skill | Role |
 |---|---|
-| `rocketride-building-pipelines` | **Orchestrator.** Owns gate discipline + the 15 forcing functions; routes the lifecycle. |
+| `rocketride-building-pipelines` | **Orchestrator.** Owns gate discipline + the 16 forcing functions; routes the lifecycle. |
 | `rocketride-designing-pipelines` | Phase 1 — discover nodes + wire the DAG (Gates A, B). |
 | `rocketride-configuring-pipelines` | Phase 2 — configure nodes + validate (Gates C, C.5). |
 | `rocketride-running-pipelines` | Phase 3 — submit, poll, report the result (Gate D). |
@@ -39,6 +39,11 @@ Reliability comes from **process + tools as the judge**, not model intelligence:
   anti-pattern checklist as a gate, mandatory `validate()` + re-validation loop, a cost-approval
   gate before any paid run, and the "Waiting = STOP" gate discipline. See
   `skills/rocketride-building-pipelines/GATE_PROTOCOL.md`.
+- **Deep docs on demand (token-economical):** a resident doc-map
+  (`.rocketride/docs/ROCKETRIDE_DOC_MAP.md` — the `docs.rocketride.org` `llms.txt`, ~156 pages,
+  ~2K tokens) + `fetch-doc.py` pull the **one** relevant page when needed (live-first, offline
+  fallback to a bundled fresh snapshot). The ~257K-token `llms-full.txt` is **never** fetched. A
+  deep lookup costs ≈ the map + one ~3K page instead of guessing or ingesting the whole manual.
 
 ## Tools
 
@@ -46,6 +51,31 @@ Reliability comes from **process + tools as the judge**, not model intelligence:
 - `skills/rocketride-configuring-pipelines/tools/fetch-node-schema.py` — one node's schema (L2).
 - `skills/rocketride-configuring-pipelines/tools/validate-pipeline.py` — `client.validate()`, or
   `--static` for an engine-free pre-flight lint.
+- `skills/rocketride-building-pipelines/tools/fetch-doc.py` — fetch ONE doc page by topic (resolves
+  from the doc-map; refuses `llms-full.txt`; offline-falls-back to the bundled `pages/` / schema).
+
+## Docs & freshness
+
+The agent's RocketRide knowledge has tiers: bundled condensed refs + node `schema/` (fast path),
+the resident **doc-map** + on-demand single-page fetch from `docs.rocketride.org` (depth, fresh),
+and a bundled `.rocketride/docs/pages/` snapshot of the non-node docs (offline fallback, pulled from
+the April-2026 docs). Refresh the map/pages by re-running the fetch in `tools/` against the live site.
+
+**Limitation (pre-skill-load actions).** A skill loads *after* the agent's first action, so a user
+explicitly ordering "read all the docs / fetch `llms-full.txt`" at turn start can't be blocked by
+the skill alone. `fetch-doc.py` refuses the monolith and caps response size, and the production MCP
+connector should carry the same guardrail in its system prompt / tool surface (no fetch-everything
+tool). The skill reliably governs *in-flow* research (fetch one page / use the index, never the
+monolith) — which is what the s9 regression scenario tests.
+
+**The node catalog is engine-authoritative.** `LAYER1_NODE_INDEX.json` /
+`.rocketride/services-catalog.json` are a 104-node snapshot. The live docs list ~26 nodes not in it
+— genuinely new (`tool_deepl`, `anomaly_detector`, `tool_apify`, `llm_kimi`, `vectorizer`, …) plus
+renames/groupings (docs use a single `response` node where the snapshot has `response_*`;
+`llm_vision_*` where the snapshot has `image_vision_*`). For authoritative select/wire, **regenerate
+from a live engine**: `python3 tools/generate-index.py` (uses `get_services()`), with `validate()`
+as the drift backstop. The bundled examples use snapshot names (`response_answers`) for
+self-consistency with the bundled catalog/validator.
 
 ## Testing
 

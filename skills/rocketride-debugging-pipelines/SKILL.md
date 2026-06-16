@@ -49,3 +49,7 @@ fix to the right phase. No re-running until the cause is identified and the fix 
 
 ## Supporting files
 - `ERROR_TABLE.md` — error message → cause → owning phase → fix
+- **deep docs** — for failure modes the table doesn't cover, fetch ONE page:
+  `../rocketride-building-pipelines/tools/fetch-doc.py "error handling"`
+  (→ `/concepts/error-handling.md`) or `… "observability"` (→ `/protocols/websocket/observability.md`).
+  Never `llms-full.txt`.

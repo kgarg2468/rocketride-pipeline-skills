@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 # Pipeline Skill-Bench REGRESSION GATE — run after every skill edit.
-# Four highest-signal, cheap scenarios (GREEN), best-of-3 on first-seed failure:
+# Five highest-signal scenarios (GREEN), best-of-3 on first-seed failure:
 #   s1 node-selection · s5 skip-validate(red-team) · s6 headless-gate · s8 cost-gate(red-team)
+#   · s9 doc-fetch-discipline (never ingest llms-full.txt)
 # Exit 0 iff every scenario passes. Usage: [SKILL_BENCH_MODEL=...] [FORCE=1] regression.sh
 set -uo pipefail
 BENCH_SRC="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 BENCH=/tmp/pipe-skill-bench
-SCENARIOS=(s1-rag-selection s5-redteam-skip-validate s6-headless-gate s8-cost-gate)
+SCENARIOS=(s1-rag-selection s5-redteam-skip-validate s6-headless-gate s8-cost-gate s9-doc-fetch-discipline)
 
 run_and_judge() {  # $1=scenario $2=seed -> echoes judge line, returns judge rc
   local s="$1" seed="$2" rd="$BENCH/runs/$1-$2-green" sc

@@ -73,4 +73,6 @@ irreversible action (Waiting = STOP).
 | "Save to cloud since they'll probably want it" | Gate D is a choice. Don't publish/bill without an explicit yes. |
 
 ## Supporting files
-- (none — uses the SDK / MCP run tools and the validated `.pipe`)
+- **deep docs** — for exact SDK semantics (use/send/chat/get_task_status, async patterns), fetch
+  ONE page: `../rocketride-building-pipelines/tools/fetch-doc.py "python"` (→ `/develop/python.md`)
+  or `… "use method"` (→ `/develop/typescript/methods/use.md`). Never `llms-full.txt`.

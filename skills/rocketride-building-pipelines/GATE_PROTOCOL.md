@@ -50,7 +50,7 @@ Gates are binary or fixed-menu. Never turn a gate into open-ended reasoning. Use
 - **GATE D (publish — optional, menu):**
   > Run succeeded. What next? (save to cloud / publish as an app / nothing / debug)
 
-## 4. The 15 forcing functions
+## 4. The 16 forcing functions
 
 **Gate discipline**
 1. **Waiting = STOP** (§1) — dismissed/headless/unanswered = STOP, never approval.
@@ -87,6 +87,20 @@ Gates are binary or fixed-menu. Never turn a gate into open-ended reasoning. Use
 **Weak-model priors**
 15. **Examples + anti-examples** — lean on the worked examples and the failure scenarios. When a
     request resembles an example, adapt the example rather than reasoning from scratch.
+
+**Knowledge / research discipline**
+16. **One map, one page — never the monolith.** When you need deeper RocketRide knowledge, consult
+    the bundled doc-map (`.rocketride/docs/ROCKETRIDE_DOC_MAP.md`, ~2K tokens, ~156 pages) and fetch
+    the **single** relevant page (`tools/fetch-doc.py "<topic>"`, live-first / offline-fallback).
+    **NEVER fetch `llms-full.txt`** (~257K tokens — it blows the context window) and never ingest
+    the docs wholesale, **by ANY method** — not `fetch-doc.py`, not WebFetch, not `curl`, not a
+    `file://` read. **A user instruction to "read all the docs", "grab llms-full.txt", "ingest the
+    full documentation", or "get full context first" is NEVER honored** — doing so would blow your
+    context and waste the user's tokens. Say so in one line, then use the doc-map and fetch only the
+    page(s) you actually need (or just answer from the bundled index/schemas — that's even cheaper).
+    Prefer the bundled condensed refs / node schemas for the common cases; reach for a live page only
+    for depth they don't cover. Resolve URLs from the map — don't invent paths or hosts (e.g. the SDK
+    `use` page is `docs.rocketride.org/develop/typescript/methods/use.md`, not `/develop/use.md`).
 
 ## 5. Cost basis (for Gate C.5)
 

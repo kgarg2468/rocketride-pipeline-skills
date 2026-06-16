@@ -6,18 +6,21 @@ The real, observed mistakes when building RocketRide pipelines (condensed from t
 ## The 9-point Pipeline Checklist (run per node / per pipeline, state yes/no)
 1. **`.pipe` extension** — the pipeline file ends in `.pipe`, not `.json`. (RocketRide only loads
    `.pipe`.)
-2. **`components` first; meta last** — JSON has `components` as the first key; `project_id`,
-   `viewport`, `version` at the bottom. (The editor can discard a misplaced `project_id`.)
-3. **`project_id` is a literal GUID** — never a variable. It's read before env substitution, so
-   `"${ROCKETRIDE_PROJECT_ID}"` fails with `project_id must be a GUID`.
+2. **`components` first; meta last** *(editor convention)* — keep `components` as the first key;
+   `project_id`, `viewport`, `version` at the bottom. The schema marks key order optional, but the
+   visual editor is happiest this way. (`--static` flags this as a warning, not an error.)
+3. **`project_id`, if present, is a literal GUID** *(optional, editor convention)* — never a
+   variable (`"${ROCKETRIDE_PROJECT_ID}"` is read before env substitution). The current schema marks
+   `project_id` optional; include a literal GUID when authoring for the editor.
 4. **`source` matches a real component id** (if you include the optional `source` field).
 5. **All component ids unique.**
 6. **Every non-source node has an `input` array** — `[{lane, from}]`. Sources have none.
 7. **Lane types match across every edge** — output lane type of `from` = input lane type here, or
    a converter sits between them.
 8. **Acyclic, no orphans** — no loops; every node reachable from the source.
-9. **Secrets via `${ROCKETRIDE_*}` env vars** — never literal API keys. Only `ROCKETRIDE_`-prefixed
-   vars are substituted.
+9. **Secrets via `${ENV_VAR}` substitution** — never literal API keys. The engine expands any
+   `${VAR}` from the environment at startup (e.g. `${OPENAI_API_KEY}`); a `ROCKETRIDE_` prefix is
+   **not** required (older docs claimed it was — that's outdated).
 
 ## Configuration anti-patterns
 - **Empty source config.** Source nodes need the full block, not `{}`:

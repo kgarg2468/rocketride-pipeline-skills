@@ -74,3 +74,6 @@ Hand the validated `.pipe` to `rocketride-running-pipelines`.
 - `PIPELINE_ANTIPATTERNS.md` — the real common mistakes, the 9-point checklist, the error table
 - `tools/fetch-node-schema.py` — `get_service(name)` (live) or read `.rocketride/schema/<name>.json`
 - `tools/validate-pipeline.py` — `client.validate(pipeline)`; `--static` = local lint, no engine
+- **deep docs** — for provider-specific config nuance/profiles the schema alone doesn't explain,
+  fetch the node's doc page: `../rocketride-building-pipelines/tools/fetch-doc.py "<node-name>"`
+  (→ `/nodes/<name>.md`). The schema gives exact fields; the page gives the why. Never `llms-full.txt`.
