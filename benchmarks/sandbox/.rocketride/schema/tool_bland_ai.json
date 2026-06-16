@@ -1,0 +1,133 @@
+{
+  "actions": 0,
+  "capabilities": 3072,
+  "classType": [
+    "tool"
+  ],
+  "description": "Make and manage AI-powered phone calls via Bland AI.\nThe agent can initiate outbound calls, retrieve call transcripts, and analyze completed calls.\nRequires a Bland AI API key from https://www.bland.ai",
+  "icon": "bland-ai.svg",
+  "lanes": {},
+  "Pipe": {
+    "schema": {
+      "properties": {
+        "apikey": {
+          "default": "",
+          "description": "Bland AI API key (org_xxx). Get one at https://www.bland.ai",
+          "title": "API Key",
+          "type": "string"
+        },
+        "language": {
+          "default": "en",
+          "enum": [
+            "en",
+            "es",
+            "fr",
+            "de",
+            "zh",
+            "ja"
+          ],
+          "title": "Language",
+          "type": "string"
+        },
+        "maxDuration": {
+          "default": 5,
+          "description": "Maximum call length in minutes (positive integer)",
+          "minimum": 1,
+          "title": "Max Call Duration (minutes)",
+          "type": "integer"
+        },
+        "record": {
+          "default": true,
+          "enum": [
+            true,
+            false
+          ],
+          "title": "Record Calls",
+          "type": "boolean"
+        },
+        "type": {
+          "default": "tool_bland_ai",
+          "type": "string"
+        },
+        "voice": {
+          "default": "June",
+          "description": "Default AI voice for calls",
+          "enum": [
+            "June",
+            "Josh",
+            "Nat",
+            "Paige",
+            "Derek",
+            "Florian"
+          ],
+          "title": "Default Voice",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "apikey",
+        "voice",
+        "maxDuration",
+        "language",
+        "record"
+      ],
+      "title": "Bland AI Voice Agent",
+      "type": "object"
+    },
+    "ui": {
+      "apikey": {
+        "ui:secure": true,
+        "ui:widget": "ApiKeyWidget"
+      },
+      "language": {
+        "ui:enumNames": [
+          "English",
+          "Spanish",
+          "French",
+          "German",
+          "Chinese",
+          "Japanese"
+        ]
+      },
+      "maxDuration": {},
+      "record": {
+        "ui:enumNames": [
+          "Yes",
+          "No"
+        ]
+      },
+      "type": {
+        "ui:options": {
+          "label": false
+        },
+        "ui:widget": "hidden"
+      },
+      "ui:order": [
+        "type",
+        "apikey",
+        "voice",
+        "maxDuration",
+        "language",
+        "record"
+      ],
+      "voice": {
+        "ui:enumNames": [
+          "June (warm, female)",
+          "Josh (friendly, male)",
+          "Nat (calm, female)",
+          "Paige (gentle, female)",
+          "Derek (professional, male)",
+          "Florian (warm, male)"
+        ]
+      }
+    }
+  },
+  "plans": null,
+  "prefix": "bland",
+  "protocol": "tool_bland_ai://",
+  "tile": [
+    "Tool: ${parameters.bland_ai.serverName}"
+  ],
+  "title": "Bland AI"
+}

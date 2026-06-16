@@ -1,0 +1,740 @@
+{
+  "actions": 0,
+  "capabilities": 3072,
+  "classType": [
+    "llm"
+  ],
+  "description": "A component that connects to Alibaba Cloud's Qwen large language models via the \nDashScope API. It supports tasks such as text generation, summarization, question \nanswering, and chat-based interactions. With access to models like Qwen Plus \nand Qwen Flash, this component enables high-quality, context-aware responses. Configurable \nwith API keys, it allows seamless integration into AI-driven workflows with scalable \nperformance.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "qwen.svg",
+  "lanes": {
+    "questions": [
+      "answers"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "dependencies": {
+        "profile": {
+          "oneOf": [
+            {
+              "properties": {
+                "custom": {
+                  "object": "custom",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "model": {
+                      "description": "Qwen model",
+                      "title": "Model",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    },
+                    "modelTotalTokens": {
+                      "description": "Maximum context length in tokens",
+                      "title": "Tokens",
+                      "type": "number"
+                    },
+                    "region": {
+                      "default": "us",
+                      "description": "DashScope regional endpoint. API keys are not interchangeable between regions.",
+                      "enum": [
+                        "us",
+                        "intl",
+                        "cn"
+                      ],
+                      "title": "Region",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "model",
+                    "modelTotalTokens",
+                    "apikey",
+                    "region"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "custom"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "profile": {
+                  "enum": [
+                    "qwen-plus"
+                  ]
+                },
+                "qwen-plus": {
+                  "object": "qwen-plus",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    },
+                    "region": {
+                      "default": "us",
+                      "description": "DashScope regional endpoint. API keys are not interchangeable between regions.",
+                      "enum": [
+                        "us",
+                        "intl",
+                        "cn"
+                      ],
+                      "title": "Region",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey",
+                    "region"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "properties": {
+                "profile": {
+                  "enum": [
+                    "qwen-flash"
+                  ]
+                },
+                "qwen-flash": {
+                  "object": "qwen-flash",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    },
+                    "region": {
+                      "default": "us",
+                      "description": "DashScope regional endpoint. API keys are not interchangeable between regions.",
+                      "enum": [
+                        "us",
+                        "intl",
+                        "cn"
+                      ],
+                      "title": "Region",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey",
+                    "region"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "properties": {
+                "profile": {
+                  "enum": [
+                    "qwen-2-5-72b-instruct"
+                  ]
+                },
+                "qwen-2-5-72b-instruct": {
+                  "object": "qwen-2-5-72b-instruct",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    },
+                    "region": {
+                      "default": "us",
+                      "description": "DashScope regional endpoint. API keys are not interchangeable between regions.",
+                      "enum": [
+                        "us",
+                        "intl",
+                        "cn"
+                      ],
+                      "title": "Region",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey",
+                    "region"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "properties": {
+                "profile": {
+                  "enum": [
+                    "qwen-2-5-7b-instruct"
+                  ]
+                },
+                "qwen-2-5-7b-instruct": {
+                  "object": "qwen-2-5-7b-instruct",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    },
+                    "region": {
+                      "default": "us",
+                      "description": "DashScope regional endpoint. API keys are not interchangeable between regions.",
+                      "enum": [
+                        "us",
+                        "intl",
+                        "cn"
+                      ],
+                      "title": "Region",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey",
+                    "region"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "properties": {
+                "profile": {
+                  "enum": [
+                    "qwen-2-5-coder-32b-instruct"
+                  ]
+                },
+                "qwen-2-5-coder-32b-instruct": {
+                  "object": "qwen-2-5-coder-32b-instruct",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    },
+                    "region": {
+                      "default": "us",
+                      "description": "DashScope regional endpoint. API keys are not interchangeable between regions.",
+                      "enum": [
+                        "us",
+                        "intl",
+                        "cn"
+                      ],
+                      "title": "Region",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey",
+                    "region"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "properties": {
+                "profile": {
+                  "enum": [
+                    "qwen-max"
+                  ]
+                },
+                "qwen-max": {
+                  "object": "qwen-max",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    },
+                    "region": {
+                      "default": "us",
+                      "description": "DashScope regional endpoint. API keys are not interchangeable between regions.",
+                      "enum": [
+                        "us",
+                        "intl",
+                        "cn"
+                      ],
+                      "title": "Region",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey",
+                    "region"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "properties": {
+                "profile": {
+                  "enum": [
+                    "qwen-plus-2025-07-28"
+                  ]
+                },
+                "qwen-plus-2025-07-28": {
+                  "object": "qwen-plus-2025-07-28",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    },
+                    "region": {
+                      "default": "us",
+                      "description": "DashScope regional endpoint. API keys are not interchangeable between regions.",
+                      "enum": [
+                        "us",
+                        "intl",
+                        "cn"
+                      ],
+                      "title": "Region",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey",
+                    "region"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "properties": {
+                "profile": {
+                  "enum": [
+                    "qwen-plus-2025-07-28-thinking"
+                  ]
+                },
+                "qwen-plus-2025-07-28-thinking": {
+                  "object": "qwen-plus-2025-07-28-thinking",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    },
+                    "region": {
+                      "default": "us",
+                      "description": "DashScope regional endpoint. API keys are not interchangeable between regions.",
+                      "enum": [
+                        "us",
+                        "intl",
+                        "cn"
+                      ],
+                      "title": "Region",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey",
+                    "region"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "properties": {
+                "profile": {
+                  "enum": [
+                    "qwen-turbo"
+                  ]
+                },
+                "qwen-turbo": {
+                  "object": "qwen-turbo",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    },
+                    "region": {
+                      "default": "us",
+                      "description": "DashScope regional endpoint. API keys are not interchangeable between regions.",
+                      "enum": [
+                        "us",
+                        "intl",
+                        "cn"
+                      ],
+                      "title": "Region",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey",
+                    "region"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "properties": {
+        "profile": {
+          "default": "qwen-flash",
+          "description": "Qwen AI model selection",
+          "enum": [
+            "qwen-2-5-72b-instruct",
+            "qwen-2-5-7b-instruct",
+            "qwen-2-5-coder-32b-instruct",
+            "qwen-flash",
+            "qwen-max",
+            "qwen-plus",
+            "qwen-plus-2025-07-28",
+            "qwen-plus-2025-07-28-thinking",
+            "qwen-turbo"
+          ],
+          "title": "Model",
+          "type": "string"
+        }
+      },
+      "required": [
+        "profile"
+      ],
+      "title": "Qwen",
+      "type": "object"
+    },
+    "ui": {
+      "custom": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "model": {},
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "modelTotalTokens": {},
+        "region": {
+          "ui:enumNames": [
+            "US (Virginia)",
+            "Singapore",
+            "China (Beijing)"
+          ]
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "model",
+          "modelTotalTokens",
+          "apikey",
+          "region",
+          "modelSource"
+        ]
+      },
+      "profile": {
+        "ui:enumNames": [
+          "Qwen2.5 72B Instruct",
+          "Qwen: Qwen2.5 7B Instruct",
+          "Qwen2.5 Coder 32B Instruct",
+          "Qwen Flash",
+          "Qwen: Qwen-Max ",
+          "Qwen Plus",
+          "Qwen: Qwen Plus 0728",
+          "Qwen: Qwen Plus 0728 (thinking)",
+          "Qwen: Qwen-Turbo"
+        ]
+      },
+      "qwen-2-5-72b-instruct": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "region": {
+          "ui:enumNames": [
+            "US (Virginia)",
+            "Singapore",
+            "China (Beijing)"
+          ]
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "region",
+          "modelSource"
+        ]
+      },
+      "qwen-2-5-7b-instruct": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "region": {
+          "ui:enumNames": [
+            "US (Virginia)",
+            "Singapore",
+            "China (Beijing)"
+          ]
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "region",
+          "modelSource"
+        ]
+      },
+      "qwen-2-5-coder-32b-instruct": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "region": {
+          "ui:enumNames": [
+            "US (Virginia)",
+            "Singapore",
+            "China (Beijing)"
+          ]
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "region",
+          "modelSource"
+        ]
+      },
+      "qwen-flash": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "region": {
+          "ui:enumNames": [
+            "US (Virginia)",
+            "Singapore",
+            "China (Beijing)"
+          ]
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "region",
+          "modelSource"
+        ]
+      },
+      "qwen-max": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "region": {
+          "ui:enumNames": [
+            "US (Virginia)",
+            "Singapore",
+            "China (Beijing)"
+          ]
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "region",
+          "modelSource"
+        ]
+      },
+      "qwen-plus": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "region": {
+          "ui:enumNames": [
+            "US (Virginia)",
+            "Singapore",
+            "China (Beijing)"
+          ]
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "region",
+          "modelSource"
+        ]
+      },
+      "qwen-plus-2025-07-28": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "region": {
+          "ui:enumNames": [
+            "US (Virginia)",
+            "Singapore",
+            "China (Beijing)"
+          ]
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "region",
+          "modelSource"
+        ]
+      },
+      "qwen-plus-2025-07-28-thinking": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "region": {
+          "ui:enumNames": [
+            "US (Virginia)",
+            "Singapore",
+            "China (Beijing)"
+          ]
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "region",
+          "modelSource"
+        ]
+      },
+      "qwen-turbo": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "region": {
+          "ui:enumNames": [
+            "US (Virginia)",
+            "Singapore",
+            "China (Beijing)"
+          ]
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "region",
+          "modelSource"
+        ]
+      },
+      "ui:order": [
+        "profile",
+        "custom",
+        "qwen-plus",
+        "qwen-flash",
+        "qwen-2-5-72b-instruct",
+        "qwen-2-5-7b-instruct",
+        "qwen-2-5-coder-32b-instruct",
+        "qwen-max",
+        "qwen-plus-2025-07-28",
+        "qwen-plus-2025-07-28-thinking",
+        "qwen-turbo"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "llm",
+  "protocol": "llm_qwen://",
+  "tile": [
+    "Model: ${parameters.llm_qwen.profile}"
+  ],
+  "title": "Qwen"
+}

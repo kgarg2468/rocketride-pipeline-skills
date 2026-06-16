@@ -1,0 +1,1020 @@
+{
+  "actions": 0,
+  "capabilities": 3072,
+  "classType": [
+    "llm"
+  ],
+  "description": "A component that connects to Gemini models for advanced natural language \nprocessing. It supports tasks such as text generation, summarization, question \nanswering, and chat-based interactions. With access to state-of-the-art language \nmodels like Gemini-3.1-pro with 1M token context window, this component enables \nhigh-quality, context-aware responses and creative text generation. Configurable \nwith API keys and deployment options, it allows seamless integration into AI-driven \nworkflows with scalable performance.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "gemini.svg",
+  "lanes": {
+    "questions": [
+      "answers"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "dependencies": {
+        "profile": {
+          "oneOf": [
+            {
+              "properties": {
+                "custom": {
+                  "object": "custom",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "model": {
+                      "description": "Gemini model",
+                      "title": "Model",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    },
+                    "modelTotalTokens": {
+                      "description": "Maximum number of input + output tokens",
+                      "title": "Total Tokens",
+                      "type": "number"
+                    },
+                    "outputTokens": {
+                      "description": "Maximum number of output tokens",
+                      "title": "Output Tokens",
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "model",
+                    "modelTotalTokens",
+                    "outputTokens",
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "custom"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "1-pro-preview": {
+                  "object": "gemini-3_1-pro-preview",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "gemini-3_1-pro-preview"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "1-flash-image-preview": {
+                  "object": "gemini-3_1-flash-image-preview",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "gemini-3_1-flash-image-preview"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "1-flash-lite-preview": {
+                  "object": "gemini-3_1-flash-lite-preview",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "gemini-3_1-flash-lite-preview"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "gemini-3-flash-preview": {
+                  "object": "gemini-3-flash-preview",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "gemini-3-flash-preview"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "gemini-3-pro-image-preview": {
+                  "object": "gemini-3-pro-image-preview",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "gemini-3-pro-image-preview"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "5-pro": {
+                  "object": "gemini-2_5-pro",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "gemini-2_5-pro"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "5-flash": {
+                  "object": "gemini-2_5-flash",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "gemini-2_5-flash"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "5-flash-lite": {
+                  "object": "gemini-2_5-flash-lite",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "gemini-2_5-flash-lite"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "5-flash-image": {
+                  "object": "gemini-2_5-flash-image",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "gemini-2_5-flash-image"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "gemini-3-pro-preview": {
+                  "object": "gemini-3-pro-preview",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "gemini-3-pro-preview"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "gemini-3-pro-image": {
+                  "object": "gemini-3-pro-image",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "gemini-3-pro-image"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "gemini-2_0-flash": {
+                  "object": "gemini-2_0-flash",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "gemini-2_0-flash"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "gemini-2_0-flash-lite": {
+                  "object": "gemini-2_0-flash-lite",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "gemini-2_0-flash-lite"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "models-gemini-2-5-flash-lite-preview-09-2025": {
+                  "object": "models-gemini-2-5-flash-lite-preview-09-2025",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "models-gemini-2-5-flash-lite-preview-09-2025"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "models-gemini-2-5-pro-preview": {
+                  "object": "models-gemini-2-5-pro-preview",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "models-gemini-2-5-pro-preview"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "models-gemini-2-5-pro-preview-05-06": {
+                  "object": "models-gemini-2-5-pro-preview-05-06",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "models-gemini-2-5-pro-preview-05-06"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "models-gemini-3-1-pro-preview-customtools": {
+                  "object": "models-gemini-3-1-pro-preview-customtools",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "models-gemini-3-1-pro-preview-customtools"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "models-gemini-flash-latest": {
+                  "object": "models-gemini-flash-latest",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "models-gemini-flash-latest"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "models-gemini-pro-latest": {
+                  "object": "models-gemini-pro-latest",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "models-gemini-pro-latest"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "properties": {
+        "profile": {
+          "default": "gemini-3_1-pro-preview",
+          "description": "Gemini LLM model",
+          "enum": [
+            "custom",
+            "gemini-2_0-flash",
+            "gemini-2_0-flash-lite",
+            "gemini-2_5-flash",
+            "gemini-2_5-flash-image",
+            "gemini-2_5-flash-lite",
+            "gemini-2_5-pro",
+            "gemini-3-flash-preview",
+            "gemini-3-pro-image",
+            "gemini-3-pro-image-preview",
+            "gemini-3-pro-preview",
+            "gemini-3_1-flash-image-preview",
+            "gemini-3_1-flash-lite-preview",
+            "gemini-3_1-pro-preview",
+            "models-gemini-2-5-flash-lite-preview-09-2025",
+            "models-gemini-2-5-pro-preview",
+            "models-gemini-2-5-pro-preview-05-06",
+            "models-gemini-3-1-pro-preview-customtools",
+            "models-gemini-flash-latest",
+            "models-gemini-pro-latest"
+          ],
+          "title": "Model",
+          "type": "string"
+        }
+      },
+      "required": [
+        "profile"
+      ],
+      "title": "Gemini",
+      "type": "object"
+    },
+    "ui": {
+      "1-flash-image-preview": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "1-flash-lite-preview": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "1-pro-preview": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "5-flash": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "5-flash-image": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "5-flash-lite": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "5-pro": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "custom": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "model": {},
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "modelTotalTokens": {},
+        "outputTokens": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "model",
+          "modelTotalTokens",
+          "outputTokens",
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "gemini-2_0-flash": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "gemini-2_0-flash-lite": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "gemini-3-flash-preview": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "gemini-3-pro-image": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "gemini-3-pro-image-preview": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "gemini-3-pro-preview": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "models-gemini-2-5-flash-lite-preview-09-2025": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "models-gemini-2-5-pro-preview": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "models-gemini-2-5-pro-preview-05-06": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "models-gemini-3-1-pro-preview-customtools": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "models-gemini-flash-latest": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "models-gemini-pro-latest": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "profile": {
+        "ui:enumNames": [
+          null,
+          "Gemini 2.0 Flash",
+          "Gemini 2.0 Flash Lite",
+          "Gemini 2.5 Flash",
+          "Gemini 2.5 Flash Image",
+          "Gemini 2.5 Flash Lite",
+          "Gemini 2.5 Pro",
+          "Gemini 3 Flash Preview",
+          "Gemini 3 Pro Image",
+          "Gemini 3 Pro Image Preview",
+          "Gemini 3 Pro Preview",
+          "Gemini 3.1 Flash Image Preview",
+          "Gemini 3.1 Flash Lite",
+          "Gemini 3.1 Pro",
+          "Google: Gemini 2.5 Flash Lite Preview 09-2025",
+          "Google: Gemini 2.5 Pro Preview 06-05",
+          "Google: Gemini 2.5 Pro Preview 05-06",
+          "Google: Gemini 3.1 Pro Preview Custom Tools",
+          "Google Gemini Flash Latest",
+          "Google Gemini Pro Latest"
+        ]
+      },
+      "ui:order": [
+        "profile",
+        "custom",
+        "1-pro-preview",
+        "1-flash-image-preview",
+        "1-flash-lite-preview",
+        "gemini-3-flash-preview",
+        "gemini-3-pro-image-preview",
+        "5-pro",
+        "5-flash",
+        "5-flash-lite",
+        "5-flash-image",
+        "gemini-3-pro-preview",
+        "gemini-3-pro-image",
+        "gemini-2_0-flash",
+        "gemini-2_0-flash-lite",
+        "models-gemini-2-5-flash-lite-preview-09-2025",
+        "models-gemini-2-5-pro-preview",
+        "models-gemini-2-5-pro-preview-05-06",
+        "models-gemini-3-1-pro-preview-customtools",
+        "models-gemini-flash-latest",
+        "models-gemini-pro-latest"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "llm",
+  "protocol": "llm_gemini://",
+  "tile": [
+    "Model: ${parameters.llm_gemini.profile}"
+  ],
+  "title": "Gemini"
+}

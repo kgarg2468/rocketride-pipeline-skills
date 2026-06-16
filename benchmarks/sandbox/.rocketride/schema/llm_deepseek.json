@@ -1,0 +1,1104 @@
+{
+  "actions": 0,
+  "capabilities": 3072,
+  "classType": [
+    "llm"
+  ],
+  "description": "A component that connects to DeepSeek’s large language models for advanced \nnatural language processing. It enables capabilities like text generation, \nsummarization, and code understanding. Optimized for technical domains, DeepSeek \noffers strong performance in handling programming-related queries, structured \ndata, and domain-specific tasks. The component is suitable for integrating \nintelligent reasoning and content generation into pipelines where accuracy and \ndomain adaptation are key.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "deepseek.svg",
+  "lanes": {
+    "questions": [
+      "answers"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "dependencies": {
+        "profile": {
+          "oneOf": [
+            {
+              "properties": {
+                "cloud-reasoner": {
+                  "object": "cloud-reasoner",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "cloud-reasoner"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "cloud-chat": {
+                  "object": "cloud-chat",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "cloud-chat"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "deepseek-r1-1_5b": {
+                  "object": "deepseek-r1-1_5b",
+                  "properties": {
+                    "serverbase": {
+                      "default": "http://localhost:11434/v1",
+                      "description": "Base url the model is hosted under.",
+                      "title": "LLM URL",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "serverbase"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "deepseek-r1-1_5b"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "deepseek-r1-7b": {
+                  "object": "deepseek-r1-7b",
+                  "properties": {
+                    "serverbase": {
+                      "default": "http://localhost:11434/v1",
+                      "description": "Base url the model is hosted under.",
+                      "title": "LLM URL",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "serverbase"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "deepseek-r1-7b"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "deepseek-r1-8b": {
+                  "object": "deepseek-r1-8b",
+                  "properties": {
+                    "serverbase": {
+                      "default": "http://localhost:11434/v1",
+                      "description": "Base url the model is hosted under.",
+                      "title": "LLM URL",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "serverbase"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "deepseek-r1-8b"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "deepseek-r1-14b": {
+                  "object": "deepseek-r1-14b",
+                  "properties": {
+                    "serverbase": {
+                      "default": "http://localhost:11434/v1",
+                      "description": "Base url the model is hosted under.",
+                      "title": "LLM URL",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "serverbase"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "deepseek-r1-14b"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "deepseek-r1-32b": {
+                  "object": "deepseek-r1-32b",
+                  "properties": {
+                    "serverbase": {
+                      "default": "http://localhost:11434/v1",
+                      "description": "Base url the model is hosted under.",
+                      "title": "LLM URL",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "serverbase"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "deepseek-r1-32b"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "deepseek-r1-70b": {
+                  "object": "deepseek-r1-70b",
+                  "properties": {
+                    "serverbase": {
+                      "default": "http://localhost:11434/v1",
+                      "description": "Base url the model is hosted under.",
+                      "title": "LLM URL",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "serverbase"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "deepseek-r1-70b"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "deepseek-r1-671b": {
+                  "object": "deepseek-r1-671b",
+                  "properties": {
+                    "serverbase": {
+                      "default": "http://localhost:11434/v1",
+                      "description": "Base url the model is hosted under.",
+                      "title": "LLM URL",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "serverbase"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "deepseek-r1-671b"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "deepseek-v3": {
+                  "object": "deepseek-v3",
+                  "properties": {
+                    "serverbase": {
+                      "default": "http://localhost:11434/v1",
+                      "description": "Base url the model is hosted under.",
+                      "title": "LLM URL",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "serverbase"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "deepseek-v3"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "deepseek-chat-v3-0324": {
+                  "object": "deepseek-chat-v3-0324",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "deepseek-chat-v3-0324"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "deepseek-chat-v3-1": {
+                  "object": "deepseek-chat-v3-1",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "deepseek-chat-v3-1"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "deepseek-r1": {
+                  "object": "deepseek-r1",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "deepseek-r1"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "deepseek-r1-0528": {
+                  "object": "deepseek-r1-0528",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "deepseek-r1-0528"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "deepseek-r1-distill-llama-70b": {
+                  "object": "deepseek-r1-distill-llama-70b",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "deepseek-r1-distill-llama-70b"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "deepseek-r1-distill-qwen-32b": {
+                  "object": "deepseek-r1-distill-qwen-32b",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "deepseek-r1-distill-qwen-32b"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "deepseek-r1t2-chimera": {
+                  "object": "deepseek-r1t2-chimera",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "deepseek-r1t2-chimera"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "deepseek-v3-1-nex-n1": {
+                  "object": "deepseek-v3-1-nex-n1",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "deepseek-v3-1-nex-n1"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "deepseek-v3-1-terminus": {
+                  "object": "deepseek-v3-1-terminus",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "deepseek-v3-1-terminus"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "deepseek-v3-2": {
+                  "object": "deepseek-v3-2",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "deepseek-v3-2"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "deepseek-v3-2-exp": {
+                  "object": "deepseek-v3-2-exp",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "deepseek-v3-2-exp"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "deepseek-v3-2-speciale": {
+                  "object": "deepseek-v3-2-speciale",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "deepseek-v3-2-speciale"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "deepseek-v4-flash": {
+                  "object": "deepseek-v4-flash",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "deepseek-v4-flash"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "deepseek-v4-pro": {
+                  "object": "deepseek-v4-pro",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "deepseek-v4-pro"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "properties": {
+        "profile": {
+          "default": "cloud-reasoner",
+          "description": "Deepseek LLM model",
+          "enum": [
+            "cloud-chat",
+            "cloud-reasoner",
+            "deepseek-chat-v3-0324",
+            "deepseek-chat-v3-1",
+            "deepseek-r1",
+            "deepseek-r1-0528",
+            "deepseek-r1-14b",
+            "deepseek-r1-1_5b",
+            "deepseek-r1-32b",
+            "deepseek-r1-671b",
+            "deepseek-r1-70b",
+            "deepseek-r1-7b",
+            "deepseek-r1-8b",
+            "deepseek-r1-distill-llama-70b",
+            "deepseek-r1-distill-qwen-32b",
+            "deepseek-r1t2-chimera",
+            "deepseek-v3",
+            "deepseek-v3-1-nex-n1",
+            "deepseek-v3-1-terminus",
+            "deepseek-v3-2",
+            "deepseek-v3-2-exp",
+            "deepseek-v3-2-speciale",
+            "deepseek-v4-flash",
+            "deepseek-v4-pro"
+          ],
+          "title": "Model",
+          "type": "string"
+        }
+      },
+      "required": [
+        "profile"
+      ],
+      "title": "Deepseek",
+      "type": "object"
+    },
+    "ui": {
+      "cloud-chat": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "cloud-reasoner": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "deepseek-chat-v3-0324": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "deepseek-chat-v3-1": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "deepseek-r1": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "deepseek-r1-0528": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "deepseek-r1-14b": {
+        "serverbase": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "serverbase"
+        ]
+      },
+      "deepseek-r1-1_5b": {
+        "serverbase": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "serverbase"
+        ]
+      },
+      "deepseek-r1-32b": {
+        "serverbase": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "serverbase"
+        ]
+      },
+      "deepseek-r1-671b": {
+        "serverbase": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "serverbase"
+        ]
+      },
+      "deepseek-r1-70b": {
+        "serverbase": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "serverbase"
+        ]
+      },
+      "deepseek-r1-7b": {
+        "serverbase": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "serverbase"
+        ]
+      },
+      "deepseek-r1-8b": {
+        "serverbase": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "serverbase"
+        ]
+      },
+      "deepseek-r1-distill-llama-70b": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "deepseek-r1-distill-qwen-32b": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "deepseek-r1t2-chimera": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "deepseek-v3": {
+        "serverbase": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "serverbase"
+        ]
+      },
+      "deepseek-v3-1-nex-n1": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "deepseek-v3-1-terminus": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "deepseek-v3-2": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "deepseek-v3-2-exp": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "deepseek-v3-2-speciale": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "deepseek-v4-flash": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "deepseek-v4-pro": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "profile": {
+        "ui:enumNames": [
+          "Cloud Chat",
+          "Cloud Reasoner",
+          "DeepSeek: DeepSeek V3 0324",
+          "DeepSeek: DeepSeek V3.1",
+          "DeepSeek: R1",
+          "DeepSeek: R1 0528",
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          null,
+          "DeepSeek: R1 Distill Llama 70B",
+          "DeepSeek: R1 Distill Qwen 32B",
+          "TNG: DeepSeek R1T2 Chimera",
+          null,
+          "Nex AGI: DeepSeek V3.1 Nex N1",
+          "DeepSeek: DeepSeek V3.1 Terminus",
+          "DeepSeek: DeepSeek V3.2",
+          "DeepSeek: DeepSeek V3.2 Exp",
+          "DeepSeek: DeepSeek V3.2 Speciale",
+          "DeepSeek: DeepSeek V4 Flash",
+          "DeepSeek: DeepSeek V4 Pro"
+        ]
+      },
+      "ui:order": [
+        "profile",
+        "cloud-reasoner",
+        "cloud-chat",
+        "deepseek-r1-1_5b",
+        "deepseek-r1-7b",
+        "deepseek-r1-8b",
+        "deepseek-r1-14b",
+        "deepseek-r1-32b",
+        "deepseek-r1-70b",
+        "deepseek-r1-671b",
+        "deepseek-v3",
+        "deepseek-chat-v3-0324",
+        "deepseek-chat-v3-1",
+        "deepseek-r1",
+        "deepseek-r1-0528",
+        "deepseek-r1-distill-llama-70b",
+        "deepseek-r1-distill-qwen-32b",
+        "deepseek-r1t2-chimera",
+        "deepseek-v3-1-nex-n1",
+        "deepseek-v3-1-terminus",
+        "deepseek-v3-2",
+        "deepseek-v3-2-exp",
+        "deepseek-v3-2-speciale",
+        "deepseek-v4-flash",
+        "deepseek-v4-pro"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "llm",
+  "protocol": "llm_deepseek://",
+  "tile": [
+    "Model: ${parameters.llm_deepseek.profile}"
+  ],
+  "title": "Deepseek"
+}

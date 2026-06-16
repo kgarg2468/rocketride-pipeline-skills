@@ -1,0 +1,46 @@
+{
+  "actions": 0,
+  "capabilities": 6144,
+  "classType": [
+    "text"
+  ],
+  "description": "A transformation component that takes input text and encapsulates \nit as a Question object without modification. Designed for structured \npipelines where raw text is to be handled as a question entity, this \ncomponent enables consistent formatting and downstream processing without \ngenerating or altering content. If no question is provided, \nthe component will skip processing and allow the \npipeline to continue to the next component without sending a question.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "question.svg",
+  "lanes": {
+    "text": [
+      "questions"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "properties": {
+        "type": {
+          "default": "question",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "title": "Question",
+      "type": "object"
+    },
+    "ui": {
+      "type": {
+        "ui:options": {
+          "label": false
+        },
+        "ui:widget": "hidden"
+      },
+      "ui:order": [
+        "type"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "question",
+  "protocol": "question://",
+  "tile": [],
+  "title": "Question"
+}

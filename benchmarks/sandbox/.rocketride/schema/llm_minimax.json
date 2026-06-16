@@ -1,0 +1,615 @@
+{
+  "actions": 0,
+  "capabilities": 3072,
+  "classType": [
+    "llm"
+  ],
+  "description": "A component that connects to MiniMax's large language models for advanced \nnatural language processing. It enables capabilities like long-context reasoning, \nagentic workflows, multi-step tool use, and high-quality conversational generation. \nMiniMax offers an OpenAI-compatible API with strong performance across reasoning, \nwriting, and coding tasks. The component is suitable for integrating MiniMax models \ninto pipelines where extended context windows and efficient inference are important.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "minimax.svg",
+  "lanes": {
+    "questions": [
+      "answers"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "dependencies": {
+        "profile": {
+          "oneOf": [
+            {
+              "properties": {
+                "custom": {
+                  "object": "custom",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "model": {
+                      "description": "MiniMax model",
+                      "title": "Model",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    },
+                    "modelTotalTokens": {
+                      "description": "Total Tokens",
+                      "title": "Tokens",
+                      "type": "number"
+                    },
+                    "serverbase": {
+                      "default": "https://api.minimax.io/v1",
+                      "description": "OpenAI-compatible base URL for the MiniMax endpoint (e.g. https://api.minimax.io/v1 for international, https://api.minimaxi.com/v1 for China).",
+                      "title": "Server base URL",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "model",
+                    "modelTotalTokens",
+                    "serverbase",
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "custom"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "minimax-m2": {
+                  "object": "minimax-m2",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "minimax-m2"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "minimax-m2-1": {
+                  "object": "minimax-m2-1",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "minimax-m2-1"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "minimax-m2-1-highspeed": {
+                  "object": "minimax-m2-1-highspeed",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "minimax-m2-1-highspeed"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "minimax-m2-5": {
+                  "object": "minimax-m2-5",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "minimax-m2-5"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "minimax-m2-5-highspeed": {
+                  "object": "minimax-m2-5-highspeed",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "minimax-m2-5-highspeed"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "minimax-m2-7": {
+                  "object": "minimax-m2-7",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "minimax-m2-7"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "minimax-m2-7-highspeed": {
+                  "object": "minimax-m2-7-highspeed",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "minimax-m2-7-highspeed"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "minimax-m2-local": {
+                  "object": "minimax-m2-local",
+                  "properties": {
+                    "serverbase": {
+                      "default": "http://localhost:11434/v1",
+                      "description": "Base url the model is hosted under.",
+                      "title": "LLM URL",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "serverbase"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "minimax-m2-local"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "minimax-m2-5-local": {
+                  "object": "minimax-m2-5-local",
+                  "properties": {
+                    "serverbase": {
+                      "default": "http://localhost:11434/v1",
+                      "description": "Base url the model is hosted under.",
+                      "title": "LLM URL",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "serverbase"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "minimax-m2-5-local"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "minimax-m2-7-local": {
+                  "object": "minimax-m2-7-local",
+                  "properties": {
+                    "serverbase": {
+                      "default": "http://localhost:11434/v1",
+                      "description": "Base url the model is hosted under.",
+                      "title": "LLM URL",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "serverbase"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "minimax-m2-7-local"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "minimax-m3": {
+                  "object": "minimax-m3",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "minimax-m3"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "properties": {
+        "profile": {
+          "default": "minimax-m2",
+          "description": "MiniMax LLM model",
+          "enum": [
+            "custom",
+            "minimax-m2",
+            "minimax-m2-1",
+            "minimax-m2-1-highspeed",
+            "minimax-m2-5",
+            "minimax-m2-5-highspeed",
+            "minimax-m2-5-local",
+            "minimax-m2-7",
+            "minimax-m2-7-highspeed",
+            "minimax-m2-7-local",
+            "minimax-m2-local",
+            "minimax-m3"
+          ],
+          "title": "Model",
+          "type": "string"
+        }
+      },
+      "required": [
+        "profile"
+      ],
+      "title": "MiniMax",
+      "type": "object"
+    },
+    "ui": {
+      "custom": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "model": {},
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "modelTotalTokens": {},
+        "serverbase": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "model",
+          "modelTotalTokens",
+          "serverbase",
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "minimax-m2": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "minimax-m2-1": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "minimax-m2-1-highspeed": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "minimax-m2-5": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "minimax-m2-5-highspeed": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "minimax-m2-5-local": {
+        "serverbase": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "serverbase"
+        ]
+      },
+      "minimax-m2-7": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "minimax-m2-7-highspeed": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "minimax-m2-7-local": {
+        "serverbase": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "serverbase"
+        ]
+      },
+      "minimax-m2-local": {
+        "serverbase": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "serverbase"
+        ]
+      },
+      "minimax-m3": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "profile": {
+        "ui:enumNames": [
+          "Custom Model",
+          "MiniMax M2",
+          "MiniMax M2.1",
+          "MiniMax M2.1 Highspeed",
+          "MiniMax M2.5",
+          "MiniMax M2.5 Highspeed",
+          "MiniMax M2.5 (Local)",
+          "MiniMax M2.7",
+          "MiniMax M2.7 Highspeed",
+          "MiniMax M2.7 (Local)",
+          "MiniMax M2 (Local)",
+          "MiniMax M3"
+        ]
+      },
+      "ui:order": [
+        "profile",
+        "custom",
+        "minimax-m2",
+        "minimax-m2-1",
+        "minimax-m2-1-highspeed",
+        "minimax-m2-5",
+        "minimax-m2-5-highspeed",
+        "minimax-m2-7",
+        "minimax-m2-7-highspeed",
+        "minimax-m2-local",
+        "minimax-m2-5-local",
+        "minimax-m2-7-local",
+        "minimax-m3"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "llm",
+  "protocol": "llm_minimax://",
+  "tile": [
+    "Model: ${parameters.llm_minimax.profile}"
+  ],
+  "title": "MiniMax"
+}

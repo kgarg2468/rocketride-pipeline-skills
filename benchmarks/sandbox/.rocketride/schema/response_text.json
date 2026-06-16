@@ -1,0 +1,42 @@
+{
+  "actions": 0,
+  "capabilities": 2048,
+  "classType": [
+    "infrastructure"
+  ],
+  "description": "A component that returns processed text back to the requesting client. It handles the \nresponse phase of the HTTP request-response cycle by returning the results as a JSON \nobject. This component ensures that data is transmitted efficiently and clearly to \nthe client, providing a standardized format for the response.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "util-infrastructure.svg",
+  "lanes": {
+    "text": []
+  },
+  "Pipe": {
+    "schema": {
+      "properties": {
+        "laneName": {
+          "default": "text",
+          "maxLength": 32,
+          "minLength": 1,
+          "title": "Identifier key within result",
+          "type": "string"
+        }
+      },
+      "required": [
+        "laneName"
+      ],
+      "title": "Return Text",
+      "type": "object"
+    },
+    "ui": {
+      "laneName": {},
+      "ui:order": [
+        "laneName"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "response",
+  "protocol": "response_text://",
+  "tile": [],
+  "title": "Return Text"
+}

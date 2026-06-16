@@ -1,0 +1,1002 @@
+{
+  "actions": 0,
+  "capabilities": 3072,
+  "classType": [
+    "llm"
+  ],
+  "description": "A component that connects to GMI Cloud's large language models for advanced \nnatural language processing. GMI Cloud hosts 100+ OpenAI-compatible models \nincluding Llama 4, Qwen3, DeepSeek, GPT, Claude, and Gemini on owned H100/H200 \nGPU infrastructure. It enables capabilities like text generation, summarization, \nreasoning, and code understanding across a wide range of open-weight and \nproprietary models through a unified OpenAI-compatible API.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "gmi_cloud.svg",
+  "lanes": {
+    "questions": [
+      "answers"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "dependencies": {
+        "profile": {
+          "oneOf": [
+            {
+              "properties": {
+                "custom": {
+                  "object": "custom",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "model": {
+                      "description": "GMI Cloud model identifier. Use org/model-name for open-weight models (e.g. deepseek-ai/DeepSeek-R1, Qwen/Qwen3-32B-FP8) or provider/model-name for proxied models (e.g. openai/gpt-4o, anthropic/claude-sonnet-4.5, google/gemini-3-flash-preview). Full list: https://www.gmicloud.ai/models",
+                      "title": "Model",
+                      "type": "string"
+                    },
+                    "modelTotalTokens": {
+                      "description": "Total Tokens",
+                      "title": "Tokens",
+                      "type": "number"
+                    },
+                    "serverbase": {
+                      "description": "Your GMI Cloud deployment endpoint URL. Deploy the model at console.gmicloud.ai, then paste the provided endpoint URL here.",
+                      "title": "Endpoint URL",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "serverbase",
+                    "model",
+                    "modelTotalTokens",
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "custom"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "llama-4-scout": {
+                  "object": "llama-4-scout",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "serverbase": {
+                      "description": "Your GMI Cloud deployment endpoint URL. Deploy the model at console.gmicloud.ai, then paste the provided endpoint URL here.",
+                      "title": "Endpoint URL",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "serverbase",
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "llama-4-scout"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "llama-4-maverick": {
+                  "object": "llama-4-maverick",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "serverbase": {
+                      "description": "Your GMI Cloud deployment endpoint URL. Deploy the model at console.gmicloud.ai, then paste the provided endpoint URL here.",
+                      "title": "Endpoint URL",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "serverbase",
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "llama-4-maverick"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "profile": {
+                  "enum": [
+                    "qwen3-235b"
+                  ]
+                },
+                "qwen3-235b": {
+                  "object": "qwen3-235b",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "serverbase": {
+                      "description": "Your GMI Cloud deployment endpoint URL. Deploy the model at console.gmicloud.ai, then paste the provided endpoint URL here.",
+                      "title": "Endpoint URL",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "serverbase",
+                    "apikey"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "properties": {
+                "profile": {
+                  "enum": [
+                    "qwen3-32b"
+                  ]
+                },
+                "qwen3-32b": {
+                  "object": "qwen3-32b",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "serverbase": {
+                      "description": "Your GMI Cloud deployment endpoint URL. Deploy the model at console.gmicloud.ai, then paste the provided endpoint URL here.",
+                      "title": "Endpoint URL",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "serverbase",
+                    "apikey"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "properties": {
+                "profile": {
+                  "enum": [
+                    "qwen3-30b"
+                  ]
+                },
+                "qwen3-30b": {
+                  "object": "qwen3-30b",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "serverbase": {
+                      "description": "Your GMI Cloud deployment endpoint URL. Deploy the model at console.gmicloud.ai, then paste the provided endpoint URL here.",
+                      "title": "Endpoint URL",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "serverbase",
+                    "apikey"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "properties": {
+                "profile": {
+                  "enum": [
+                    "qwen3-coder-480b"
+                  ]
+                },
+                "qwen3-coder-480b": {
+                  "object": "qwen3-coder-480b",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "serverbase": {
+                      "description": "Your GMI Cloud deployment endpoint URL. Deploy the model at console.gmicloud.ai, then paste the provided endpoint URL here.",
+                      "title": "Endpoint URL",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "serverbase",
+                    "apikey"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "properties": {
+                "deepseek-v3-2": {
+                  "object": "deepseek-v3-2",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "deepseek-v3-2"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "deepseek-v3": {
+                  "object": "deepseek-v3",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "deepseek-v3"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "deepseek-r1": {
+                  "object": "deepseek-r1",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "deepseek-r1"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "deepseek-r1-distill-32b": {
+                  "object": "deepseek-r1-distill-32b",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "serverbase": {
+                      "description": "Your GMI Cloud deployment endpoint URL. Deploy the model at console.gmicloud.ai, then paste the provided endpoint URL here.",
+                      "title": "Endpoint URL",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "serverbase",
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "deepseek-r1-distill-32b"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "deepseek-r1-distill-1-5b": {
+                  "object": "deepseek-r1-distill-1-5b",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "serverbase": {
+                      "description": "Your GMI Cloud deployment endpoint URL. Deploy the model at console.gmicloud.ai, then paste the provided endpoint URL here.",
+                      "title": "Endpoint URL",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "serverbase",
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "deepseek-r1-distill-1-5b"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "deepseek-prover-v2": {
+                  "object": "deepseek-prover-v2",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "deepseek-prover-v2"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "gpt-5-2": {
+                  "object": "gpt-5-2",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "gpt-5-2"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "gpt-5-1": {
+                  "object": "gpt-5-1",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "gpt-5-1"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "gpt-5": {
+                  "object": "gpt-5",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "gpt-5"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "gpt-4o": {
+                  "object": "gpt-4o",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "gpt-4o"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "claude-opus-4-5": {
+                  "object": "claude-opus-4-5",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "claude-opus-4-5"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "claude-sonnet-4-5": {
+                  "object": "claude-sonnet-4-5",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "claude-sonnet-4-5"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "gemini-3-pro": {
+                  "object": "gemini-3-pro",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "gemini-3-pro"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "gemini-3-flash": {
+                  "object": "gemini-3-flash",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "gemini-3-flash"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "gemini-3-1-flash-lite": {
+                  "object": "gemini-3-1-flash-lite",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "gemini-3-1-flash-lite"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "properties": {
+        "profile": {
+          "default": "deepseek-v3",
+          "description": "GMI Cloud LLM model",
+          "enum": [
+            "claude-opus-4-5",
+            "claude-sonnet-4-5",
+            "custom",
+            "deepseek-prover-v2",
+            "deepseek-r1",
+            "deepseek-r1-distill-1-5b",
+            "deepseek-r1-distill-32b",
+            "deepseek-v3",
+            "deepseek-v3-2",
+            "gemini-3-1-flash-lite",
+            "gemini-3-flash",
+            "gemini-3-pro",
+            "gpt-4o",
+            "gpt-5",
+            "gpt-5-1",
+            "gpt-5-2",
+            "llama-4-maverick",
+            "llama-4-scout",
+            "qwen3-235b",
+            "qwen3-30b",
+            "qwen3-32b",
+            "qwen3-coder-480b"
+          ],
+          "title": "Model",
+          "type": "string"
+        }
+      },
+      "required": [
+        "profile"
+      ],
+      "title": "GMI Cloud",
+      "type": "object"
+    },
+    "ui": {
+      "claude-opus-4-5": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey"
+        ]
+      },
+      "claude-sonnet-4-5": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey"
+        ]
+      },
+      "custom": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "model": {},
+        "modelTotalTokens": {},
+        "serverbase": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "serverbase",
+          "model",
+          "modelTotalTokens",
+          "apikey"
+        ]
+      },
+      "deepseek-prover-v2": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey"
+        ]
+      },
+      "deepseek-r1": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey"
+        ]
+      },
+      "deepseek-r1-distill-1-5b": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "serverbase": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "serverbase",
+          "apikey"
+        ]
+      },
+      "deepseek-r1-distill-32b": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "serverbase": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "serverbase",
+          "apikey"
+        ]
+      },
+      "deepseek-v3": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey"
+        ]
+      },
+      "deepseek-v3-2": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey"
+        ]
+      },
+      "gemini-3-1-flash-lite": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey"
+        ]
+      },
+      "gemini-3-flash": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey"
+        ]
+      },
+      "gemini-3-pro": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey"
+        ]
+      },
+      "gpt-4o": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey"
+        ]
+      },
+      "gpt-5": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey"
+        ]
+      },
+      "gpt-5-1": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey"
+        ]
+      },
+      "gpt-5-2": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey"
+        ]
+      },
+      "llama-4-maverick": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "serverbase": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "serverbase",
+          "apikey"
+        ]
+      },
+      "llama-4-scout": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "serverbase": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "serverbase",
+          "apikey"
+        ]
+      },
+      "profile": {
+        "ui:enumNames": [
+          "Claude Opus 4.5",
+          "Claude Sonnet 4.5",
+          null,
+          "DeepSeek Prover V2",
+          "DeepSeek R1",
+          "DeepSeek R1 Distill 1.5B",
+          "DeepSeek R1 Distill 32B",
+          "DeepSeek V3",
+          "DeepSeek V3.2",
+          "Gemini 3.1 Flash Lite",
+          "Gemini 3 Flash",
+          "Gemini 3.1 Pro",
+          "GPT-4o",
+          "GPT-5",
+          "GPT-5.1",
+          "GPT-5.2",
+          "Llama 4 Maverick",
+          "Llama 4 Scout",
+          "Qwen3 235B",
+          "Qwen3 30B",
+          "Qwen3 32B",
+          "Qwen3 Coder 480B"
+        ]
+      },
+      "qwen3-235b": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "serverbase": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "serverbase",
+          "apikey"
+        ]
+      },
+      "qwen3-30b": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "serverbase": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "serverbase",
+          "apikey"
+        ]
+      },
+      "qwen3-32b": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "serverbase": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "serverbase",
+          "apikey"
+        ]
+      },
+      "qwen3-coder-480b": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "serverbase": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "serverbase",
+          "apikey"
+        ]
+      },
+      "ui:order": [
+        "profile",
+        "custom",
+        "llama-4-scout",
+        "llama-4-maverick",
+        "qwen3-235b",
+        "qwen3-32b",
+        "qwen3-30b",
+        "qwen3-coder-480b",
+        "deepseek-v3-2",
+        "deepseek-v3",
+        "deepseek-r1",
+        "deepseek-r1-distill-32b",
+        "deepseek-r1-distill-1-5b",
+        "deepseek-prover-v2",
+        "gpt-5-2",
+        "gpt-5-1",
+        "gpt-5",
+        "gpt-4o",
+        "claude-opus-4-5",
+        "claude-sonnet-4-5",
+        "gemini-3-pro",
+        "gemini-3-flash",
+        "gemini-3-1-flash-lite"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "llm",
+  "protocol": "llm_gmi_cloud://",
+  "tile": [
+    "Model: ${parameters.llm_gmi_cloud.profile}"
+  ],
+  "title": "GMI Cloud"
+}

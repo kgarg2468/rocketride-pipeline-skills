@@ -1,0 +1,50 @@
+{
+  "actions": 0,
+  "capabilities": 3072,
+  "classType": [
+    "tool"
+  ],
+  "description": "Generates Chart.js v4 chart configurations from data using the pipeline LLM.\nThe agent provides raw data and an optional chart type or description.\nReturns a ```chartjs fenced code block ready for rendering in the chat UI.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "chartjs.svg",
+  "invoke": {
+    "llm": {
+      "description": "LLM used to generate Chart.js configurations from data",
+      "min": 1
+    }
+  },
+  "lanes": {},
+  "Pipe": {
+    "schema": {
+      "properties": {
+        "type": {
+          "default": "tool_chartjs",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "title": "Chart (Chart.js)",
+      "type": "object"
+    },
+    "ui": {
+      "type": {
+        "ui:options": {
+          "label": false
+        },
+        "ui:widget": "hidden"
+      },
+      "ui:order": [
+        "type"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "chartjs",
+  "protocol": "tool_chartjs://",
+  "tile": [
+    "Tool: ${parameters.tool_chartjs.serverName}.generate_chart"
+  ],
+  "title": "Chart (Chart.js)"
+}

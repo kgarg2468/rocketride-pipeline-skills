@@ -1,0 +1,124 @@
+{
+  "actions": 0,
+  "capabilities": 2560,
+  "classType": [
+    "source"
+  ],
+  "description": "A Telegram Bot source node that receives messages from users via the Telegram Bot API. \nSupports text messages and media files (images, audio, voice, video, documents). \nEach message type is routed to the appropriate pipeline lane. \nPipeline responses are automatically sent back as replies to the sender. \nSupports both long polling (for local/private setups) and webhook (for production).",
+  "icon": "telegram.svg",
+  "lanes": {
+    "_source": [
+      "text",
+      "image",
+      "audio",
+      "video",
+      "tags"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "properties": {
+        "parameters": {
+          "dependencies": {
+            "mode": {
+              "oneOf": [
+                {
+                  "properties": {
+                    "mode": {
+                      "enum": [
+                        "webhook"
+                      ]
+                    },
+                    "webhookUrl": {
+                      "description": "Public HTTPS URL Telegram will POST updates to (e.g. https://your-server.com/telegram/webhook). Required for webhook mode.",
+                      "title": "Webhook URL",
+                      "type": "string"
+                    }
+                  }
+                },
+                {
+                  "properties": {
+                    "mode": {
+                      "enum": [
+                        "polling"
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "properties": {
+            "botToken": {
+              "description": "Telegram bot token from @BotFather (e.g. 123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11)",
+              "title": "Bot Token",
+              "type": "string"
+            },
+            "mode": {
+              "default": "polling",
+              "description": "Polling works anywhere without a public URL. Webhook requires a public HTTPS endpoint.",
+              "enum": [
+                "polling",
+                "webhook"
+              ],
+              "title": "Connection Mode",
+              "type": "string"
+            }
+          },
+          "required": [
+            "botToken",
+            "mode"
+          ],
+          "title": "Bot Configuration",
+          "type": "object"
+        },
+        "type": {
+          "default": "telegram",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "title": "Telegram Bot",
+      "type": "object"
+    },
+    "ui": {
+      "parameters": {
+        "botToken": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "mode": {
+          "ui:enumNames": [
+            "polling",
+            "webhook"
+          ]
+        },
+        "ui:order": [
+          "botToken",
+          "mode",
+          "webhookUrl"
+        ],
+        "webhookUrl": {}
+      },
+      "type": {
+        "ui:options": {
+          "label": false
+        },
+        "ui:widget": "hidden"
+      },
+      "ui:order": [
+        "type",
+        "parameters"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "Telegram",
+  "protocol": "telegram://",
+  "tile": [
+    "Mode: ${parameters.telegram.mode}"
+  ],
+  "title": "Telegram Bot"
+}

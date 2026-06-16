@@ -1,0 +1,625 @@
+{
+  "actions": 0,
+  "capabilities": 3072,
+  "classType": [
+    "image"
+  ],
+  "description": "A component that connects to locally-hosted open-source vision models through Ollama \nfor image analysis, description, and visual understanding tasks. Supports Llama 3.2 Vision, \nLLaVA, Moondream, MiniCPM-V, and other multimodal models. Runs entirely on-premise with no \nexternal API keys required — ideal for privacy-sensitive applications.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "ollama.svg",
+  "lanes": {
+    "documents": [
+      "documents"
+    ],
+    "image": [
+      "text"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "dependencies": {
+        "profile": {
+          "oneOf": [
+            {
+              "properties": {
+                "custom": {
+                  "object": "custom",
+                  "properties": {
+                    "model": {
+                      "description": "Ollama vision model name",
+                      "title": "Model",
+                      "type": "string"
+                    },
+                    "modelTotalTokens": {
+                      "description": "Total Tokens",
+                      "title": "Tokens",
+                      "type": "number"
+                    },
+                    "prompt": {
+                      "description": "Describe what you want to analyze or extract from the image",
+                      "format": "textarea",
+                      "title": "Analysis Prompt",
+                      "type": "string"
+                    },
+                    "serverbase": {
+                      "default": "http://localhost:11434/v1",
+                      "description": "Base url the model is hosted under.",
+                      "title": "LLM URL",
+                      "type": "string"
+                    },
+                    "systemPrompt": {
+                      "description": "Define the model's role and behavior for image analysis",
+                      "format": "textarea",
+                      "title": "System Instructions",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "model",
+                    "modelTotalTokens",
+                    "serverbase",
+                    "systemPrompt",
+                    "prompt"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "custom"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "llama3_2-vision-11b": {
+                  "object": "llama3_2-vision-11b",
+                  "properties": {
+                    "prompt": {
+                      "description": "Describe what you want to analyze or extract from the image",
+                      "format": "textarea",
+                      "title": "Analysis Prompt",
+                      "type": "string"
+                    },
+                    "serverbase": {
+                      "default": "http://localhost:11434/v1",
+                      "description": "Base url the model is hosted under.",
+                      "title": "LLM URL",
+                      "type": "string"
+                    },
+                    "systemPrompt": {
+                      "description": "Define the model's role and behavior for image analysis",
+                      "format": "textarea",
+                      "title": "System Instructions",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "serverbase",
+                    "systemPrompt",
+                    "prompt"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "llama3_2-vision-11b"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "llama3_2-vision-90b": {
+                  "object": "llama3_2-vision-90b",
+                  "properties": {
+                    "prompt": {
+                      "description": "Describe what you want to analyze or extract from the image",
+                      "format": "textarea",
+                      "title": "Analysis Prompt",
+                      "type": "string"
+                    },
+                    "serverbase": {
+                      "default": "http://localhost:11434/v1",
+                      "description": "Base url the model is hosted under.",
+                      "title": "LLM URL",
+                      "type": "string"
+                    },
+                    "systemPrompt": {
+                      "description": "Define the model's role and behavior for image analysis",
+                      "format": "textarea",
+                      "title": "System Instructions",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "serverbase",
+                    "systemPrompt",
+                    "prompt"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "llama3_2-vision-90b"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "llava-7b": {
+                  "object": "llava-7b",
+                  "properties": {
+                    "prompt": {
+                      "description": "Describe what you want to analyze or extract from the image",
+                      "format": "textarea",
+                      "title": "Analysis Prompt",
+                      "type": "string"
+                    },
+                    "serverbase": {
+                      "default": "http://localhost:11434/v1",
+                      "description": "Base url the model is hosted under.",
+                      "title": "LLM URL",
+                      "type": "string"
+                    },
+                    "systemPrompt": {
+                      "description": "Define the model's role and behavior for image analysis",
+                      "format": "textarea",
+                      "title": "System Instructions",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "serverbase",
+                    "systemPrompt",
+                    "prompt"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "llava-7b"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "llava-13b": {
+                  "object": "llava-13b",
+                  "properties": {
+                    "prompt": {
+                      "description": "Describe what you want to analyze or extract from the image",
+                      "format": "textarea",
+                      "title": "Analysis Prompt",
+                      "type": "string"
+                    },
+                    "serverbase": {
+                      "default": "http://localhost:11434/v1",
+                      "description": "Base url the model is hosted under.",
+                      "title": "LLM URL",
+                      "type": "string"
+                    },
+                    "systemPrompt": {
+                      "description": "Define the model's role and behavior for image analysis",
+                      "format": "textarea",
+                      "title": "System Instructions",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "serverbase",
+                    "systemPrompt",
+                    "prompt"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "llava-13b"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "llava-34b": {
+                  "object": "llava-34b",
+                  "properties": {
+                    "prompt": {
+                      "description": "Describe what you want to analyze or extract from the image",
+                      "format": "textarea",
+                      "title": "Analysis Prompt",
+                      "type": "string"
+                    },
+                    "serverbase": {
+                      "default": "http://localhost:11434/v1",
+                      "description": "Base url the model is hosted under.",
+                      "title": "LLM URL",
+                      "type": "string"
+                    },
+                    "systemPrompt": {
+                      "description": "Define the model's role and behavior for image analysis",
+                      "format": "textarea",
+                      "title": "System Instructions",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "serverbase",
+                    "systemPrompt",
+                    "prompt"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "llava-34b"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "moondream": {
+                  "object": "moondream",
+                  "properties": {
+                    "prompt": {
+                      "description": "Describe what you want to analyze or extract from the image",
+                      "format": "textarea",
+                      "title": "Analysis Prompt",
+                      "type": "string"
+                    },
+                    "serverbase": {
+                      "default": "http://localhost:11434/v1",
+                      "description": "Base url the model is hosted under.",
+                      "title": "LLM URL",
+                      "type": "string"
+                    },
+                    "systemPrompt": {
+                      "description": "Define the model's role and behavior for image analysis",
+                      "format": "textarea",
+                      "title": "System Instructions",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "serverbase",
+                    "systemPrompt",
+                    "prompt"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "moondream"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "minicpm-v": {
+                  "object": "minicpm-v",
+                  "properties": {
+                    "prompt": {
+                      "description": "Describe what you want to analyze or extract from the image",
+                      "format": "textarea",
+                      "title": "Analysis Prompt",
+                      "type": "string"
+                    },
+                    "serverbase": {
+                      "default": "http://localhost:11434/v1",
+                      "description": "Base url the model is hosted under.",
+                      "title": "LLM URL",
+                      "type": "string"
+                    },
+                    "systemPrompt": {
+                      "description": "Define the model's role and behavior for image analysis",
+                      "format": "textarea",
+                      "title": "System Instructions",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "serverbase",
+                    "systemPrompt",
+                    "prompt"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "minicpm-v"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "profile": {
+                  "enum": [
+                    "qwen2_5vl-3b"
+                  ]
+                },
+                "qwen2_5vl-3b": {
+                  "object": "qwen2_5vl-3b",
+                  "properties": {
+                    "prompt": {
+                      "description": "Describe what you want to analyze or extract from the image",
+                      "format": "textarea",
+                      "title": "Analysis Prompt",
+                      "type": "string"
+                    },
+                    "serverbase": {
+                      "default": "http://localhost:11434/v1",
+                      "description": "Base url the model is hosted under.",
+                      "title": "LLM URL",
+                      "type": "string"
+                    },
+                    "systemPrompt": {
+                      "description": "Define the model's role and behavior for image analysis",
+                      "format": "textarea",
+                      "title": "System Instructions",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "serverbase",
+                    "systemPrompt",
+                    "prompt"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "properties": {
+                "profile": {
+                  "enum": [
+                    "qwen2_5vl-7b"
+                  ]
+                },
+                "qwen2_5vl-7b": {
+                  "object": "qwen2_5vl-7b",
+                  "properties": {
+                    "prompt": {
+                      "description": "Describe what you want to analyze or extract from the image",
+                      "format": "textarea",
+                      "title": "Analysis Prompt",
+                      "type": "string"
+                    },
+                    "serverbase": {
+                      "default": "http://localhost:11434/v1",
+                      "description": "Base url the model is hosted under.",
+                      "title": "LLM URL",
+                      "type": "string"
+                    },
+                    "systemPrompt": {
+                      "description": "Define the model's role and behavior for image analysis",
+                      "format": "textarea",
+                      "title": "System Instructions",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "serverbase",
+                    "systemPrompt",
+                    "prompt"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "properties": {
+        "profile": {
+          "default": "llama3_2-vision-11b",
+          "description": "Select the Ollama vision model to use",
+          "enum": [
+            "custom",
+            "llama3_2-vision-11b",
+            "llama3_2-vision-90b",
+            "llava-13b",
+            "llava-34b",
+            "llava-7b",
+            "minicpm-v",
+            "moondream",
+            "qwen2_5vl-3b",
+            "qwen2_5vl-7b"
+          ],
+          "title": "Vision Model",
+          "type": "string"
+        }
+      },
+      "required": [
+        "profile"
+      ],
+      "title": "Ollama Vision",
+      "type": "object"
+    },
+    "ui": {
+      "custom": {
+        "model": {},
+        "modelTotalTokens": {},
+        "prompt": {},
+        "serverbase": {},
+        "systemPrompt": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "model",
+          "modelTotalTokens",
+          "serverbase",
+          "systemPrompt",
+          "prompt"
+        ]
+      },
+      "llama3_2-vision-11b": {
+        "prompt": {},
+        "serverbase": {},
+        "systemPrompt": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "serverbase",
+          "systemPrompt",
+          "prompt"
+        ]
+      },
+      "llama3_2-vision-90b": {
+        "prompt": {},
+        "serverbase": {},
+        "systemPrompt": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "serverbase",
+          "systemPrompt",
+          "prompt"
+        ]
+      },
+      "llava-13b": {
+        "prompt": {},
+        "serverbase": {},
+        "systemPrompt": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "serverbase",
+          "systemPrompt",
+          "prompt"
+        ]
+      },
+      "llava-34b": {
+        "prompt": {},
+        "serverbase": {},
+        "systemPrompt": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "serverbase",
+          "systemPrompt",
+          "prompt"
+        ]
+      },
+      "llava-7b": {
+        "prompt": {},
+        "serverbase": {},
+        "systemPrompt": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "serverbase",
+          "systemPrompt",
+          "prompt"
+        ]
+      },
+      "minicpm-v": {
+        "prompt": {},
+        "serverbase": {},
+        "systemPrompt": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "serverbase",
+          "systemPrompt",
+          "prompt"
+        ]
+      },
+      "moondream": {
+        "prompt": {},
+        "serverbase": {},
+        "systemPrompt": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "serverbase",
+          "systemPrompt",
+          "prompt"
+        ]
+      },
+      "profile": {
+        "ui:enumNames": [
+          "Custom",
+          "Llama 3.2 Vision 11B",
+          "Llama 3.2 Vision 90B",
+          "LLaVA 13B",
+          "LLaVA 34B",
+          "LLaVA 7B",
+          "MiniCPM-V",
+          "Moondream 2",
+          "Qwen 2.5 VL 3B",
+          "Qwen 2.5 VL 7B"
+        ]
+      },
+      "qwen2_5vl-3b": {
+        "prompt": {},
+        "serverbase": {},
+        "systemPrompt": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "serverbase",
+          "systemPrompt",
+          "prompt"
+        ]
+      },
+      "qwen2_5vl-7b": {
+        "prompt": {},
+        "serverbase": {},
+        "systemPrompt": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "serverbase",
+          "systemPrompt",
+          "prompt"
+        ]
+      },
+      "ui:order": [
+        "profile",
+        "custom",
+        "llama3_2-vision-11b",
+        "llama3_2-vision-90b",
+        "llava-7b",
+        "llava-13b",
+        "llava-34b",
+        "moondream",
+        "minicpm-v",
+        "qwen2_5vl-3b",
+        "qwen2_5vl-7b"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "image_vision_ollama",
+  "protocol": "image_vision_ollama://",
+  "tile": [
+    "Model: ${parameters.image_vision_ollama.profile}"
+  ],
+  "title": "Ollama Vision"
+}

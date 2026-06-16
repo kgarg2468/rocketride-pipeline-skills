@@ -1,0 +1,221 @@
+{
+  "actions": 0,
+  "capabilities": 66560,
+  "classType": [
+    "database",
+    "tool"
+  ],
+  "description": "A processing component that connects to an ArangoDB multi-model database. \nAccepts natural-language questions, translates them to read-only AQL queries \nvia an LLM, and returns results to the pipeline. Works across documents, graphs \nand ArangoSearch views — designed for document retrieval, graph traversal, and RAG workflows.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "arango.svg",
+  "invoke": {
+    "llm": {
+      "description": "LLM to use to craft AQL queries from question",
+      "min": 1
+    }
+  },
+  "lanes": {
+    "questions": [
+      "table",
+      "text",
+      "answers"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "dependencies": {
+        "profile": {
+          "oneOf": [
+            {
+              "properties": {
+                "default": {
+                  "dependencies": {
+                    "auth_method": {
+                      "oneOf": [
+                        {
+                          "properties": {
+                            "auth_method": {
+                              "enum": [
+                                "userpass"
+                              ]
+                            },
+                            "password": {
+                              "description": "Password to authenticate with the ArangoDB instance.",
+                              "title": "Password",
+                              "type": "string"
+                            },
+                            "user": {
+                              "default": "root",
+                              "description": "Username to authenticate with ArangoDB. Defaults to 'root'.",
+                              "title": "User",
+                              "type": "string"
+                            }
+                          }
+                        },
+                        {
+                          "properties": {
+                            "auth_method": {
+                              "enum": [
+                                "token"
+                              ]
+                            },
+                            "token": {
+                              "description": "JWT bearer token for token-based authentication (e.g. ArangoGraph cloud).",
+                              "title": "Bearer token",
+                              "type": "string"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "object": "default",
+                  "properties": {
+                    "allow_execute": {
+                      "default": false,
+                      "description": "Permit QuestionType.EXECUTE callers to run raw AQL without LLM translation or safety checks. Leave OFF unless a trusted application explicitly needs to issue AQL directly.",
+                      "title": "Allow direct query execution",
+                      "type": "boolean"
+                    },
+                    "auth_method": {
+                      "default": "userpass",
+                      "enum": [
+                        "userpass",
+                        "token"
+                      ],
+                      "title": "Authentication",
+                      "type": "string"
+                    },
+                    "database": {
+                      "default": "_system",
+                      "description": "Name of the ArangoDB database to query. '_system' is the built-in default — point this at your application database.",
+                      "title": "Database name",
+                      "type": "string"
+                    },
+                    "db_description": {
+                      "default": "",
+                      "description": "What is this database used for? Describe its collections, graphs and domain — this helps the LLM generate more accurate AQL queries.",
+                      "title": "Database description",
+                      "type": "string"
+                    },
+                    "endpoint": {
+                      "default": "http://localhost:8529",
+                      "description": "HTTP(S) endpoint for the ArangoDB server. Use http://host:8529 for self-host/Docker, or https://<id>.arangodb.cloud:8529 for ArangoGraph cloud (TLS).",
+                      "title": "Connection endpoint",
+                      "type": "string"
+                    },
+                    "max_attempts": {
+                      "default": 5,
+                      "description": "Maximum number of times to re-ask the LLM if EXPLAIN rejects the generated AQL query",
+                      "maximum": 20,
+                      "minimum": 1,
+                      "title": "Max validation attempts",
+                      "type": "integer"
+                    },
+                    "max_execute_rows": {
+                      "default": 25000,
+                      "description": "Maximum number of rows returned by a query. Also caps the raw EXECUTE path; a query that exceeds it fails rather than streaming unbounded results.",
+                      "maximum": 1000000,
+                      "minimum": 1,
+                      "title": "Max result rows",
+                      "type": "integer"
+                    }
+                  },
+                  "required": [
+                    "db_description",
+                    "endpoint",
+                    "auth_method",
+                    "database",
+                    "max_attempts",
+                    "max_execute_rows",
+                    "allow_execute"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "default"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "properties": {
+        "profile": {
+          "default": "default",
+          "enum": [
+            "default"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "profile"
+      ],
+      "title": "ArangoDB",
+      "type": "object"
+    },
+    "ui": {
+      "default": {
+        "allow_execute": {},
+        "auth_method": {
+          "ui:enumNames": [
+            "Username & Password",
+            "Bearer / JWT Token"
+          ]
+        },
+        "database": {},
+        "db_description": {
+          "ui:widget": "textarea"
+        },
+        "endpoint": {},
+        "max_attempts": {},
+        "max_execute_rows": {},
+        "password": {
+          "ui:secure": true,
+          "ui:widget": "password"
+        },
+        "token": {
+          "ui:secure": true,
+          "ui:widget": "password"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "db_description",
+          "endpoint",
+          "auth_method",
+          "user",
+          "password",
+          "token",
+          "database",
+          "max_attempts",
+          "max_execute_rows",
+          "allow_execute"
+        ],
+        "user": {}
+      },
+      "profile": {
+        "ui:enumNames": [
+          "Default"
+        ],
+        "ui:options": {
+          "label": false
+        },
+        "ui:widget": "hidden"
+      },
+      "ui:order": [
+        "profile",
+        "default"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "arango",
+  "protocol": "db_arango://",
+  "title": "ArangoDB"
+}

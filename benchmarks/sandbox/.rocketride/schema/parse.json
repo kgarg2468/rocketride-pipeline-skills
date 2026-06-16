@@ -1,0 +1,30 @@
+{
+  "actions": 0,
+  "capabilities": 2048,
+  "classType": [
+    "data"
+  ],
+  "description": "A document parsing component that extracts rich content from a wide variety \nof document types. It automatically identifies and processes embedded content, \nproducing structured outputs including plain text, tables, images, audio, and \nvideo. This enables comprehensive analysis of complex documents and media files \nby making their contents accessible for downstream processing in the pipeline.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "parse.svg",
+  "lanes": {
+    "tags": [
+      "text",
+      "table",
+      "image",
+      "video",
+      "audio"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "title": "Parse",
+      "type": "object"
+    },
+    "ui": {}
+  },
+  "plans": null,
+  "prefix": "Parse",
+  "protocol": "parse://",
+  "title": "Parser"
+}

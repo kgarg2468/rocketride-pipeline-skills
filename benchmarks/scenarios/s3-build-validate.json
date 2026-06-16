@@ -1,0 +1,27 @@
+{
+  "id": "s3-build-validate",
+  "tier": 2,
+  "turns": [
+    "build me a chatbot that answers questions from my uploaded PDFs",
+    "go with your recommendation",
+    "wire it up",
+    "now configure every node and validate the pipeline"
+  ],
+  "expect": ["", "", "", ""],
+  "why": "Configure + validate phase: per-node schema fetch, the anti-pattern checklist as a gate, then validate(). Must not claim valid without actually validating.",
+  "ground_truth": {
+    "required_nodes": {
+      "source": ["chat", "webhook"],
+      "embedding": ["embedding_transformer", "embedding"],
+      "store": ["qdrant", "chroma", "store"],
+      "llm": ["llm_openai", "llm"],
+      "response": ["response_answers", "response"]
+    }
+  },
+  "rubric": [
+    "fetches each node's schema before configuring it",
+    "runs the 9-point checklist per node",
+    "calls validate() (validate-pipeline.py or the tool)",
+    "uses ${ROCKETRIDE_*} env refs, never literal keys"
+  ]
+}

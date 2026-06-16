@@ -1,0 +1,279 @@
+{
+  "actions": 0,
+  "capabilities": 2048,
+  "classType": [
+    "store"
+  ],
+  "description": "An OpenSearch node that supports classic BM25 search and vector search \nfor ingestion and retrieval workflows. Works with self-managed OpenSearch.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "opensearch.svg",
+  "lanes": {
+    "documents": [],
+    "questions": [
+      "text",
+      "answers",
+      "documents"
+    ],
+    "text": []
+  },
+  "Pipe": {
+    "schema": {
+      "dependencies": {
+        "enabled": {
+          "oneOf": [
+            {
+              "properties": {
+                "enabled": {
+                  "enum": [
+                    true
+                  ]
+                },
+                "password": {
+                  "default": "",
+                  "title": "Password",
+                  "type": "string"
+                },
+                "username": {
+                  "default": "admin",
+                  "title": "Username",
+                  "type": "string"
+                }
+              }
+            }
+          ]
+        },
+        "highlight": {
+          "oneOf": [
+            {
+              "properties": {
+                "fragment_size": {
+                  "default": 250,
+                  "description": "Maximum characters in the returned highlight snippet (context window) per hit.",
+                  "title": "Snippet size (characters)",
+                  "type": "number"
+                },
+                "highlight": {
+                  "enum": [
+                    true
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "matchOperator": {
+          "oneOf": [
+            {
+              "properties": {
+                "matchOperator": {
+                  "enum": [
+                    "exact"
+                  ]
+                },
+                "slop": {
+                  "default": 0,
+                  "description": "The number of words to allow between terms when exact phrase search is enabled.",
+                  "title": "Slop",
+                  "type": "number"
+                }
+              }
+            },
+            {
+              "properties": {
+                "matchOperator": {
+                  "enum": [
+                    "and",
+                    "or"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "mode": {
+          "oneOf": [
+            {
+              "properties": {
+                "index_label": {
+                  "title": "Index Mode",
+                  "type": "object"
+                },
+                "mode": {
+                  "enum": [
+                    false
+                  ]
+                },
+                "search": {
+                  "default": false,
+                  "description": "Customize the search behavior of the index. This option does not affect the ingestion and creation of the index. You can switch between behaviors when searching between pipeline runs.",
+                  "title": "Customize Indexing Search Behavior",
+                  "type": "boolean"
+                }
+              }
+            },
+            {
+              "properties": {
+                "dim": {
+                  "default": 768,
+                  "description": "Required in vector store mode; dimension of embedding vectors.",
+                  "minimum": 1,
+                  "title": "Embedding Dimension",
+                  "type": "integer"
+                },
+                "mode": {
+                  "enum": [
+                    true
+                  ]
+                },
+                "score": {
+                  "default": 0.5,
+                  "description": "Minimum retrieval score for vector stores",
+                  "enum": [
+                    0,
+                    0.4,
+                    0.6,
+                    0.7,
+                    0.8,
+                    0.9,
+                    1
+                  ],
+                  "maximum": 1,
+                  "minimum": 0,
+                  "title": "Retrieval Score",
+                  "type": "number"
+                },
+                "vstore_label": {
+                  "title": "Vector Store Mode",
+                  "type": "object"
+                }
+              }
+            }
+          ]
+        },
+        "search": {
+          "oneOf": [
+            {
+              "properties": {
+                "highlight": {
+                  "default": false,
+                  "description": "Use the unified highlighter to return snippets around matches.",
+                  "title": "Return contextual snippets",
+                  "type": "boolean"
+                },
+                "matchOperator": {
+                  "default": "or",
+                  "description": "Controls how multiple query terms are matched: \n'or' (default) matches documents containing ANY of the query terms, \n'and' matches documents containing ALL of the query terms, \n'exact' requires the exact phrase to appear in order (phrase matching).",
+                  "enum": [
+                    "and",
+                    "or",
+                    "exact"
+                  ],
+                  "title": "Match Operator",
+                  "type": "string"
+                },
+                "search": {
+                  "enum": [
+                    true
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "properties": {
+        "collection": {
+          "default": "rocketride",
+          "description": "The name of the collection to use for the OpenSearch index. Only lowercase letters, numbers, and underscores are allowed.",
+          "title": "Collection",
+          "type": "string"
+        },
+        "enabled": {
+          "default": true,
+          "description": "Enable basic authentication when connecting.",
+          "title": "Use basic auth",
+          "type": "boolean"
+        },
+        "host": {
+          "default": "http://localhost:9200",
+          "description": "Localhost URL for OpenSearch.",
+          "title": "Host",
+          "type": "string"
+        },
+        "mode": {
+          "default": false,
+          "description": "Toggle between index and vector store.",
+          "title": "Store Mode",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "host",
+        "collection",
+        "enabled",
+        "mode"
+      ],
+      "title": "OpenSearch Index/Vector",
+      "type": "object"
+    },
+    "ui": {
+      "collection": {},
+      "dim": {},
+      "enabled": {},
+      "fragment_size": {},
+      "highlight": {},
+      "host": {},
+      "index_label": {},
+      "matchOperator": {
+        "ui:enumNames": [
+          "and",
+          "or",
+          "exact"
+        ]
+      },
+      "mode": {},
+      "password": {
+        "ui:widget": "ApiKeyWidget"
+      },
+      "score": {
+        "ui:enumNames": [
+          "All results",
+          "Likely not related",
+          "Possibly related",
+          "Related",
+          "Strongly related",
+          "Highly relevant",
+          "Almost identical"
+        ]
+      },
+      "search": {},
+      "slop": {},
+      "ui:order": [
+        "host",
+        "collection",
+        "enabled",
+        "username",
+        "password",
+        "mode",
+        "index_label",
+        "search",
+        "fragment_size",
+        "matchOperator",
+        "slop",
+        "highlight",
+        "vstore_label",
+        "dim",
+        "score"
+      ],
+      "username": {},
+      "vstore_label": {}
+    }
+  },
+  "plans": null,
+  "prefix": "OpenSearch Index",
+  "protocol": "opensearch://",
+  "tile": [
+    "Host: ${parameters.opensearch.host}"
+  ],
+  "title": "OpenSearch"
+}

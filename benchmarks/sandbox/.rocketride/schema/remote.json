@@ -1,0 +1,205 @@
+{
+  "actions": 0,
+  "capabilities": 10240,
+  "classType": [
+    "infrastructure"
+  ],
+  "description": "A transport component that forwards data to a remote machine or \nprocessing node. It enables distributed pipeline architectures by \noffloading computation or specialized tasks to external systems. Configurable \nwith network endpoints, authentication, and serialization settings, \nit supports scalable and modular deployment across environments.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "remote.svg",
+  "lanes": {},
+  "Pipe": {
+    "schema": {
+      "properties": {
+        "remote": {
+          "object": "remote",
+          "properties": {
+            "provider": {
+              "const": "remote",
+              "default": "remote",
+              "type": "string"
+            },
+            "remote": {
+              "dependencies": {
+                "profile": {
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "profile": {
+                          "enum": [
+                            "remote"
+                          ]
+                        },
+                        "remote": {
+                          "object": "remote",
+                          "properties": {
+                            "apikey": {
+                              "description": "Enter your API key",
+                              "title": "API key",
+                              "type": "string"
+                            },
+                            "host": {
+                              "default": "pipe.rocketride.ai",
+                              "maxLength": 32,
+                              "minLength": 2,
+                              "title": "Host",
+                              "type": "string"
+                            },
+                            "mode": {
+                              "const": "remote",
+                              "default": "remote",
+                              "type": "string"
+                            },
+                            "port": {
+                              "default": 5565,
+                              "minimum": 0,
+                              "title": "Port",
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "mode",
+                            "host",
+                            "port",
+                            "apikey"
+                          ],
+                          "type": "object"
+                        }
+                      }
+                    },
+                    {
+                      "properties": {
+                        "local": {
+                          "object": "local",
+                          "properties": {
+                            "mode": {
+                              "const": "local",
+                              "default": "local",
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "mode"
+                          ],
+                          "type": "object"
+                        },
+                        "profile": {
+                          "enum": [
+                            "local"
+                          ]
+                        }
+                      }
+                    }
+                  ]
+                }
+              },
+              "object": "remote",
+              "properties": {
+                "profile": {
+                  "default": "local",
+                  "enum": [
+                    "local",
+                    "remote"
+                  ],
+                  "title": "Processing Mode",
+                  "type": "string"
+                }
+              },
+              "required": [
+                "profile"
+              ],
+              "type": "object"
+            }
+          },
+          "required": [
+            "provider"
+          ],
+          "title": "Remote/Local Processing",
+          "type": "object"
+        }
+      },
+      "title": "Remote",
+      "type": "object"
+    },
+    "ui": {
+      "remote": {
+        "provider": {
+          "ui:options": {
+            "label": false
+          },
+          "ui:widget": "hidden"
+        },
+        "remote": {
+          "local": {
+            "mode": {
+              "ui:options": {
+                "label": false
+              },
+              "ui:widget": "hidden"
+            },
+            "ui:options": {
+              "label": false,
+              "nonNestedDisplay": true
+            },
+            "ui:order": [
+              "mode"
+            ]
+          },
+          "profile": {
+            "ui:enumNames": [
+              "Process everything locally",
+              "Process CPU/GPU heavy tasks remotely"
+            ]
+          },
+          "remote": {
+            "apikey": {
+              "ui:secure": true,
+              "ui:widget": "ApiKeyWidget"
+            },
+            "host": {},
+            "mode": {
+              "ui:options": {
+                "label": false
+              },
+              "ui:widget": "hidden"
+            },
+            "port": {},
+            "ui:options": {
+              "label": false,
+              "nonNestedDisplay": true
+            },
+            "ui:order": [
+              "mode",
+              "host",
+              "port",
+              "apikey"
+            ]
+          },
+          "ui:options": {
+            "label": false,
+            "nonNestedDisplay": true
+          },
+          "ui:order": [
+            "profile",
+            "remote",
+            "local"
+          ]
+        },
+        "ui:options": {
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "provider",
+          "remote"
+        ]
+      },
+      "ui:order": [
+        "remote"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "Remote",
+  "protocol": "remote://",
+  "title": "Remote Processing"
+}

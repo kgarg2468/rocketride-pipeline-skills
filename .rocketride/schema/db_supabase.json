@@ -1,0 +1,172 @@
+{
+  "actions": 0,
+  "capabilities": 1024,
+  "classType": [
+    "database",
+    "tool"
+  ],
+  "description": "A processing component that takes structured table data and inserts it \ninto a Supabase (PostgreSQL) database. Designed for straightforward data ingestion, it \nsupports field mapping and basic configuration of connection credentials \nand target tables. Use the Supavisor pooler from your Supabase dashboard (works over IPv4); \nthe direct connection is IPv6-only. The connection is encrypted over TLS.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "supabase.svg",
+  "invoke": {
+    "llm": {
+      "description": "LLM to use to craft SQL queries from question",
+      "min": 1
+    }
+  },
+  "lanes": {
+    "answers": [],
+    "questions": [
+      "table",
+      "text",
+      "answers"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "dependencies": {
+        "profile": {
+          "oneOf": [
+            {
+              "properties": {
+                "default": {
+                  "object": "default",
+                  "properties": {
+                    "allow_execute": {
+                      "default": false,
+                      "description": "Permit QuestionType.EXECUTE callers to run raw SQL without LLM translation or safety checks. Leave OFF unless a trusted application explicitly needs to issue SQL directly.",
+                      "title": "Allow direct query execution",
+                      "type": "boolean"
+                    },
+                    "database": {
+                      "default": "postgres",
+                      "description": "Name of database (Supabase default is 'postgres')",
+                      "maxLength": 63,
+                      "minLength": 2,
+                      "title": "Database name",
+                      "type": "string"
+                    },
+                    "db_description": {
+                      "default": "",
+                      "description": "What is this database used for? Describe its content and purpose — this helps the LLM generate more accurate queries.",
+                      "title": "Database description",
+                      "type": "string"
+                    },
+                    "host": {
+                      "description": "From the Supabase dashboard (Connect button), including the port. Recommended: the Supavisor pooler (works over IPv4) -> aws-0-<region>.pooler.supabase.com:6543 (transaction) or :5432 (session). The Direct connection (db.<project-ref>.supabase.co:5432) is IPv6-only and will fail to resolve on networks without IPv6.",
+                      "title": "Supabase host",
+                      "type": "string"
+                    },
+                    "max_attempts": {
+                      "default": 5,
+                      "description": "Maximum number of times to re-ask the LLM if EXPLAIN rejects the generated SQL",
+                      "maximum": 20,
+                      "minimum": 1,
+                      "title": "Max validation attempts",
+                      "type": "integer"
+                    },
+                    "password": {
+                      "description": "Database password from your Supabase project (Project Settings -> Database)",
+                      "title": "Password",
+                      "type": "string"
+                    },
+                    "table": {
+                      "default": "table",
+                      "description": "Name of table",
+                      "title": "Table name",
+                      "type": "string"
+                    },
+                    "user": {
+                      "default": "postgres",
+                      "description": "Database user. For the pooler (recommended) it MUST include your project ref: postgres.<project-ref> — without the .<project-ref> suffix the pooler returns 'no tenant identifier'. For the direct connection it is just: postgres",
+                      "title": "User",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "db_description",
+                    "host",
+                    "user",
+                    "password",
+                    "database",
+                    "table",
+                    "max_attempts",
+                    "allow_execute"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "default"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "properties": {
+        "profile": {
+          "default": "default",
+          "enum": [
+            "default"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "profile"
+      ],
+      "title": "Supabase",
+      "type": "object"
+    },
+    "ui": {
+      "default": {
+        "allow_execute": {},
+        "database": {},
+        "db_description": {
+          "ui:widget": "textarea"
+        },
+        "host": {},
+        "max_attempts": {},
+        "password": {
+          "ui:secure": true,
+          "ui:widget": "password"
+        },
+        "table": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "db_description",
+          "host",
+          "user",
+          "password",
+          "database",
+          "table",
+          "max_attempts",
+          "allow_execute"
+        ],
+        "user": {}
+      },
+      "profile": {
+        "ui:enumNames": [
+          "Default"
+        ],
+        "ui:options": {
+          "label": false
+        },
+        "ui:widget": "hidden"
+      },
+      "ui:order": [
+        "profile",
+        "default"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "supabase",
+  "protocol": "db_supabase://",
+  "title": "Supabase"
+}

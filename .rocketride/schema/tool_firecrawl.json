@@ -1,0 +1,54 @@
+{
+  "actions": 0,
+  "capabilities": 3072,
+  "classType": [
+    "tool"
+  ],
+  "description": "Exposes Firecrawl web-scraping operations as agent tools.\nProvides scrape_url (single page) and map_url (site structure discovery).",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "firecrawl.svg",
+  "lanes": {},
+  "Pipe": {
+    "schema": {
+      "properties": {
+        "apikey": {
+          "default": "",
+          "description": "Firecrawl API key",
+          "title": "API Key",
+          "type": "string"
+        },
+        "type": {
+          "default": "tool_firecrawl",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "apikey"
+      ],
+      "title": "Firecrawl",
+      "type": "object"
+    },
+    "ui": {
+      "apikey": {
+        "ui:secure": true,
+        "ui:widget": "ApiKeyWidget"
+      },
+      "type": {
+        "ui:options": {
+          "label": false
+        },
+        "ui:widget": "hidden"
+      },
+      "ui:order": [
+        "type",
+        "apikey"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "firecrawl",
+  "protocol": "tool_firecrawl://",
+  "tile": [],
+  "title": "Firecrawl"
+}

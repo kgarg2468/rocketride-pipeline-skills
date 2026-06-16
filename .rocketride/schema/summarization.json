@@ -1,0 +1,119 @@
+{
+  "actions": 0,
+  "capabilities": 2048,
+  "classType": [
+    "text"
+  ],
+  "description": "A processing component that analyzes document content to extract concise \nsummaries, key points, and named entities. Designed to enhance understanding \nand downstream utility, it supports unstructured text and delivers structured \ninsights for indexing, search, or display. Ideal for distilling key information \nfrom large volumes of content.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "summaries.svg",
+  "invoke": {
+    "llm": {
+      "description": "LLM to use to summarize the document",
+      "min": 1
+    }
+  },
+  "lanes": {
+    "text": [
+      "text",
+      "documents"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "dependencies": {
+        "profile": {
+          "oneOf": [
+            {
+              "properties": {
+                "default": {
+                  "object": "default",
+                  "properties": {
+                    "numberOfEntities": {
+                      "title": "Number of entities to extract from the document. Set to 0 to disable entity extraction.",
+                      "type": "number"
+                    },
+                    "numberOfKeyPointWords": {
+                      "title": "Number of words in each key point. Set to 0 to disable key points.",
+                      "type": "number"
+                    },
+                    "numberOfSummaries": {
+                      "title": "Number of chunks to summarize after the document is split",
+                      "type": "number"
+                    },
+                    "numberOfSummaryWords": {
+                      "title": "Number of words in each summary. Set to 0 to disable summaries.",
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "numberOfSummaries",
+                    "numberOfSummaryWords",
+                    "numberOfKeyPointWords",
+                    "numberOfEntities"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "default"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "properties": {
+        "profile": {
+          "default": "default",
+          "enum": [
+            "default"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "profile"
+      ],
+      "title": "Summarization",
+      "type": "object"
+    },
+    "ui": {
+      "default": {
+        "numberOfEntities": {},
+        "numberOfKeyPointWords": {},
+        "numberOfSummaries": {},
+        "numberOfSummaryWords": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "numberOfSummaries",
+          "numberOfSummaryWords",
+          "numberOfKeyPointWords",
+          "numberOfEntities"
+        ]
+      },
+      "profile": {
+        "ui:enumNames": [
+          "Default"
+        ],
+        "ui:options": {
+          "label": false
+        },
+        "ui:widget": "hidden"
+      },
+      "ui:order": [
+        "profile",
+        "default"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "Summarization",
+  "protocol": "summarization://",
+  "tile": [],
+  "title": "Summarization: LLM"
+}

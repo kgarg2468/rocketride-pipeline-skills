@@ -1,0 +1,287 @@
+{
+  "actions": 0,
+  "capabilities": 6144,
+  "classType": [
+    "data"
+  ],
+  "description": "A document parsing component that uses LlamaParse to extract text and structured data \nfrom various document formats including PDFs, images, Word documents, Excel spreadsheets, \nand other formats. It provides high-quality text extraction with support for tables, \nlayout preservation, and markdown output formatting.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "llamaindex_icon.svg",
+  "lanes": {
+    "tags": [
+      "text",
+      "table"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "properties": {
+        "default": {
+          "dependencies": {
+            "parse_mode": {
+              "oneOf": [
+                {
+                  "properties": {
+                    "lvm_model": {
+                      "default": "anthropic-sonnet-4.0",
+                      "description": "The LVM model to use for parsing when LVM or agentic modes are selected.",
+                      "enum": [
+                        "anthropic-sonnet-4.0",
+                        "anthropic-sonnet-3.5",
+                        "gpt-4o",
+                        "gpt-4o-mini"
+                      ],
+                      "title": "LVM Model",
+                      "type": "string"
+                    },
+                    "parse_mode": {
+                      "enum": [
+                        "parse_page_with_lvm"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "properties": {
+                    "lvm_model": {
+                      "default": "anthropic-sonnet-4.0",
+                      "description": "The LVM model to use for parsing when LVM or agentic modes are selected.",
+                      "enum": [
+                        "anthropic-sonnet-4.0",
+                        "anthropic-sonnet-3.5",
+                        "gpt-4o",
+                        "gpt-4o-mini"
+                      ],
+                      "title": "LVM Model",
+                      "type": "string"
+                    },
+                    "parse_mode": {
+                      "enum": [
+                        "agentic"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "properties": {
+                    "lvm_model": {
+                      "default": "anthropic-sonnet-4.0",
+                      "description": "The LVM model to use for parsing when LVM or agentic modes are selected.",
+                      "enum": [
+                        "anthropic-sonnet-4.0",
+                        "anthropic-sonnet-3.5",
+                        "gpt-4o",
+                        "gpt-4o-mini"
+                      ],
+                      "title": "LVM Model",
+                      "type": "string"
+                    },
+                    "parse_mode": {
+                      "enum": [
+                        "agentic_plus"
+                      ]
+                    }
+                  }
+                },
+                {
+                  "properties": {
+                    "parse_mode": {
+                      "enum": [
+                        "cost_effective (LLM)"
+                      ]
+                    }
+                  }
+                }
+              ]
+            },
+            "use_advanced_config": {
+              "oneOf": [
+                {
+                  "properties": {
+                    "advanced_config": {
+                      "default": "{\n  \"parse_mode\": \"parse_page_with_llm\",\n  \"spreadsheet_extract_sub_tables\": false,\n  \"system_prompt_append\": \"\",\n  \"lvm_model\": \"anthropic-sonnet-4.0\"\n}",
+                      "description": "Enter configuration options in JSON format. For more information, see: <a href='https://docs.cloud.llamaindex.ai/llamaparse/presets_and_modes/advance_parsing_modes' target='_blank'>LlamaParse Documentation</a>",
+                      "format": "textarea",
+                      "title": "Advanced Configuration (JSON)",
+                      "type": "string"
+                    },
+                    "use_advanced_config": {
+                      "enum": [
+                        true
+                      ]
+                    }
+                  }
+                },
+                {
+                  "properties": {
+                    "parse_mode": {
+                      "default": "parse_page_with_lvm",
+                      "description": "The parse mode to use for chosing complexity of the parse",
+                      "enum": [
+                        "cost_effective (LLM)",
+                        "agentic",
+                        "agentic_plus",
+                        "parse_page_with_lvm"
+                      ],
+                      "title": "Parse Mode",
+                      "type": "string"
+                    },
+                    "spreadsheet_extract_sub_tables": {
+                      "default": false,
+                      "description": "Extract sub-tables from spreadsheets for better table parsing.",
+                      "enum": [
+                        true,
+                        false
+                      ],
+                      "title": "Extract Sub Tables",
+                      "type": "boolean"
+                    },
+                    "use_advanced_config": {
+                      "enum": [
+                        false
+                      ]
+                    },
+                    "use_system_prompt_append": {
+                      "default": false,
+                      "description": "Check to add custom instructions to the system prompt for LlamaParse.",
+                      "enum": [
+                        true,
+                        false
+                      ],
+                      "title": "Use Additional Instructions",
+                      "type": "boolean"
+                    }
+                  }
+                }
+              ]
+            },
+            "use_system_prompt_append": {
+              "oneOf": [
+                {
+                  "properties": {
+                    "system_prompt_append": {
+                      "description": "Additional instructions to append to the system prompt for LlamaParse.",
+                      "format": "textarea",
+                      "title": "Additional Instructions",
+                      "type": "string"
+                    },
+                    "use_system_prompt_append": {
+                      "enum": [
+                        true
+                      ]
+                    }
+                  }
+                },
+                {
+                  "properties": {
+                    "use_system_prompt_append": {
+                      "enum": [
+                        false
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "object": "default",
+          "properties": {
+            "api_key": {
+              "description": "Your LlamaIndex API key for LlamaParse service",
+              "title": "API Key",
+              "type": "string"
+            },
+            "use_advanced_config": {
+              "default": false,
+              "description": "Check to use advanced JSON configuration instead of simple options.",
+              "enum": [
+                true,
+                false
+              ],
+              "title": "Advanced Configuration",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "api_key",
+            "use_advanced_config"
+          ],
+          "type": "object"
+        }
+      },
+      "title": "LlamaParse",
+      "type": "object"
+    },
+    "ui": {
+      "default": {
+        "advanced_config": {
+          "ui:options": {
+            "rows": 10
+          },
+          "ui:widget": "textarea"
+        },
+        "api_key": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "lvm_model": {
+          "ui:enumNames": [
+            "Anthropic Sonnet 4.0",
+            "Anthropic Sonnet 3.5",
+            "GPT-4o",
+            "GPT-4o Mini"
+          ]
+        },
+        "parse_mode": {
+          "ui:enumNames": [
+            "Cost-effective - Text-heavy documents",
+            "Agentic - Documents with diagrams and images",
+            "Agentic Plus - Complex layouts and multi-page tables",
+            "Parse with LVM (Legacy)"
+          ]
+        },
+        "spreadsheet_extract_sub_tables": {
+          "ui:enumNames": [
+            "Yes",
+            "No"
+          ]
+        },
+        "system_prompt_append": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "api_key",
+          "use_advanced_config",
+          "advanced_config",
+          "parse_mode",
+          "lvm_model",
+          "use_system_prompt_append",
+          "system_prompt_append",
+          "spreadsheet_extract_sub_tables"
+        ],
+        "use_advanced_config": {
+          "ui:enumNames": [
+            "Yes",
+            "No"
+          ]
+        },
+        "use_system_prompt_append": {
+          "ui:enumNames": [
+            "Yes",
+            "No"
+          ]
+        }
+      },
+      "ui:order": [
+        "default"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "llamaparse",
+  "protocol": "llamaparse://",
+  "tile": [],
+  "title": "LlamaParse"
+}

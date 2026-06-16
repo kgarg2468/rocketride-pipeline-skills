@@ -1,0 +1,144 @@
+{
+  "actions": 0,
+  "capabilities": 3072,
+  "classType": [
+    "search"
+  ],
+  "description": "A direct Exa web search node.\nAccepts user questions and returns Exa's raw search JSON as the answer.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "exa.svg",
+  "lanes": {
+    "questions": [
+      "answers",
+      "text"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "dependencies": {
+        "profile": {
+          "oneOf": [
+            {
+              "properties": {
+                "default": {
+                  "object": "default",
+                  "properties": {
+                    "highlightChars": {
+                      "default": 600,
+                      "maximum": 4000,
+                      "minimum": 100,
+                      "title": "Highlight Chars",
+                      "type": "integer"
+                    },
+                    "includeHighlights": {
+                      "default": true,
+                      "title": "Include Highlights",
+                      "type": "boolean"
+                    },
+                    "numResults": {
+                      "default": 5,
+                      "maximum": 20,
+                      "minimum": 1,
+                      "title": "Results",
+                      "type": "integer"
+                    },
+                    "type": {
+                      "default": "auto",
+                      "enum": [
+                        "auto",
+                        "keyword",
+                        "neural"
+                      ],
+                      "title": "Search Type",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "type",
+                    "numResults",
+                    "includeHighlights",
+                    "highlightChars"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "default"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "properties": {
+        "apikey": {
+          "default": "",
+          "description": "Exa API key",
+          "title": "API Key",
+          "type": "string"
+        },
+        "profile": {
+          "default": "default",
+          "enum": [
+            "default"
+          ],
+          "title": "Profile",
+          "type": "string"
+        }
+      },
+      "required": [
+        "apikey",
+        "profile"
+      ],
+      "title": "Exa Search",
+      "type": "object"
+    },
+    "ui": {
+      "apikey": {
+        "ui:secure": true,
+        "ui:widget": "ApiKeyWidget"
+      },
+      "default": {
+        "highlightChars": {},
+        "includeHighlights": {},
+        "numResults": {},
+        "type": {
+          "ui:enumNames": [
+            "Auto",
+            "Keyword",
+            "Neural"
+          ]
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "type",
+          "numResults",
+          "includeHighlights",
+          "highlightChars"
+        ]
+      },
+      "profile": {
+        "ui:enumNames": [
+          "Default"
+        ]
+      },
+      "ui:order": [
+        "apikey",
+        "profile",
+        "default"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "search",
+  "protocol": "search_exa://",
+  "tile": [
+    "Type: ${parameters.search_exa.type}",
+    "Results: ${parameters.search_exa.numResults}"
+  ],
+  "title": "Exa Search"
+}

@@ -1,0 +1,125 @@
+{
+  "actions": 0,
+  "capabilities": 8200,
+  "classType": [
+    "target"
+  ],
+  "description": "A target component that writes data to the file system. It supports \noutputting structured or unstructured content to files in a variety \nof formats such as JSON, CSV, or plain text. Configurable with output \npaths and naming conventions, the component enables flexible persistence \nof processed data to networked storage.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "text-output.svg",
+  "lanes": {
+    "text": []
+  },
+  "plans": null,
+  "prefix": "Text Output",
+  "protocol": "text-output://",
+  "title": "Text Output",
+  "Transform": {
+    "schema": {
+      "properties": {
+        "mode": {
+          "default": "Target",
+          "type": "string"
+        },
+        "parameters": {
+          "dependencies": {
+            "anonymize": {
+              "oneOf": [
+                {
+                  "properties": {
+                    "anonymize": {
+                      "enum": [
+                        true
+                      ]
+                    },
+                    "anonymizeAll": {
+                      "default": false,
+                      "description": "Enable it if you want to collapse to the fixed length any sensitive data in the text.\n\nFor example, if you enable it, then the text \"SSN: 064 70 6733\" will become \"SSN: ***\". If you disable it, the text will remain \"SSN: ***********\".",
+                      "title": "Anonymize All Data",
+                      "type": "boolean"
+                    },
+                    "anonymizeChar": {
+                      "default": "█",
+                      "description": "Specify a character that will mask any sensitive data in the text.\n\nFor example, if you specify the characher \"*\", then the text \"SSN: 064 70 6733\" will become \"SSN: ***********\". If you specify the character \"?\" the text will become \"SSN: ???????????\".",
+                      "maxLength": 1,
+                      "minLength": 1,
+                      "title": "Anonymization Character",
+                      "type": "string"
+                    }
+                  }
+                },
+                {
+                  "properties": {
+                    "anonymize": {
+                      "enum": [
+                        false
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "object": "parameters",
+          "properties": {
+            "anonymize": {
+              "default": false,
+              "description": "Enable it if you want to mask any sensitive data in the text. If you leave it disabled, the text will be output as it is.\n\nFor example, if you enable it, then the text \"SSN: 064 70 6733\" will become \"SSN: ***********\". If you disable it, the text will remain \"SSN: 064 70 6733\".",
+              "title": "Anonymize Classified Information",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "anonymize"
+          ],
+          "type": "object"
+        },
+        "type": {
+          "default": "text-output",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "mode"
+      ],
+      "title": "Text Output",
+      "type": "object"
+    },
+    "ui": {
+      "mode": {
+        "ui:options": {
+          "label": false
+        },
+        "ui:widget": "hidden"
+      },
+      "parameters": {
+        "anonymize": {
+          "ui:widget": "hidden"
+        },
+        "anonymizeAll": {},
+        "anonymizeChar": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "anonymize",
+          "anonymizeChar",
+          "anonymizeAll"
+        ]
+      },
+      "type": {
+        "ui:options": {
+          "label": false
+        },
+        "ui:widget": "hidden"
+      },
+      "ui:order": [
+        "type",
+        "parameters",
+        "mode"
+      ]
+    }
+  }
+}

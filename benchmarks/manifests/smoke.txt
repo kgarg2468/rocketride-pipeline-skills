@@ -1,0 +1,4 @@
+# Cheapest meaningful smoke: one GREEN + one RED on the node-selection scenario, Haiku.
+# Run with:  ./lane.sh smoke manifests/smoke.txt    (~2 runs, a few cents on Haiku)
+s1-rag-selection.json  a
+s1-rag-selection.json  a  red

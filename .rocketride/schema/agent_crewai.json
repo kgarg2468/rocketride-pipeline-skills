@@ -1,0 +1,176 @@
+{
+  "actions": 0,
+  "capabilities": 3072,
+  "classType": [
+    "agent",
+    "tool"
+  ],
+  "description": "Standalone single-agent CrewAI node.\nCan be invoked as a tool (`<nodeId>.run_agent`) by other agents.\nFor multi-agent delegation, use a CrewAI Manager + CrewAI Subagent nodes.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "crewai.svg",
+  "invoke": {
+    "llm": {
+      "description": "LLM used by the agent",
+      "min": 1
+    },
+    "tool": {
+      "description": "Tools available to the agent (via control-plane invoke)",
+      "min": 0
+    }
+  },
+  "lanes": {
+    "questions": [
+      "answers"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "properties": {
+        "default": {
+          "dependencies": {
+            "advanced_mode": {
+              "oneOf": [
+                {
+                  "properties": {
+                    "advanced_mode": {
+                      "enum": [
+                        true
+                      ]
+                    },
+                    "agent_config_header": {
+                      "default": null,
+                      "title": "Agent Config",
+                      "type": "null"
+                    },
+                    "backstory": {
+                      "description": "Background context for this agent's persona. Maps to CrewAI Agent(backstory=...).",
+                      "format": "textarea",
+                      "title": "Backstory",
+                      "type": "string"
+                    },
+                    "expected_output": {
+                      "description": "Description of the expected output format. Maps to CrewAI Task(expected_output=...).",
+                      "format": "textarea",
+                      "title": "Expected Output",
+                      "type": "string"
+                    },
+                    "goal": {
+                      "description": "What this agent is trying to achieve. Maps to CrewAI Agent(goal=...).",
+                      "format": "textarea",
+                      "title": "Goal",
+                      "type": "string"
+                    },
+                    "role": {
+                      "description": "Agent role name (e.g. 'Financial Analyst'). Maps to CrewAI Agent(role=...).",
+                      "title": "Role",
+                      "type": "string"
+                    },
+                    "task_config_header": {
+                      "default": null,
+                      "title": "Task Config",
+                      "type": "null"
+                    },
+                    "task_description": {
+                      "description": "What this agent should do. If blank, the incoming question is used. Maps to CrewAI Task(description=...).",
+                      "format": "textarea",
+                      "title": "Task",
+                      "type": "string"
+                    }
+                  }
+                },
+                {
+                  "properties": {
+                    "advanced_mode": {
+                      "enum": [
+                        false
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "object": "default",
+          "properties": {
+            "advanced_mode": {
+              "default": false,
+              "description": "Expose CrewAI Agent and Task configuration directly.",
+              "enum": [
+                false,
+                true
+              ],
+              "title": "Advanced Mode",
+              "type": "boolean"
+            },
+            "agent_description": {
+              "default": "",
+              "description": "What does this agent do? Describe its purpose and capabilities — this helps parent agents select and invoke it correctly.",
+              "title": "Agent description",
+              "type": "string"
+            },
+            "instructions": {
+              "description": "Additional instructions to guide the agent.",
+              "items": {
+                "format": "textarea",
+                "type": "string"
+              },
+              "title": "Instructions",
+              "type": "array"
+            }
+          },
+          "required": [
+            "instructions",
+            "advanced_mode"
+          ],
+          "type": "object"
+        }
+      },
+      "title": "CrewAI Agent",
+      "type": "object"
+    },
+    "ui": {
+      "default": {
+        "advanced_mode": {
+          "ui:enumNames": [
+            "Off",
+            "On"
+          ]
+        },
+        "agent_config_header": {},
+        "agent_description": {
+          "ui:widget": "textarea"
+        },
+        "backstory": {},
+        "expected_output": {},
+        "goal": {},
+        "instructions": {},
+        "role": {},
+        "task_config_header": {},
+        "task_description": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "agent_description",
+          "instructions",
+          "advanced_mode",
+          "agent_config_header",
+          "role",
+          "goal",
+          "backstory",
+          "task_config_header",
+          "task_description",
+          "expected_output"
+        ]
+      },
+      "ui:order": [
+        "default"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "agent",
+  "protocol": "agent_crewai://",
+  "title": "CrewAI Agent"
+}

@@ -1,0 +1,224 @@
+{
+  "actions": 0,
+  "capabilities": 3072,
+  "classType": [
+    "tool"
+  ],
+  "description": "Connects to an external MCP server and exposes its tools for agent tool-calling.\nTransports: STDIO (local subprocess), Streamable HTTP (modern), and legacy HTTP+SSE.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "mcp.svg",
+  "lanes": {},
+  "Pipe": {
+    "schema": {
+      "dependencies": {
+        "transport": {
+          "oneOf": [
+            {
+              "properties": {
+                "stdio": {
+                  "object": "stdio",
+                  "properties": {
+                    "commandLine": {
+                      "default": "python -m rocketride_mcp",
+                      "description": "Command line to launch MCP server (stdio transport). Example: python -m rocketride_mcp",
+                      "title": "Command line",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "commandLine"
+                  ],
+                  "title": "STDIO (subprocess)",
+                  "type": "object"
+                },
+                "transport": {
+                  "enum": [
+                    "stdio"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "http": {
+                  "object": "http",
+                  "properties": {
+                    "bearer": {
+                      "default": "",
+                      "description": "Optional Authorization bearer token",
+                      "title": "Bearer token",
+                      "type": "string"
+                    },
+                    "endpoint": {
+                      "default": "",
+                      "description": "MCP Streamable HTTP endpoint URL. Example: http(s)://host:port/mcp",
+                      "title": "Endpoint",
+                      "type": "string"
+                    },
+                    "headers": {
+                      "default": {},
+                      "description": "Extra HTTP headers for streamable-http/sse transports",
+                      "title": "Headers",
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "endpoint",
+                    "headers"
+                  ],
+                  "title": "HTTP (Streamable HTTP)",
+                  "type": "object"
+                },
+                "transport": {
+                  "enum": [
+                    "streamable-http"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "sse": {
+                  "object": "sse",
+                  "properties": {
+                    "bearer": {
+                      "default": "",
+                      "description": "Optional Authorization bearer token",
+                      "title": "Bearer token",
+                      "type": "string"
+                    },
+                    "headers": {
+                      "default": {},
+                      "description": "Extra HTTP headers for streamable-http/sse transports",
+                      "title": "Headers",
+                      "type": "object"
+                    },
+                    "sse_endpoint": {
+                      "default": "",
+                      "description": "Legacy MCP SSE URL (old transport). Example: http://127.0.0.1:8000/sse",
+                      "title": "SSE endpoint (legacy)",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "sse_endpoint",
+                    "headers"
+                  ],
+                  "title": "Legacy HTTP+SSE",
+                  "type": "object"
+                },
+                "transport": {
+                  "enum": [
+                    "sse"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "properties": {
+        "serverName": {
+          "default": "mcp",
+          "description": "Namespace prefix for tools: <serverName>.<toolName> (example: local.echo)",
+          "title": "Server name",
+          "type": "string"
+        },
+        "transport": {
+          "default": "streamable-http",
+          "description": "How to connect to the MCP server",
+          "enum": [
+            "stdio",
+            "streamable-http",
+            "sse"
+          ],
+          "title": "Transport",
+          "type": "string"
+        },
+        "type": {
+          "default": "mcp_client",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "serverName",
+        "transport"
+      ],
+      "title": "MCP Client",
+      "type": "object"
+    },
+    "ui": {
+      "http": {
+        "bearer": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "endpoint": {},
+        "headers": {},
+        "ui:options": {
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "endpoint",
+          "headers",
+          "bearer"
+        ]
+      },
+      "serverName": {},
+      "sse": {
+        "bearer": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "headers": {},
+        "sse_endpoint": {},
+        "ui:options": {
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "sse_endpoint",
+          "headers",
+          "bearer"
+        ]
+      },
+      "stdio": {
+        "commandLine": {},
+        "ui:options": {
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "commandLine"
+        ]
+      },
+      "transport": {
+        "ui:enumNames": [
+          "stdio",
+          "streamable-http",
+          "sse"
+        ]
+      },
+      "type": {
+        "ui:options": {
+          "label": false
+        },
+        "ui:widget": "hidden"
+      },
+      "ui:order": [
+        "type",
+        "serverName",
+        "transport",
+        "stdio",
+        "http",
+        "sse"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "mcp",
+  "protocol": "mcp_client://",
+  "tile": [
+    "Transport: ${parameters.mcp_client.transport}"
+  ],
+  "title": "MCP Client"
+}

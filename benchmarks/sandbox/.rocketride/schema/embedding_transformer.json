@@ -1,0 +1,135 @@
+{
+  "actions": 0,
+  "capabilities": 6144,
+  "classType": [
+    "embedding"
+  ],
+  "description": "A component that transforms text into numerical vector representations using advanced embedding \nmodels. It converts input text—ranging from individual words to entire documents—into high-dimensional \nvectors that capture semantic meaning and relationships. These embeddings enable efficient similarity \nsearches, clustering, and other advanced natural language processing tasks. The text embedder is highly \nconfigurable, supporting various pre-trained models and fine-tuning options, ensuring flexibility for \ndifferent use cases across domains.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "embedding-text.svg",
+  "lanes": {
+    "documents": [
+      "documents"
+    ],
+    "questions": [
+      "questions"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "dependencies": {
+        "profile": {
+          "oneOf": [
+            {
+              "properties": {
+                "custom": {
+                  "object": "custom",
+                  "properties": {
+                    "document_prefix": {
+                      "description": "Prefix prepended to document text before encoding (e.g. 'search_document: ', 'passage: ')",
+                      "title": "Document prefix",
+                      "type": "string"
+                    },
+                    "model": {
+                      "description": "Hugging face model to use for embedding",
+                      "maxLength": 32,
+                      "minLength": 2,
+                      "title": "Model name",
+                      "type": "string"
+                    },
+                    "query_prefix": {
+                      "description": "Prefix prepended to query text before encoding (e.g. 'search_query: ', 'query: ')",
+                      "title": "Query prefix",
+                      "type": "string"
+                    },
+                    "truncate_dim": {
+                      "description": "Truncate embeddings to this dimensionality (0 = use model default)",
+                      "title": "Truncate dimensions",
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "model",
+                    "truncate_dim",
+                    "document_prefix",
+                    "query_prefix"
+                  ],
+                  "title": "",
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "custom"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "profile": {
+                  "enum": [
+                    "miniAll",
+                    "miniLM",
+                    "mpnet"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "properties": {
+        "profile": {
+          "default": "miniLM",
+          "description": "Embedding model",
+          "enum": [
+            "custom",
+            "miniAll",
+            "miniLM",
+            "mpnet"
+          ],
+          "title": "Model",
+          "type": "string"
+        }
+      },
+      "required": [
+        "profile"
+      ],
+      "title": "Sentence Transformer",
+      "type": "object"
+    },
+    "ui": {
+      "custom": {
+        "document_prefix": {},
+        "model": {},
+        "query_prefix": {},
+        "truncate_dim": {},
+        "ui:options": {
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "model",
+          "truncate_dim",
+          "document_prefix",
+          "query_prefix"
+        ]
+      },
+      "profile": {
+        "ui:enumNames": [
+          "Custom model",
+          "miniAll - Another good one",
+          "miniLM  - General use embeddings, good performance",
+          "mpnet   - Yet another good one"
+        ]
+      },
+      "ui:order": [
+        "profile",
+        "custom"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "embedding",
+  "protocol": "embedding_transformer://",
+  "title": "Transformer"
+}

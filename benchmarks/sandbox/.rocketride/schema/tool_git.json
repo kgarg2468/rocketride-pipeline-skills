@@ -1,0 +1,150 @@
+{
+  "actions": 0,
+  "capabilities": 3072,
+  "classType": [
+    "tool"
+  ],
+  "description": "Exposes local Git repository operations as agent tools. \nCovers clone, init, status, log, show, diff, blame, stage, commit, stash, branch management, pull, push, and code search. \nRuns entirely in-process without requiring a host git installation. \nSupports secure authentication via personal access tokens and SSH keys.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "git.svg",
+  "lanes": {},
+  "Pipe": {
+    "schema": {
+      "properties": {
+        "authType": {
+          "default": "none",
+          "description": "How to authenticate with remote repositories.",
+          "enum": [
+            "none",
+            "token",
+            "ssh"
+          ],
+          "title": "Authentication Type",
+          "type": "string"
+        },
+        "readOnlyMode": {
+          "default": true,
+          "description": "Block ALL write operations (clone, init, write_file, stage, commit, stash push/pop/drop, branch create/delete, checkout, merge, fetch, pull, push). Read-only tools (status, log, show, diff, blame, file_at, branch_list, grep, ls_files, stash list) remain available. Strictly stronger than Safe Mode. Recommended when the agent only needs to inspect a repository.",
+          "enum": [
+            true,
+            false
+          ],
+          "title": "Read-Only Mode",
+          "type": "boolean"
+        },
+        "repoPath": {
+          "default": "",
+          "description": "Local path to an existing repository, or a remote URL (https://, git@, ssh://). A remote URL is cloned into a temporary directory at pipeline start and cleaned up on exit. Leave blank to let the agent call clone or init at runtime.",
+          "title": "Repository Path",
+          "type": "string"
+        },
+        "safeMode": {
+          "default": true,
+          "description": "Block destructive operations: force-push and force branch deletion. Normal branch deletion is allowed only when the branch is fully merged into HEAD; deleting an unmerged branch requires force=true (which is blocked in safe mode). Recommended for agent use.",
+          "enum": [
+            true,
+            false
+          ],
+          "title": "Safe Mode",
+          "type": "boolean"
+        },
+        "sshKey": {
+          "default": "",
+          "description": "PEM-encoded SSH private key content (starts with -----BEGIN ...). Used when Auth Type is SSH.",
+          "title": "SSH Private Key",
+          "type": "string"
+        },
+        "sshPassphrase": {
+          "default": "",
+          "description": "Passphrase for the SSH private key, if encrypted. Leave empty for unencrypted keys.",
+          "title": "SSH Key Passphrase",
+          "type": "string"
+        },
+        "token": {
+          "default": "",
+          "description": "Personal access token or password for HTTPS authentication. Leave empty when using SSH.",
+          "title": "Token / Password",
+          "type": "string"
+        },
+        "type": {
+          "default": "tool_git",
+          "type": "string"
+        },
+        "username": {
+          "default": "",
+          "description": "Git username for token-based HTTPS authentication.",
+          "title": "Username",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "repoPath",
+        "authType",
+        "safeMode",
+        "readOnlyMode"
+      ],
+      "title": "Git",
+      "type": "object"
+    },
+    "ui": {
+      "authType": {
+        "ui:enumNames": [
+          "None (public repos / no remote ops)",
+          "Token / HTTPS (username + token)",
+          "SSH key"
+        ]
+      },
+      "readOnlyMode": {
+        "ui:enumNames": [
+          "Yes — block all writes",
+          "No — allow writes (subject to Safe Mode)"
+        ]
+      },
+      "repoPath": {},
+      "safeMode": {
+        "ui:enumNames": [
+          "Yes — block destructive ops",
+          "No — allow all operations"
+        ]
+      },
+      "sshKey": {
+        "ui:secure": true,
+        "ui:widget": "textarea"
+      },
+      "sshPassphrase": {
+        "ui:secure": true,
+        "ui:widget": "ApiKeyWidget"
+      },
+      "token": {
+        "ui:secure": true,
+        "ui:widget": "ApiKeyWidget"
+      },
+      "type": {
+        "ui:options": {
+          "label": false
+        },
+        "ui:widget": "hidden"
+      },
+      "ui:order": [
+        "type",
+        "repoPath",
+        "authType",
+        "username",
+        "token",
+        "sshKey",
+        "sshPassphrase",
+        "safeMode",
+        "readOnlyMode"
+      ],
+      "username": {}
+    }
+  },
+  "plans": null,
+  "prefix": "git",
+  "protocol": "tool_git://",
+  "tile": [
+    "Git: ${parameters.git.repoPath || 'not configured'}"
+  ],
+  "title": "Git"
+}

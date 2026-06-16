@@ -1,0 +1,167 @@
+{
+  "actions": 0,
+  "capabilities": 71680,
+  "classType": [
+    "embedding"
+  ],
+  "description": "A processing component that generates vector embeddings from video content \nby extracting frames at configurable intervals and encoding them using \nvision models such as CLIP. It transforms visual features from video frames \ninto numerical representations that capture the semantic and structural \ncharacteristics of the video. These embeddings enable similarity search, \nclustering, and integration into multimodal RAG workflows. Ideal for use \ncases involving video retrieval, semantic search, and content understanding.",
+  "icon": "embedding-video.svg",
+  "lanes": {
+    "video": [
+      "documents"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "dependencies": {
+        "profile": {
+          "oneOf": [
+            {
+              "properties": {
+                "custom": {
+                  "object": "custom",
+                  "properties": {
+                    "model": {
+                      "description": "Hugging Face model to use for frame embedding",
+                      "maxLength": 256,
+                      "minLength": 2,
+                      "title": "Model name",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "model"
+                  ],
+                  "title": "",
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "custom"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "profile": {
+                  "enum": [
+                    "google16x224",
+                    "openai-patch16",
+                    "openai-patch32"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "properties": {
+        "extraction": {
+          "object": "extraction",
+          "properties": {
+            "duration": {
+              "default": 0,
+              "title": "Duration (in seconds) for frame extraction (0=end of video)",
+              "type": "number"
+            },
+            "interval": {
+              "default": 5,
+              "description": "Time in seconds between extracted frames",
+              "title": "Interval (in seconds) between frames",
+              "type": "number"
+            },
+            "max_frames": {
+              "default": 50,
+              "description": "Limit the total number of frames extracted from the video. Set to 0 for unlimited.",
+              "title": "Maximum number of frames to extract (0=unlimited)",
+              "type": "number"
+            },
+            "maxVideoSizeMB": {
+              "default": 500,
+              "description": "Maximum allowed video file size in megabytes. Videos exceeding this limit will be rejected.",
+              "title": "Maximum video file size (MB)",
+              "type": "number"
+            },
+            "start_time": {
+              "default": 0,
+              "title": "Start time (in seconds) for frame extraction (0=beginning)",
+              "type": "number"
+            }
+          },
+          "required": [
+            "interval",
+            "max_frames",
+            "start_time",
+            "duration",
+            "maxVideoSizeMB"
+          ],
+          "title": "Frame Extraction",
+          "type": "object"
+        },
+        "profile": {
+          "default": "openai-patch16",
+          "description": "Embedding model for video frames",
+          "enum": [
+            "custom",
+            "google16x224",
+            "openai-patch16",
+            "openai-patch32"
+          ],
+          "title": "Model",
+          "type": "string"
+        }
+      },
+      "required": [
+        "profile"
+      ],
+      "title": "Video Embedding",
+      "type": "object"
+    },
+    "ui": {
+      "custom": {
+        "model": {},
+        "ui:options": {
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "model"
+        ]
+      },
+      "extraction": {
+        "duration": {},
+        "interval": {},
+        "max_frames": {},
+        "maxVideoSizeMB": {},
+        "start_time": {},
+        "ui:options": {
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "interval",
+          "max_frames",
+          "start_time",
+          "duration",
+          "maxVideoSizeMB"
+        ]
+      },
+      "profile": {
+        "ui:enumNames": [
+          "Custom model",
+          "Google ViT - 16x16 - fast, accurate, general-purpose",
+          "OpenAI CLIP - 16x16 - good performance, lower memory",
+          "OpenAI CLIP - 32x32 - lower performance, better recognition"
+        ]
+      },
+      "ui:order": [
+        "profile",
+        "custom",
+        "extraction"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "embedding",
+  "protocol": "embedding_video://",
+  "title": "Video"
+}

@@ -1,0 +1,74 @@
+{
+  "actions": 0,
+  "capabilities": 3072,
+  "classType": [
+    "tool"
+  ],
+  "description": "Connects to the Butterbase MCP server and exposes its backend tools for agent tool-calling.\nButterbase is an AI-optimized Backend-as-a-Service (managed database, authentication, object storage, serverless functions, RAG). The agent can create apps, evolve schemas, configure auth, deploy functions, and more — as tools named butterbase.<tool>.\nThis is a branded preset of the generic MCP Client (Streamable HTTP), so it shares the same implementation. Prerequisite: enable Developer Mode on your Butterbase app so the agent can create/modify resources.",
+  "documentation": "https://docs.butterbase.ai",
+  "icon": "butterbase.svg",
+  "lanes": {},
+  "Pipe": {
+    "schema": {
+      "properties": {
+        "bearer": {
+          "default": "",
+          "description": "Butterbase API key (bb_sk_...). Create one in the <b>Butterbase dashboard</b>: <a href='https://dashboard.butterbase.ai' target='_blank'>dashboard.butterbase.ai</a> → API Keys. Sent as an Authorization Bearer token.",
+          "title": "API Key",
+          "type": "string"
+        },
+        "endpoint": {
+          "default": "https://api.butterbase.ai/mcp",
+          "description": "Butterbase MCP Streamable HTTP endpoint. Defaults to the production server.",
+          "title": "Endpoint",
+          "type": "string"
+        },
+        "serverName": {
+          "default": "butterbase",
+          "description": "Namespace prefix for the discovered tools: <serverName>.<toolName> (example: butterbase.init_app).",
+          "title": "Server name",
+          "type": "string"
+        },
+        "type": {
+          "default": "tool_butterbase",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "bearer",
+        "endpoint",
+        "serverName"
+      ],
+      "title": "Butterbase MCP Client",
+      "type": "object"
+    },
+    "ui": {
+      "bearer": {
+        "ui:secure": true,
+        "ui:widget": "ApiKeyWidget"
+      },
+      "endpoint": {},
+      "serverName": {},
+      "type": {
+        "ui:options": {
+          "label": false
+        },
+        "ui:widget": "hidden"
+      },
+      "ui:order": [
+        "type",
+        "bearer",
+        "endpoint",
+        "serverName"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "butterbase",
+  "protocol": "tool_butterbase://",
+  "tile": [
+    "Server: ${parameters.mcp_client.serverName}"
+  ],
+  "title": "Butterbase MCP Client"
+}

@@ -1,0 +1,777 @@
+{
+  "actions": 0,
+  "capabilities": 3072,
+  "classType": [
+    "llm"
+  ],
+  "description": "A component that integrates with xAI's Grok language models for intelligent text generation \nand analysis. Designed for advanced natural language understanding, it supports a wide range \nof use cases including question answering, summarization, and conversational AI. With a focus \non reasoning and accuracy, this component provides access to cutting-edge capabilities from xAI, \nenabling rich, context-aware responses for enterprise and technical applications. Configuration \noptions allow flexible deployment within secure and performance-optimized pipelines.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "xai.svg",
+  "lanes": {
+    "questions": [
+      "answers"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "dependencies": {
+        "profile": {
+          "oneOf": [
+            {
+              "properties": {
+                "custom": {
+                  "object": "custom",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "model": {
+                      "description": "xAI model",
+                      "title": "Model",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    },
+                    "modelTotalTokens": {
+                      "description": "Total Tokens",
+                      "title": "Tokens",
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "model",
+                    "modelTotalTokens",
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "custom"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "grok-4-1-fast-reasoning": {
+                  "object": "grok-4-1-fast-reasoning",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "grok-4-1-fast-reasoning"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "grok-4-1-fast-non-reasoning": {
+                  "object": "grok-4-1-fast-non-reasoning",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "grok-4-1-fast-non-reasoning"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "grok-code-fast-1": {
+                  "object": "grok-code-fast-1",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "grok-code-fast-1"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "grok-4-fast-reasoning": {
+                  "object": "grok-4-fast-reasoning",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "grok-4-fast-reasoning"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "grok-4-fast-non-reasoning": {
+                  "object": "grok-4-fast-non-reasoning",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "grok-4-fast-non-reasoning"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "grok-4": {
+                  "object": "grok-4",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "grok-4"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "grok-3-mini": {
+                  "object": "grok-3-mini",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "grok-3-mini"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "grok-3": {
+                  "object": "grok-3",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "grok-3"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "grok-3-beta": {
+                  "object": "grok-3-beta",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "grok-3-beta"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "grok-3-mini-beta": {
+                  "object": "grok-3-mini-beta",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "grok-3-mini-beta"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "grok-4-1-fast": {
+                  "object": "grok-4-1-fast",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "grok-4-1-fast"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "grok-4-20": {
+                  "object": "grok-4-20",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "grok-4-20"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "grok-4-20-multi-agent": {
+                  "object": "grok-4-20-multi-agent",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "grok-4-20-multi-agent"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "grok-4-fast": {
+                  "object": "grok-4-fast",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "grok-4-fast"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "properties": {
+        "profile": {
+          "default": "grok-3",
+          "description": "LLM model",
+          "enum": [
+            "custom",
+            "grok-3",
+            "grok-3-beta",
+            "grok-3-mini",
+            "grok-3-mini-beta",
+            "grok-4",
+            "grok-4-1-fast",
+            "grok-4-1-fast-non-reasoning",
+            "grok-4-1-fast-reasoning",
+            "grok-4-20",
+            "grok-4-20-multi-agent",
+            "grok-4-fast",
+            "grok-4-fast-non-reasoning",
+            "grok-4-fast-reasoning",
+            "grok-code-fast-1"
+          ],
+          "title": "Model",
+          "type": "string"
+        }
+      },
+      "required": [
+        "profile"
+      ],
+      "title": "xAI",
+      "type": "object"
+    },
+    "ui": {
+      "custom": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "model": {},
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "modelTotalTokens": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "model",
+          "modelTotalTokens",
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "grok-3": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "grok-3-beta": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "grok-3-mini": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "grok-3-mini-beta": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "grok-4": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "grok-4-1-fast": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "grok-4-1-fast-non-reasoning": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "grok-4-1-fast-reasoning": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "grok-4-20": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "grok-4-20-multi-agent": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "grok-4-fast": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "grok-4-fast-non-reasoning": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "grok-4-fast-reasoning": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "grok-code-fast-1": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "profile": {
+        "ui:enumNames": [
+          "Custom Model",
+          "Grok 3",
+          "xAI: Grok 3 Beta",
+          "Grok 3 Mini",
+          "xAI: Grok 3 Mini Beta",
+          "Grok 4",
+          "xAI: Grok 4.1 Fast",
+          "Grok 4.1 Fast Non-Reasoning",
+          "Grok 4.1 Fast",
+          "xAI: Grok 4.20",
+          "xAI: Grok 4.20 Multi-Agent",
+          "xAI: Grok 4 Fast",
+          "Grok 4 Fast Non-Reasoning",
+          "Grok 4 Fast",
+          "Grok Code Fast 1"
+        ]
+      },
+      "ui:order": [
+        "profile",
+        "custom",
+        "grok-4-1-fast-reasoning",
+        "grok-4-1-fast-non-reasoning",
+        "grok-code-fast-1",
+        "grok-4-fast-reasoning",
+        "grok-4-fast-non-reasoning",
+        "grok-4",
+        "grok-3-mini",
+        "grok-3",
+        "grok-3-beta",
+        "grok-3-mini-beta",
+        "grok-4-1-fast",
+        "grok-4-20",
+        "grok-4-20-multi-agent",
+        "grok-4-fast"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "llm",
+  "protocol": "llm_xai://",
+  "tile": [
+    "Model: ${parameters.llm_xai.profile}"
+  ],
+  "title": "xAI"
+}

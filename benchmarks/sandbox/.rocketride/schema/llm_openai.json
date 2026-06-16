@@ -1,0 +1,1388 @@
+{
+  "actions": 0,
+  "capabilities": 3072,
+  "classType": [
+    "llm"
+  ],
+  "description": "A component that connects to OpenAI's latest GPT models for advanced natural language \nprocessing. It supports tasks such as text generation, summarization, question \nanswering, and chat-based interactions. With access to state-of-the-art language \nmodels like GPT-5.4, GPT-5, GPT-4o, and GPT-4o-mini, this component enables \nhigh-quality, context-aware responses and creative text generation. Configurable with \nAPI keys and deployment options, it allows seamless integration into AI-driven \nworkflows with scalable performance and enhanced multimodal capabilities.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "openai.svg",
+  "lanes": {
+    "questions": [
+      "answers"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "dependencies": {
+        "profile": {
+          "oneOf": [
+            {
+              "properties": {
+                "custom": {
+                  "object": "custom",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "model": {
+                      "description": "OpenAI model",
+                      "title": "Model",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    },
+                    "modelTotalTokens": {
+                      "description": "Total Tokens",
+                      "title": "Tokens",
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "model",
+                    "modelTotalTokens",
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "custom"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "openai-5-4": {
+                  "object": "openai-5-4",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "openai-5-4"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "openai-5-4-pro": {
+                  "object": "openai-5-4-pro",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "openai-5-4-pro"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "openai-5-4-mini": {
+                  "object": "openai-5-4-mini",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "openai-5-4-mini"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "openai-5-4-nano": {
+                  "object": "openai-5-4-nano",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "openai-5-4-nano"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "openai-4o": {
+                  "object": "openai-4o",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "openai-4o"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "openai-4o-mini": {
+                  "object": "openai-4o-mini",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "openai-4o-mini"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "openai-5": {
+                  "object": "openai-5",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "openai-5"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "openai-5-1": {
+                  "object": "openai-5-1",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "openai-5-1"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "openai-5-2": {
+                  "object": "openai-5-2",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "openai-5-2"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "openai-5-mini": {
+                  "object": "openai-5-mini",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "openai-5-mini"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "openai-5-nano": {
+                  "object": "openai-5-nano",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "openai-5-nano"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "gpt-3-5-turbo": {
+                  "object": "gpt-3-5-turbo",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "gpt-3-5-turbo"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "gpt-3-5-turbo-16k": {
+                  "object": "gpt-3-5-turbo-16k",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "gpt-3-5-turbo-16k"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "gpt-4": {
+                  "object": "gpt-4",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "gpt-4"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "gpt-4-1": {
+                  "object": "gpt-4-1",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "gpt-4-1"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "gpt-4-1-mini": {
+                  "object": "gpt-4-1-mini",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "gpt-4-1-mini"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "gpt-4-1-nano": {
+                  "object": "gpt-4-1-nano",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "gpt-4-1-nano"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "gpt-4-turbo": {
+                  "object": "gpt-4-turbo",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "gpt-4-turbo"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "gpt-5-1-chat-latest": {
+                  "object": "gpt-5-1-chat-latest",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "gpt-5-1-chat-latest"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "gpt-5-2-chat-latest": {
+                  "object": "gpt-5-2-chat-latest",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "gpt-5-2-chat-latest"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "gpt-5-3-chat-latest": {
+                  "object": "gpt-5-3-chat-latest",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "gpt-5-3-chat-latest"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "gpt-5-chat-latest": {
+                  "object": "gpt-5-chat-latest",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "gpt-5-chat-latest"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "o1": {
+                  "object": "o1",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "o1"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "o3": {
+                  "object": "o3",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "o3"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "o3-mini": {
+                  "object": "o3-mini",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "o3-mini"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "o4-mini": {
+                  "object": "o4-mini",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "o4-mini"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "gpt-5-5": {
+                  "object": "gpt-5-5",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "gpt-5-5"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "properties": {
+        "profile": {
+          "default": "openai-5-2",
+          "description": "LLM model",
+          "enum": [
+            "custom",
+            "gpt-3-5-turbo",
+            "gpt-3-5-turbo-16k",
+            "gpt-4",
+            "gpt-4-1",
+            "gpt-4-1-mini",
+            "gpt-4-1-nano",
+            "gpt-4-turbo",
+            "gpt-5-1-chat-latest",
+            "gpt-5-2-chat-latest",
+            "gpt-5-3-chat-latest",
+            "gpt-5-5",
+            "gpt-5-chat-latest",
+            "o1",
+            "o3",
+            "o3-mini",
+            "o4-mini",
+            "openai-4o",
+            "openai-4o-mini",
+            "openai-5",
+            "openai-5-1",
+            "openai-5-2",
+            "openai-5-4",
+            "openai-5-4-mini",
+            "openai-5-4-nano",
+            "openai-5-4-pro",
+            "openai-5-mini",
+            "openai-5-nano"
+          ],
+          "title": "Model",
+          "type": "string"
+        }
+      },
+      "required": [
+        "profile"
+      ],
+      "title": "OpenAI",
+      "type": "object"
+    },
+    "ui": {
+      "custom": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "model": {},
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "modelTotalTokens": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "model",
+          "modelTotalTokens",
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "gpt-3-5-turbo": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "gpt-3-5-turbo-16k": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "gpt-4": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "gpt-4-1": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "gpt-4-1-mini": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "gpt-4-1-nano": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "gpt-4-turbo": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "gpt-5-1-chat-latest": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "gpt-5-2-chat-latest": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "gpt-5-3-chat-latest": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "gpt-5-5": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "gpt-5-chat-latest": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "o1": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "o3": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "o3-mini": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "o4-mini": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "openai-4o": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "openai-4o-mini": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "openai-5": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "openai-5-1": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "openai-5-2": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "openai-5-4": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "openai-5-4-mini": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "openai-5-4-nano": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "openai-5-4-pro": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "openai-5-mini": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "openai-5-nano": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "profile": {
+        "ui:enumNames": [
+          null,
+          "OpenAI: GPT-3.5 Turbo",
+          "OpenAI: GPT-3.5 Turbo 16k",
+          "OpenAI: GPT-4",
+          "OpenAI: GPT-4.1",
+          "OpenAI: GPT-4.1 Mini",
+          "OpenAI: GPT-4.1 Nano",
+          "OpenAI: GPT-4 Turbo",
+          "GPT-5.1 Chat Latest",
+          "GPT-5.2 Chat Latest",
+          "GPT-5.3 Chat Latest",
+          "OpenAI: GPT-5.5",
+          "GPT-5 Chat Latest",
+          "OpenAI: o1",
+          "OpenAI: o3",
+          "OpenAI: o3 Mini",
+          "OpenAI: o4 Mini",
+          "GPT-4o",
+          "GPT-4o-mini",
+          "GPT-5",
+          "GPT-5.1",
+          "GPT-5.2",
+          "GPT-5.4",
+          "GPT-5.4-mini",
+          "GPT-5.4-nano",
+          "GPT-5.4 Pro",
+          "GPT-5-mini",
+          "GPT-5-nano"
+        ]
+      },
+      "ui:order": [
+        "profile",
+        "custom",
+        "openai-5-4",
+        "openai-5-4-pro",
+        "openai-5-4-mini",
+        "openai-5-4-nano",
+        "openai-4o",
+        "openai-4o-mini",
+        "openai-5",
+        "openai-5-1",
+        "openai-5-2",
+        "openai-5-mini",
+        "openai-5-nano",
+        "gpt-3-5-turbo",
+        "gpt-3-5-turbo-16k",
+        "gpt-4",
+        "gpt-4-1",
+        "gpt-4-1-mini",
+        "gpt-4-1-nano",
+        "gpt-4-turbo",
+        "gpt-5-1-chat-latest",
+        "gpt-5-2-chat-latest",
+        "gpt-5-3-chat-latest",
+        "gpt-5-chat-latest",
+        "o1",
+        "o3",
+        "o3-mini",
+        "o4-mini",
+        "gpt-5-5"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "llm",
+  "protocol": "llm_openai://",
+  "tile": [
+    "Model: ${parameters.llm_openai.profile}"
+  ],
+  "title": "OpenAI"
+}

@@ -1,0 +1,173 @@
+{
+  "actions": 0,
+  "capabilities": 1024,
+  "classType": [
+    "database",
+    "tool"
+  ],
+  "description": "A processing component that takes structured table data and inserts it \ninto a MySQL database. Designed for straightforward data ingestion, it \nsupports field mapping and basic configuration of connection credentials \nand target tables. Ideal for storing processed results or structured outputs, \nthis component ensures reliable insertion of records into relational storage.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "mysql.svg",
+  "invoke": {
+    "llm": {
+      "description": "LLM to use to craft SQL queries from question",
+      "min": 1
+    }
+  },
+  "lanes": {
+    "answers": [],
+    "questions": [
+      "table",
+      "text",
+      "answers"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "dependencies": {
+        "profile": {
+          "oneOf": [
+            {
+              "properties": {
+                "default": {
+                  "object": "default",
+                  "properties": {
+                    "allow_execute": {
+                      "default": false,
+                      "description": "Permit QuestionType.EXECUTE callers to run raw SQL without LLM translation or safety checks. Leave OFF unless a trusted application explicitly needs to issue SQL directly.",
+                      "title": "Allow direct query execution",
+                      "type": "boolean"
+                    },
+                    "database": {
+                      "default": "database",
+                      "description": "Name of database",
+                      "maxLength": 32,
+                      "minLength": 2,
+                      "title": "Database name",
+                      "type": "string"
+                    },
+                    "db_description": {
+                      "default": "",
+                      "description": "What is this database used for? Describe its content and purpose — this helps the LLM generate more accurate queries.",
+                      "title": "Database description",
+                      "type": "string"
+                    },
+                    "host": {
+                      "default": "localhost",
+                      "description": "Host name or IP address of the MySQL server",
+                      "title": "MySQL host",
+                      "type": "string"
+                    },
+                    "max_attempts": {
+                      "default": 5,
+                      "description": "Maximum number of times to re-ask the LLM if EXPLAIN rejects the generated SQL",
+                      "maximum": 20,
+                      "minimum": 1,
+                      "title": "Max validation attempts",
+                      "type": "integer"
+                    },
+                    "password": {
+                      "description": "Password to connect to the MySQL server",
+                      "title": "Password",
+                      "type": "string"
+                    },
+                    "table": {
+                      "default": "table",
+                      "description": "Name of table",
+                      "title": "Table name",
+                      "type": "string"
+                    },
+                    "user": {
+                      "default": "root",
+                      "description": "User to connect to the MySQL server",
+                      "title": "User",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "db_description",
+                    "host",
+                    "user",
+                    "password",
+                    "database",
+                    "table",
+                    "max_attempts",
+                    "allow_execute"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "default"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "properties": {
+        "profile": {
+          "default": "default",
+          "enum": [
+            "default"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "profile"
+      ],
+      "title": "MySQL",
+      "type": "object"
+    },
+    "ui": {
+      "default": {
+        "allow_execute": {},
+        "database": {},
+        "db_description": {
+          "ui:widget": "textarea"
+        },
+        "host": {},
+        "max_attempts": {},
+        "password": {
+          "ui:secure": true,
+          "ui:widget": "password"
+        },
+        "table": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "db_description",
+          "host",
+          "user",
+          "password",
+          "database",
+          "table",
+          "max_attempts",
+          "allow_execute"
+        ],
+        "user": {}
+      },
+      "profile": {
+        "ui:enumNames": [
+          "Default"
+        ],
+        "ui:options": {
+          "label": false
+        },
+        "ui:widget": "hidden"
+      },
+      "ui:order": [
+        "profile",
+        "default"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "mysql",
+  "protocol": "db_mysql://",
+  "title": "MySQL"
+}

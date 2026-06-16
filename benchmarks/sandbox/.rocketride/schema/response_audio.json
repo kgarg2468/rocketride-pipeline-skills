@@ -1,0 +1,42 @@
+{
+  "actions": 0,
+  "capabilities": 2048,
+  "classType": [
+    "infrastructure"
+  ],
+  "description": "A component that returns processed audio back to the requesting client. It handles the \nresponse phase of the HTTP request-response cycle by returning the results as a JSON \nobject. This component ensures that data is transmitted efficiently and clearly to \nthe client, providing a standardized format for the response.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "util-infrastructure.svg",
+  "lanes": {
+    "audio": []
+  },
+  "Pipe": {
+    "schema": {
+      "properties": {
+        "laneName": {
+          "default": "audio",
+          "maxLength": 32,
+          "minLength": 1,
+          "title": "Identifier key within result",
+          "type": "string"
+        }
+      },
+      "required": [
+        "laneName"
+      ],
+      "title": "Return Audio",
+      "type": "object"
+    },
+    "ui": {
+      "laneName": {},
+      "ui:order": [
+        "laneName"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "response",
+  "protocol": "response_audio://",
+  "tile": [],
+  "title": "Return Audio"
+}

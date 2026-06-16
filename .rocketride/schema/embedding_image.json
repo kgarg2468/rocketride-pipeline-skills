@@ -1,0 +1,111 @@
+{
+  "actions": 0,
+  "capabilities": 6144,
+  "classType": [
+    "embedding"
+  ],
+  "description": "A processing component that generates vector embeddings from image content \nusing advanced computer vision models. It transforms visual features into \nnumerical representations that capture the semantic and structural characteristics \nof the image. These embeddings enable similarity search, clustering, and \nintegration into multimodal workflows. Ideal for use cases involving image retrieval, \nclassification, or content understanding.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "embedding-image.svg",
+  "lanes": {
+    "documents": [
+      "documents"
+    ],
+    "image": [
+      "documents"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "dependencies": {
+        "profile": {
+          "oneOf": [
+            {
+              "properties": {
+                "custom": {
+                  "object": "custom",
+                  "properties": {
+                    "model": {
+                      "description": "Hugging face model to use for embedding",
+                      "maxLength": 32,
+                      "minLength": 2,
+                      "title": "Model name",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "model"
+                  ],
+                  "title": "",
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "custom"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "profile": {
+                  "enum": [
+                    "google16x224",
+                    "openai-patch16",
+                    "openai-patch32"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "properties": {
+        "profile": {
+          "default": "openai-patch16",
+          "description": "Embedding model",
+          "enum": [
+            "custom",
+            "google16x224",
+            "openai-patch16",
+            "openai-patch32"
+          ],
+          "title": "Model",
+          "type": "string"
+        }
+      },
+      "required": [
+        "profile"
+      ],
+      "title": "Image",
+      "type": "object"
+    },
+    "ui": {
+      "custom": {
+        "model": {},
+        "ui:options": {
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "model"
+        ]
+      },
+      "profile": {
+        "ui:enumNames": [
+          "Custom model",
+          "Google - 16x16 - fast, accurate, general-purpose",
+          "OpenAI - 16x16 - good performance, lower memory",
+          "OpenAI - 32x32 - lower performance, better recognition"
+        ]
+      },
+      "ui:order": [
+        "profile",
+        "custom"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "embedding",
+  "protocol": "embedding_image://",
+  "title": "Image"
+}

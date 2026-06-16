@@ -1,0 +1,210 @@
+{
+  "actions": 0,
+  "capabilities": 2048,
+  "classType": [
+    "audio"
+  ],
+  "description": "Converts incoming text into speech using Kokoro-82M (local KPipeline or --modelserver KokoroLoader).\nOutput is sent on the audio lane as WAV bytes.\nSee README for spaCy en_core_web_sm (misaki) and troubleshooting.",
+  "icon": "audio-player.svg",
+  "lanes": {
+    "answers": [
+      "audio"
+    ],
+    "documents": [
+      "audio"
+    ],
+    "questions": [
+      "audio"
+    ],
+    "text": [
+      "audio"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "dependencies": {
+        "profile": {
+          "oneOf": [
+            {
+              "properties": {
+                "kokoro": {
+                  "object": "kokoro",
+                  "properties": {
+                    "kokoro_voice": {
+                      "default": "af_heart",
+                      "description": "Kokoro voice. The language is derived automatically from the voice prefix (af_/am_ → American, bf_/bm_ → British, ef_/em_ → Spanish, etc.).",
+                      "enum": [
+                        "af_heart",
+                        "af_bella",
+                        "af_nicole",
+                        "af_sarah",
+                        "af_sky",
+                        "af_alloy",
+                        "af_aoede",
+                        "af_jessica",
+                        "af_kore",
+                        "af_nova",
+                        "af_river",
+                        "am_adam",
+                        "am_echo",
+                        "am_eric",
+                        "am_fenrir",
+                        "am_liam",
+                        "am_michael",
+                        "am_onyx",
+                        "am_puck",
+                        "am_santa",
+                        "bf_emma",
+                        "bf_isabella",
+                        "bf_alice",
+                        "bf_lily",
+                        "bm_george",
+                        "bm_lewis",
+                        "bm_daniel",
+                        "bm_fable",
+                        "jf_alpha",
+                        "jf_gongitsune",
+                        "jf_nezumi",
+                        "jf_tebukuro",
+                        "jm_kumo",
+                        "zf_xiaobei",
+                        "zf_xiaoni",
+                        "zf_xiaoxiao",
+                        "zf_xiaoyi",
+                        "zm_yunjian",
+                        "zm_yunxi",
+                        "zm_yunxia",
+                        "zm_yunyang",
+                        "ef_dora",
+                        "em_alex",
+                        "em_santa",
+                        "ff_siwis",
+                        "hf_alpha",
+                        "hf_beta",
+                        "hm_omega",
+                        "hm_psi",
+                        "if_sara",
+                        "im_nicola",
+                        "pf_dora",
+                        "pm_alex",
+                        "pm_santa"
+                      ],
+                      "title": "Voice",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "kokoro_voice"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "kokoro"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "properties": {
+        "profile": {
+          "default": "kokoro",
+          "enum": [
+            "kokoro"
+          ],
+          "title": "TTS profile",
+          "type": "string"
+        }
+      },
+      "required": [
+        "profile"
+      ],
+      "title": "Text To Speech",
+      "type": "object"
+    },
+    "ui": {
+      "kokoro": {
+        "kokoro_voice": {
+          "ui:enumNames": [
+            "American — af_heart",
+            "American — af_bella",
+            "American — af_nicole",
+            "American — af_sarah",
+            "American — af_sky",
+            "American — af_alloy",
+            "American — af_aoede",
+            "American — af_jessica",
+            "American — af_kore",
+            "American — af_nova",
+            "American — af_river",
+            "American — am_adam",
+            "American — am_echo",
+            "American — am_eric",
+            "American — am_fenrir",
+            "American — am_liam",
+            "American — am_michael",
+            "American — am_onyx",
+            "American — am_puck",
+            "American — am_santa",
+            "British — bf_emma",
+            "British — bf_isabella",
+            "British — bf_alice",
+            "British — bf_lily",
+            "British — bm_george",
+            "British — bm_lewis",
+            "British — bm_daniel",
+            "British — bm_fable",
+            "Japanese — jf_alpha",
+            "Japanese — jf_gongitsune",
+            "Japanese — jf_nezumi",
+            "Japanese — jf_tebukuro",
+            "Japanese — jm_kumo",
+            "Mandarin — zf_xiaobei",
+            "Mandarin — zf_xiaoni",
+            "Mandarin — zf_xiaoxiao",
+            "Mandarin — zf_xiaoyi",
+            "Mandarin — zm_yunjian",
+            "Mandarin — zm_yunxi",
+            "Mandarin — zm_yunxia",
+            "Mandarin — zm_yunyang",
+            "Spanish — ef_dora",
+            "Spanish — em_alex",
+            "Spanish — em_santa",
+            "French — ff_siwis",
+            "Hindi — hf_alpha",
+            "Hindi — hf_beta",
+            "Hindi — hm_omega",
+            "Hindi — hm_psi",
+            "Italian — if_sara",
+            "Italian — im_nicola",
+            "Portuguese — pf_dora",
+            "Portuguese — pm_alex",
+            "Portuguese — pm_santa"
+          ]
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "kokoro_voice"
+        ]
+      },
+      "profile": {
+        "ui:enumNames": [
+          "Kokoro"
+        ]
+      },
+      "ui:order": [
+        "profile",
+        "kokoro"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "audio_tts",
+  "protocol": "audio_tts://",
+  "title": "Text To Speech"
+}

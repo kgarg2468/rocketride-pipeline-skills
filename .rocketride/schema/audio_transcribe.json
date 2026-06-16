@@ -1,0 +1,159 @@
+{
+  "actions": 0,
+  "capabilities": 2048,
+  "classType": [
+    "audio"
+  ],
+  "description": "The Audio transcribe component recieves audio or video and transcribes into text.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "audio-transcribe.svg",
+  "lanes": {
+    "audio": [
+      "text"
+    ],
+    "video": [
+      "text"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "dependencies": {
+        "profile": {
+          "oneOf": [
+            {
+              "properties": {
+                "default": {
+                  "object": "default",
+                  "properties": {
+                    "max_seconds": {
+                      "default": 300,
+                      "description": "The maximum seconds of audio to buffer to process",
+                      "title": "Maximum Seconds",
+                      "type": "number"
+                    },
+                    "min_seconds": {
+                      "default": 240,
+                      "description": "The minimum seconds of audio to process in a batch and looking for silence",
+                      "title": "Minimum Seconds",
+                      "type": "number"
+                    },
+                    "model": {
+                      "default": "base",
+                      "description": "The Whisper model to use for transcription",
+                      "enum": [
+                        "tiny",
+                        "base",
+                        "small",
+                        "medium",
+                        "large-v3"
+                      ],
+                      "title": "Model",
+                      "type": "string"
+                    },
+                    "silence_threshold": {
+                      "default": 0.25,
+                      "description": "The silence threshold to detect silence in speech (in seconds)",
+                      "title": "Silence Threshold",
+                      "type": "number"
+                    },
+                    "vad_level": {
+                      "default": 1,
+                      "description": "The VAD level to use for silence detection (0-3)",
+                      "enum": [
+                        0,
+                        1,
+                        2,
+                        3
+                      ],
+                      "title": "VAD Level",
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "model",
+                    "silence_threshold",
+                    "min_seconds",
+                    "max_seconds",
+                    "vad_level"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "default"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "properties": {
+        "profile": {
+          "default": "default",
+          "enum": [
+            "default"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "profile"
+      ],
+      "title": "Transcribe",
+      "type": "object"
+    },
+    "ui": {
+      "default": {
+        "max_seconds": {},
+        "min_seconds": {},
+        "model": {
+          "ui:enumNames": [
+            "Tiny - Faster, least acccurate",
+            "Base - Fast, low accuracy",
+            "Small - Medium, medium accuracy",
+            "Medium - Slower, high accuracy",
+            "Large v3 - Slowest, Highest accuracy"
+          ]
+        },
+        "silence_threshold": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "model",
+          "silence_threshold",
+          "min_seconds",
+          "max_seconds",
+          "vad_level"
+        ],
+        "vad_level": {
+          "ui:enumNames": [
+            "Most permissive - detects the most audio as speech (risk: includes noise",
+            "Slightly more aggressive - skips minor background noise.",
+            "Balanced - moderate filtering of non-speech (default in many tools).",
+            "Most aggressive - filters aggressively, may cut off quiet or short speech."
+          ]
+        }
+      },
+      "profile": {
+        "ui:enumNames": [
+          "Default"
+        ],
+        "ui:options": {
+          "label": false
+        },
+        "ui:widget": "hidden"
+      },
+      "ui:order": [
+        "profile",
+        "default"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "audio_transcribe",
+  "protocol": "audio_transcribe://",
+  "title": "Transcribe"
+}

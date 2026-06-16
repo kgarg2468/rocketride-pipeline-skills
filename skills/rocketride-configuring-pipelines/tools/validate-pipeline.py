@@ -1,0 +1,249 @@
+#!/usr/bin/env python3
+"""Validate a RocketRide pipeline (Layer 3 — the backstop).
+
+Two modes:
+  (default)  Engine validation via the SDK: client.validate(pipeline) -> {errors, warnings}.
+             This is authoritative (real structural + connection + chain checks). Falls back to
+             --static automatically if no engine/SDK is reachable (and says so).
+  --static   Local pre-flight lint only (no engine): the 9-point checklist + lane compatibility +
+             cycle/orphan detection, checked against the node catalog. Fast, but NOT authoritative
+             — always run engine validation before a real run.
+
+Usage:
+  python3 validate-pipeline.py mypipeline.pipe
+  python3 validate-pipeline.py --static mypipeline.pipe
+
+Exit code 0 = no errors; 1 = errors found; 2 = usage/load error.
+"""
+import sys, os, json, re, asyncio
+
+GUID_RE = re.compile(r"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
+
+
+# ---------- catalog loading (for --static) ----------
+def load_catalog(start):
+    """Find the node catalog: live .rocketride/services-catalog.json (walk up), else the bundled
+    LAYER1_NODE_INDEX.json next to the skills. Returns {name: entry} or None."""
+    here = os.path.abspath(start)
+    for _ in range(8):
+        cand = os.path.join(here, ".rocketride", "services-catalog.json")
+        if os.path.isfile(cand):
+            data = json.load(open(cand))
+            return {e["name"]: e for e in data}
+        parent = os.path.dirname(here)
+        if parent == here:
+            break
+        here = parent
+    bundled = os.path.join(
+        os.path.dirname(os.path.abspath(__file__)),
+        "..", "..", "rocketride-designing-pipelines", "LAYER1_NODE_INDEX.json",
+    )
+    if os.path.isfile(bundled):
+        return {e["name"]: e for e in json.load(open(bundled))}
+    return None
+
+
+def out_lanes(entry):
+    s = set()
+    for outs in (entry.get("lanes") or {}).values():
+        s.update(outs or [])
+    return s
+
+
+def in_lanes(entry):
+    return {k for k in (entry.get("lanes") or {}).keys() if k != "_source"}
+
+
+def is_source(entry):
+    return "source" in (entry.get("classType") or [])
+
+
+def static_validate(path):
+    errors, warnings = [], []
+    try:
+        obj = json.load(open(path))
+    except Exception as e:
+        return [f"could not parse pipeline JSON: {e}"], []
+
+    # 1. extension
+    if not path.endswith(".pipe"):
+        errors.append("file must use the .pipe extension, not .json")
+    # 2. components first
+    keys = list(obj.keys())
+    if not keys or keys[0] != "components":
+        errors.append("`components` must be the first key in the pipeline JSON")
+    comps = obj.get("components") or []
+    if not comps:
+        return errors + ["pipeline has no components"], warnings
+    # 3. project_id literal GUID
+    pid = obj.get("project_id")
+    if pid is None:
+        errors.append("missing project_id")
+    elif not isinstance(pid, str) or "$" in pid or not GUID_RE.match(pid):
+        errors.append(f"project_id must be a literal GUID, got {pid!r}")
+
+    ids = [c.get("id") for c in comps]
+    # 5. unique ids
+    dupes = {i for i in ids if ids.count(i) > 1}
+    if dupes:
+        errors.append(f"duplicate component ids: {sorted(dupes)}")
+    idset = set(ids)
+    # 4. source field (optional) matches a component
+    if "source" in obj and obj["source"] not in idset:
+        errors.append(f"`source` {obj['source']!r} does not match any component id")
+
+    cat = load_catalog(os.path.dirname(os.path.abspath(path)) or ".")
+    if cat is None:
+        warnings.append("no catalog found (.rocketride/ or bundled index) — lane checks skipped")
+
+    sources = []
+    adj = {i: [] for i in ids}  # from -> [to]
+    has_incoming = set()
+    has_control = set()
+    for c in comps:
+        cid, prov = c.get("id"), c.get("provider")
+        entry = cat.get(prov) if cat else None
+        if cat and entry is None:
+            errors.append(f"component {cid!r}: provider {prov!r} not found in catalog")
+        ctrl = c.get("control") or []
+        src = is_source(entry) if entry else (not c.get("input") and not ctrl)
+        if src:
+            sources.append(cid)
+        if ctrl:
+            has_control.add(cid)
+        for ce in ctrl:  # control-plane nodes (llm/tool/memory attached to an agent)
+            if ce.get("from") not in idset:
+                errors.append(f"{cid!r} control.from {ce.get('from')!r} is not a component id")
+        inputs = c.get("input") or []
+        # 6. non-source, non-control node needs input
+        if not src and not inputs and not ctrl:
+            errors.append(f"non-source component {cid!r} has no input array and no control")
+        for edge in inputs:
+            frm, lane = edge.get("from"), edge.get("lane")
+            if frm not in idset:
+                errors.append(f"{cid!r} input.from {frm!r} is not a component id")
+                continue
+            adj[frm].append(cid)
+            has_incoming.add(cid)
+            # 7. lane compatibility
+            if cat and entry is not None:
+                frm_entry = cat.get(comp_by_id(comps, frm, "provider"))
+                if frm_entry and lane not in out_lanes(frm_entry):
+                    errors.append(f"lane {lane!r}: {frm!r} does not output it (edge {frm}->{cid})")
+                if lane not in in_lanes(entry) and in_lanes(entry):
+                    errors.append(f"lane {lane!r}: {cid!r} does not accept it (edge {frm}->{cid})")
+        # 9. secrets via env
+        for k, v in flatten(c.get("config") or {}):
+            if "apikey" in k.lower() and isinstance(v, str) and v and not v.startswith("${ROCKETRIDE_"):
+                errors.append(f"{cid!r} config {k}: hardcoded secret — use ${{ROCKETRIDE_*}}")
+    # one source
+    if len(sources) == 0:
+        errors.append("no source component found (need exactly one)")
+    elif len(sources) > 1:
+        errors.append(f"more than one source component: {sources}")
+    # 8. orphans + cycles
+    for c in comps:
+        cid = c.get("id")
+        if cid not in sources and cid not in has_incoming and cid not in has_control:
+            warnings.append(f"component {cid!r} is orphaned (no incoming edge / control)")
+    cyc = find_cycle(adj)
+    if cyc:
+        errors.append(f"cycle detected (pipelines must be acyclic): {' -> '.join(cyc)}")
+    return errors, warnings
+
+
+def comp_by_id(comps, cid, field):
+    for c in comps:
+        if c.get("id") == cid:
+            return c.get(field)
+    return None
+
+
+def flatten(d, prefix=""):
+    out = []
+    if isinstance(d, dict):
+        for k, v in d.items():
+            out += flatten(v, f"{prefix}{k}.")
+    elif isinstance(d, list):
+        for i, v in enumerate(d):
+            out += flatten(v, f"{prefix}{i}.")
+    else:
+        out.append((prefix.rstrip("."), d))
+    return out
+
+
+def find_cycle(adj):
+    WHITE, GRAY, BLACK = 0, 1, 2
+    color = {n: WHITE for n in adj}
+    stack = []
+
+    def dfs(n):
+        color[n] = GRAY
+        stack.append(n)
+        for m in adj.get(n, []):
+            if color.get(m) == GRAY:
+                return stack[stack.index(m):] + [m]
+            if color.get(m, BLACK) == WHITE:
+                r = dfs(m)
+                if r:
+                    return r
+        stack.pop()
+        color[n] = BLACK
+        return None
+
+    for n in adj:
+        if color[n] == WHITE:
+            r = dfs(n)
+            if r:
+                return r
+    return None
+
+
+# ---------- engine validation (default) ----------
+async def engine_validate(path):
+    try:
+        from rocketride import RocketRideClient  # type: ignore
+    except Exception:
+        return None
+    try:
+        pipeline = json.load(open(path))
+        async with RocketRideClient() as client:
+            return await client.validate(pipeline)
+    except Exception as e:
+        sys.stderr.write(f"[validate] engine unavailable ({e}); falling back to --static\n")
+        return None
+
+
+def report(errors, warnings, mode):
+    sys.stderr.write(f"[validate] mode: {mode}\n")
+    for w in warnings:
+        print(f"WARNING: {w}")
+    for e in errors:
+        print(f"ERROR: {e}")
+    print(f"\nvalidate(): {len(errors)} errors, {len(warnings)} warnings")
+    sys.exit(1 if errors else 0)
+
+
+def main():
+    args = [a for a in sys.argv[1:] if a != "--static"]
+    static = "--static" in sys.argv
+    if not args:
+        sys.stderr.write(__doc__)
+        sys.exit(2)
+    path = args[0]
+    if not os.path.isfile(path):
+        sys.stderr.write(f"[validate] file not found: {path}\n")
+        sys.exit(2)
+    if not static:
+        res = asyncio.run(engine_validate(path))
+        if res is not None:
+            errs = [e.get("message", str(e)) if isinstance(e, dict) else str(e) for e in res.get("errors", [])]
+            warns = [w.get("message", str(w)) if isinstance(w, dict) else str(w) for w in res.get("warnings", [])]
+            report(errs, warns, "engine (client.validate)")
+            return
+    errors, warnings = static_validate(path)
+    report(errors, warnings, "static lint (NOT authoritative — run engine validation before a real run)")
+
+
+if __name__ == "__main__":
+    main()

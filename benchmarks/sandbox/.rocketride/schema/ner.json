@@ -1,0 +1,570 @@
+{
+  "actions": 0,
+  "capabilities": 6144,
+  "classType": [
+    "text"
+  ],
+  "description": "A text processing component that identifies and extracts named entities from text using \nstate-of-the-art transformer models. It can detect and classify entities such as persons, \norganizations, locations, dates, and more. The extracted entities are added to document \nmetadata for enhanced search, filtering, and analysis capabilities.</br>\n</br>\nThe component supports multiple pre-trained models optimized for different languages and \nuse cases, from general-purpose entity recognition to specialized domains.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "util-text.svg",
+  "lanes": {
+    "documents": [
+      "documents"
+    ],
+    "text": [
+      "text"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "dependencies": {
+        "profile": {
+          "oneOf": [
+            {
+              "properties": {
+                "custom": {
+                  "object": "custom",
+                  "properties": {
+                    "aggregation_strategy": {
+                      "default": "simple",
+                      "description": "How to combine word pieces into entities",
+                      "enum": [
+                        "none",
+                        "simple",
+                        "first",
+                        "average",
+                        "max"
+                      ],
+                      "title": "Entity aggregation strategy",
+                      "type": "string"
+                    },
+                    "min_confidence": {
+                      "default": 0.9,
+                      "description": "Minimum confidence score (0.0-1.0) for entity detection",
+                      "maximum": 1,
+                      "minimum": 0,
+                      "title": "Minimum confidence threshold",
+                      "type": "number"
+                    },
+                    "model": {
+                      "description": "HuggingFace model to use for NER",
+                      "maxLength": 128,
+                      "minLength": 2,
+                      "title": "Model name",
+                      "type": "string"
+                    },
+                    "store_in_metadata": {
+                      "default": true,
+                      "description": "Add extracted entities to document metadata fields",
+                      "title": "Store entities in document metadata",
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "model",
+                    "aggregation_strategy",
+                    "min_confidence",
+                    "store_in_metadata"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "custom"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "bertLarge": {
+                  "object": "bertLarge",
+                  "properties": {
+                    "aggregation_strategy": {
+                      "default": "simple",
+                      "description": "How to combine word pieces into entities",
+                      "enum": [
+                        "none",
+                        "simple",
+                        "first",
+                        "average",
+                        "max"
+                      ],
+                      "title": "Entity aggregation strategy",
+                      "type": "string"
+                    },
+                    "min_confidence": {
+                      "default": 0.9,
+                      "description": "Minimum confidence score (0.0-1.0) for entity detection",
+                      "maximum": 1,
+                      "minimum": 0,
+                      "title": "Minimum confidence threshold",
+                      "type": "number"
+                    },
+                    "store_in_metadata": {
+                      "default": true,
+                      "description": "Add extracted entities to document metadata fields",
+                      "title": "Store entities in document metadata",
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "aggregation_strategy",
+                    "min_confidence",
+                    "store_in_metadata"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "bertLarge"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "bertBase": {
+                  "object": "bertBase",
+                  "properties": {
+                    "aggregation_strategy": {
+                      "default": "simple",
+                      "description": "How to combine word pieces into entities",
+                      "enum": [
+                        "none",
+                        "simple",
+                        "first",
+                        "average",
+                        "max"
+                      ],
+                      "title": "Entity aggregation strategy",
+                      "type": "string"
+                    },
+                    "min_confidence": {
+                      "default": 0.9,
+                      "description": "Minimum confidence score (0.0-1.0) for entity detection",
+                      "maximum": 1,
+                      "minimum": 0,
+                      "title": "Minimum confidence threshold",
+                      "type": "number"
+                    },
+                    "store_in_metadata": {
+                      "default": true,
+                      "description": "Add extracted entities to document metadata fields",
+                      "title": "Store entities in document metadata",
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "aggregation_strategy",
+                    "min_confidence",
+                    "store_in_metadata"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "bertBase"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "distilbert": {
+                  "object": "distilbert",
+                  "properties": {
+                    "aggregation_strategy": {
+                      "default": "simple",
+                      "description": "How to combine word pieces into entities",
+                      "enum": [
+                        "none",
+                        "simple",
+                        "first",
+                        "average",
+                        "max"
+                      ],
+                      "title": "Entity aggregation strategy",
+                      "type": "string"
+                    },
+                    "min_confidence": {
+                      "default": 0.9,
+                      "description": "Minimum confidence score (0.0-1.0) for entity detection",
+                      "maximum": 1,
+                      "minimum": 0,
+                      "title": "Minimum confidence threshold",
+                      "type": "number"
+                    },
+                    "store_in_metadata": {
+                      "default": true,
+                      "description": "Add extracted entities to document metadata fields",
+                      "title": "Store entities in document metadata",
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "aggregation_strategy",
+                    "min_confidence",
+                    "store_in_metadata"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "distilbert"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "profile": {
+                  "enum": [
+                    "xlmRoberta"
+                  ]
+                },
+                "xlmRoberta": {
+                  "object": "xlmRoberta",
+                  "properties": {
+                    "aggregation_strategy": {
+                      "default": "simple",
+                      "description": "How to combine word pieces into entities",
+                      "enum": [
+                        "none",
+                        "simple",
+                        "first",
+                        "average",
+                        "max"
+                      ],
+                      "title": "Entity aggregation strategy",
+                      "type": "string"
+                    },
+                    "min_confidence": {
+                      "default": 0.9,
+                      "description": "Minimum confidence score (0.0-1.0) for entity detection",
+                      "maximum": 1,
+                      "minimum": 0,
+                      "title": "Minimum confidence threshold",
+                      "type": "number"
+                    },
+                    "store_in_metadata": {
+                      "default": true,
+                      "description": "Add extracted entities to document metadata fields",
+                      "title": "Store entities in document metadata",
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "aggregation_strategy",
+                    "min_confidence",
+                    "store_in_metadata"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "properties": {
+                "deberta": {
+                  "object": "deberta",
+                  "properties": {
+                    "aggregation_strategy": {
+                      "default": "simple",
+                      "description": "How to combine word pieces into entities",
+                      "enum": [
+                        "none",
+                        "simple",
+                        "first",
+                        "average",
+                        "max"
+                      ],
+                      "title": "Entity aggregation strategy",
+                      "type": "string"
+                    },
+                    "min_confidence": {
+                      "default": 0.9,
+                      "description": "Minimum confidence score (0.0-1.0) for entity detection",
+                      "maximum": 1,
+                      "minimum": 0,
+                      "title": "Minimum confidence threshold",
+                      "type": "number"
+                    },
+                    "store_in_metadata": {
+                      "default": true,
+                      "description": "Add extracted entities to document metadata fields",
+                      "title": "Store entities in document metadata",
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "aggregation_strategy",
+                    "min_confidence",
+                    "store_in_metadata"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "deberta"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "biomedical": {
+                  "object": "biomedical",
+                  "properties": {
+                    "aggregation_strategy": {
+                      "default": "simple",
+                      "description": "How to combine word pieces into entities",
+                      "enum": [
+                        "none",
+                        "simple",
+                        "first",
+                        "average",
+                        "max"
+                      ],
+                      "title": "Entity aggregation strategy",
+                      "type": "string"
+                    },
+                    "min_confidence": {
+                      "default": 0.9,
+                      "description": "Minimum confidence score (0.0-1.0) for entity detection",
+                      "maximum": 1,
+                      "minimum": 0,
+                      "title": "Minimum confidence threshold",
+                      "type": "number"
+                    },
+                    "store_in_metadata": {
+                      "default": true,
+                      "description": "Add extracted entities to document metadata fields",
+                      "title": "Store entities in document metadata",
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "aggregation_strategy",
+                    "min_confidence",
+                    "store_in_metadata"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "biomedical"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "properties": {
+        "profile": {
+          "default": "bertLarge",
+          "description": "NER model configuration",
+          "enum": [
+            "bertBase",
+            "bertLarge",
+            "biomedical",
+            "custom",
+            "deberta",
+            "distilbert",
+            "xlmRoberta"
+          ],
+          "title": "Model",
+          "type": "string"
+        }
+      },
+      "required": [
+        "profile"
+      ],
+      "title": "Named Entity Recognition",
+      "type": "object"
+    },
+    "ui": {
+      "bertBase": {
+        "aggregation_strategy": {
+          "ui:enumNames": [
+            "none",
+            "simple",
+            "first",
+            "average",
+            "max"
+          ]
+        },
+        "min_confidence": {},
+        "store_in_metadata": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "aggregation_strategy",
+          "min_confidence",
+          "store_in_metadata"
+        ]
+      },
+      "bertLarge": {
+        "aggregation_strategy": {
+          "ui:enumNames": [
+            "none",
+            "simple",
+            "first",
+            "average",
+            "max"
+          ]
+        },
+        "min_confidence": {},
+        "store_in_metadata": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "aggregation_strategy",
+          "min_confidence",
+          "store_in_metadata"
+        ]
+      },
+      "biomedical": {
+        "aggregation_strategy": {
+          "ui:enumNames": [
+            "none",
+            "simple",
+            "first",
+            "average",
+            "max"
+          ]
+        },
+        "min_confidence": {},
+        "store_in_metadata": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "aggregation_strategy",
+          "min_confidence",
+          "store_in_metadata"
+        ]
+      },
+      "custom": {
+        "aggregation_strategy": {
+          "ui:enumNames": [
+            "none",
+            "simple",
+            "first",
+            "average",
+            "max"
+          ]
+        },
+        "min_confidence": {},
+        "model": {},
+        "store_in_metadata": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "model",
+          "aggregation_strategy",
+          "min_confidence",
+          "store_in_metadata"
+        ]
+      },
+      "deberta": {
+        "aggregation_strategy": {
+          "ui:enumNames": [
+            "none",
+            "simple",
+            "first",
+            "average",
+            "max"
+          ]
+        },
+        "min_confidence": {},
+        "store_in_metadata": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "aggregation_strategy",
+          "min_confidence",
+          "store_in_metadata"
+        ]
+      },
+      "distilbert": {
+        "aggregation_strategy": {
+          "ui:enumNames": [
+            "none",
+            "simple",
+            "first",
+            "average",
+            "max"
+          ]
+        },
+        "min_confidence": {},
+        "store_in_metadata": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "aggregation_strategy",
+          "min_confidence",
+          "store_in_metadata"
+        ]
+      },
+      "profile": {
+        "ui:enumNames": [
+          "BERT Base (English) - Balanced performance",
+          "BERT Large (English) - High accuracy for English text",
+          "BioBERT (Biomedical) - Medical/scientific entities",
+          "Custom model",
+          "DeBERTa v3 (English) - State-of-the-art accuracy",
+          "DistilBERT (English) - Fast and lightweight",
+          "XLM-RoBERTa (Multilingual) - Supports 100+ languages"
+        ]
+      },
+      "ui:order": [
+        "profile",
+        "custom",
+        "bertLarge",
+        "bertBase",
+        "distilbert",
+        "xlmRoberta",
+        "deberta",
+        "biomedical"
+      ],
+      "xlmRoberta": {
+        "aggregation_strategy": {
+          "ui:enumNames": [
+            "none",
+            "simple",
+            "first",
+            "average",
+            "max"
+          ]
+        },
+        "min_confidence": {},
+        "store_in_metadata": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "aggregation_strategy",
+          "min_confidence",
+          "store_in_metadata"
+        ]
+      }
+    }
+  },
+  "plans": null,
+  "prefix": "ner",
+  "protocol": "ner://",
+  "title": "Named Entity Recognition"
+}

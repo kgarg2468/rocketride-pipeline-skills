@@ -1,0 +1,173 @@
+{
+  "actions": 0,
+  "capabilities": 2048,
+  "classType": [
+    "embedding"
+  ],
+  "description": "A component that transforms text into numerical vector representations using advanced embedding \nmodels. It converts input text—ranging from individual words to entire documents—into high-dimensional \nvectors that capture semantic meaning and relationships. These embeddings enable efficient similarity \nsearches, clustering, and other advanced natural language processing tasks. The text embedder is highly \nconfigurable, supporting various pre-trained models and fine-tuning options, ensuring flexibility for \ndifferent use cases across domains.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "openai.svg",
+  "lanes": {
+    "documents": [
+      "documents"
+    ],
+    "questions": [
+      "questions"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "dependencies": {
+        "profile": {
+          "oneOf": [
+            {
+              "properties": {
+                "profile": {
+                  "enum": [
+                    "text-embedding-3-small"
+                  ]
+                },
+                "text-embedding-3-small": {
+                  "object": "text-embedding-3-small",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "properties": {
+                "profile": {
+                  "enum": [
+                    "text-embedding-3-large"
+                  ]
+                },
+                "text-embedding-3-large": {
+                  "object": "text-embedding-3-large",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "properties": {
+                "profile": {
+                  "enum": [
+                    "text-embedding-ada-002"
+                  ]
+                },
+                "text-embedding-ada-002": {
+                  "object": "text-embedding-ada-002",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "properties": {
+        "profile": {
+          "default": "text-embedding-3-small",
+          "description": "OpenAI embedding model",
+          "enum": [
+            "text-embedding-3-large",
+            "text-embedding-3-small",
+            "text-embedding-ada-002"
+          ],
+          "title": "Model",
+          "type": "string"
+        }
+      },
+      "required": [
+        "profile"
+      ],
+      "title": "OpenAI",
+      "type": "object"
+    },
+    "ui": {
+      "profile": {
+        "ui:enumNames": [
+          "Text Large   - A larger and more powerful model",
+          "Text Small   - A highly efficient model",
+          "Text Ada     - First OpenAI embeddings model"
+        ]
+      },
+      "text-embedding-3-large": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey"
+        ]
+      },
+      "text-embedding-3-small": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey"
+        ]
+      },
+      "text-embedding-ada-002": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey"
+        ]
+      },
+      "ui:order": [
+        "profile",
+        "text-embedding-3-small",
+        "text-embedding-3-large",
+        "text-embedding-ada-002"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "embedding",
+  "protocol": "embedding_openai://",
+  "title": "OpenAI (Embedding)"
+}

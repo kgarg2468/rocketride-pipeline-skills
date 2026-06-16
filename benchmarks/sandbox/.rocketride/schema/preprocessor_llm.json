@@ -1,0 +1,98 @@
+{
+  "actions": 0,
+  "capabilities": 2048,
+  "classType": [
+    "preprocessor"
+  ],
+  "description": "A processing component that analyzes document content to extract concise \nsummaries, key points, and named entities and to divide a document for \nstorage into a vector database.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "preprocessor-llm.svg",
+  "invoke": {
+    "llm": {
+      "description": "LLM to use to process the document",
+      "min": 1
+    }
+  },
+  "lanes": {
+    "table": [
+      "documents"
+    ],
+    "text": [
+      "documents"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "dependencies": {
+        "profile": {
+          "oneOf": [
+            {
+              "properties": {
+                "default": {
+                  "object": "default",
+                  "properties": {
+                    "numberOfTokens": {
+                      "default": 384,
+                      "title": "Number of tokens per document chunk. Needs to match your embedding model.",
+                      "type": "number"
+                    }
+                  },
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "default"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "properties": {
+        "profile": {
+          "default": "default",
+          "enum": [
+            "default"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "profile"
+      ],
+      "title": "LLM",
+      "type": "object"
+    },
+    "ui": {
+      "default": {
+        "numberOfTokens": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "numberOfTokens"
+        ]
+      },
+      "profile": {
+        "ui:enumNames": [
+          "Default"
+        ],
+        "ui:options": {
+          "label": false
+        },
+        "ui:widget": "hidden"
+      },
+      "ui:order": [
+        "profile",
+        "default"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "Preprocessor",
+  "protocol": "preprocessor_llm://",
+  "tile": [],
+  "title": "LLM"
+}

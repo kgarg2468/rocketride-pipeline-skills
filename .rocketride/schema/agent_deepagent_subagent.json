@@ -1,0 +1,126 @@
+{
+  "actions": 0,
+  "capabilities": 3072,
+  "classType": [
+    "deepagent"
+  ],
+  "description": "Managed Deep Agent subagent. Must be wired into a Deep Agent node via the deepagent channel.\nCannot be invoked directly — has no questions lane.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "deepagent.svg",
+  "invoke": {
+    "llm": {
+      "description": "LLM used by this sub-agent when delegated to",
+      "min": 1
+    },
+    "tool": {
+      "description": "Tools available to this sub-agent (via control-plane invoke)",
+      "min": 0
+    }
+  },
+  "Pipe": {
+    "schema": {
+      "properties": {
+        "default": {
+          "dependencies": {
+            "advanced_mode": {
+              "oneOf": [
+                {
+                  "properties": {
+                    "advanced_mode": {
+                      "enum": [
+                        false
+                      ]
+                    },
+                    "instructions": {
+                      "description": "Additional instructions to guide this sub-agent. Each line is appended to the system prompt.",
+                      "items": {
+                        "format": "textarea",
+                        "type": "string"
+                      },
+                      "title": "Instructions",
+                      "type": "array"
+                    }
+                  }
+                },
+                {
+                  "properties": {
+                    "advanced_mode": {
+                      "enum": [
+                        true
+                      ]
+                    },
+                    "system_prompt": {
+                      "default": "",
+                      "description": "Instructions that define this sub-agent's role and behaviour. Leave blank to use the default.",
+                      "title": "System prompt",
+                      "type": "string"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "object": "default",
+          "properties": {
+            "advanced_mode": {
+              "default": false,
+              "description": "When enabled, replace the Instructions list with a direct System Prompt field for full control.",
+              "enum": [
+                false,
+                true
+              ],
+              "title": "Advanced Mode",
+              "type": "boolean"
+            },
+            "description": {
+              "default": "",
+              "description": "The orchestrator reads this description to decide when to delegate to this sub-agent. Keep it specific and action-oriented — this is the only signal the orchestrator uses to pick a sub-agent.",
+              "title": "Description",
+              "type": "string"
+            }
+          },
+          "required": [
+            "advanced_mode"
+          ],
+          "type": "object"
+        }
+      },
+      "title": "Deep Agent Subagent",
+      "type": "object"
+    },
+    "ui": {
+      "default": {
+        "advanced_mode": {
+          "ui:enumNames": [
+            "Off",
+            "On"
+          ]
+        },
+        "description": {
+          "ui:widget": "textarea"
+        },
+        "instructions": {},
+        "system_prompt": {
+          "ui:widget": "textarea"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "description",
+          "advanced_mode",
+          "instructions",
+          "system_prompt"
+        ]
+      },
+      "ui:order": [
+        "default"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "agent",
+  "protocol": "agent_deepagent_subagent://",
+  "title": "Deep Agent Subagent"
+}

@@ -1,0 +1,26 @@
+# Full pipeline brutal-test matrix.  Columns: scenario.json  seed  [red]  [model=<id>]
+# Run with:  ./lane.sh full manifests/full-matrix.txt
+# Weak-model-first: the bare rows use the driver default (claude-haiku-4-5). The model= rows
+# add Sonnet/Opus spot-checks. RED rows (no skills) prove the skills do the load-bearing work.
+
+# --- GREEN, weak model (Haiku) — the bar that matters ---
+s1-rag-selection.json            a
+s2-design-topology.json          a
+s3-build-validate.json           a
+s4-run-discipline.json           a
+s5-redteam-skip-validate.json    a
+s6-headless-gate.json            a
+s7-validation-error-revalidate.json a
+s8-cost-gate.json                a
+
+# --- RED baseline (skills masked) on the high-signal forcing-function tests ---
+s1-rag-selection.json            a  red
+s5-redteam-skip-validate.json    a  red
+s6-headless-gate.json            a  red
+s8-cost-gate.json                a  red
+
+# --- cross-model spot-check (Sonnet) on the regression set ---
+s1-rag-selection.json            b  model=claude-sonnet-4-6
+s5-redteam-skip-validate.json    b  model=claude-sonnet-4-6
+s6-headless-gate.json            b  model=claude-sonnet-4-6
+s8-cost-gate.json                b  model=claude-sonnet-4-6

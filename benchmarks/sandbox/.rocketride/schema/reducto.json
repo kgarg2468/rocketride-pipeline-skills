@@ -1,0 +1,185 @@
+{
+  "actions": 0,
+  "capabilities": 2048,
+  "classType": [
+    "data"
+  ],
+  "description": "A parsing component that uses Reducto to extract text and structured data \nfrom various document formats including PDFs, images, and other document types. \nIt provides high-quality text extraction with support for tables, layout preservation, \nand multiple output formats.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "reducto.svg",
+  "lanes": {
+    "tags": [
+      "text",
+      "table"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "properties": {
+        "default": {
+          "dependencies": {
+            "parse_mode": {
+              "oneOf": [
+                {
+                  "properties": {
+                    "Contains_Handwritten_Text": {
+                      "default": false,
+                      "description": "Enables Agentic OCR mode for better handwriting recognition and small text/table cell corrections.",
+                      "enum": [
+                        true,
+                        false
+                      ],
+                      "title": "Contains Handwritten Text",
+                      "type": "boolean"
+                    },
+                    "Contains_Non_English_Text": {
+                      "default": false,
+                      "description": "Enables Multilingual OCR system which can parse non-Germanic languages and unicode symbols.",
+                      "enum": [
+                        true,
+                        false
+                      ],
+                      "title": "Contains Non-English Text",
+                      "type": "boolean"
+                    },
+                    "parse_mode": {
+                      "enum": [
+                        false
+                      ]
+                    },
+                    "Summarize_Text": {
+                      "default": false,
+                      "description": "Generate AI summaries for figures, diagrams, and images using vision-language models.",
+                      "enum": [
+                        true,
+                        false
+                      ],
+                      "title": "AI Summarize Figures/Images",
+                      "type": "boolean"
+                    }
+                  }
+                },
+                {
+                  "properties": {
+                    "advanced_documentation": {
+                      "default": null,
+                      "description": "In advanced mode, you can use the full set of options from the Reducto API. For each set of options you must use and only include a python dictionary, e.g., {'key': 'value', 'flag': True}. If no information is provided for a set of options, the default values will be used. For more information on what options are available, see the Reducto API documentation at https://docs.reducto.ai/parsing/default-configurations. This page also contains examples of how to format the options fields. (In Advanced mode your configuration from Simple mode will be ignored)",
+                      "title": "Advanced Parse Mode - How to",
+                      "type": "null"
+                    },
+                    "advanced_options": {
+                      "description": "Advanced options for the Reducto API",
+                      "format": "textarea",
+                      "title": "Advanced Options",
+                      "type": "string"
+                    },
+                    "experimental_options": {
+                      "description": "Experimental options for the Reducto API",
+                      "format": "textarea",
+                      "title": "Experimental Options",
+                      "type": "string"
+                    },
+                    "options": {
+                      "description": "Options for the Reducto API",
+                      "format": "textarea",
+                      "title": "Options",
+                      "type": "string"
+                    },
+                    "parse_mode": {
+                      "enum": [
+                        true
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "object": "default",
+          "properties": {
+            "api_key": {
+              "description": "Your Reducto API key",
+              "title": "API Key",
+              "type": "string"
+            },
+            "parse_mode": {
+              "default": false,
+              "description": "Toggle to use the advanced parse mode, and have access to the full set of options from the Reducto API.",
+              "enum": [
+                false,
+                true
+              ],
+              "title": "Advanced Mode",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "api_key",
+            "parse_mode"
+          ],
+          "type": "object"
+        }
+      },
+      "title": "Reducto",
+      "type": "object"
+    },
+    "ui": {
+      "default": {
+        "advanced_documentation": {},
+        "advanced_options": {},
+        "api_key": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "Contains_Handwritten_Text": {
+          "ui:enumNames": [
+            "Yes",
+            "No"
+          ]
+        },
+        "Contains_Non_English_Text": {
+          "ui:enumNames": [
+            "Yes",
+            "No"
+          ]
+        },
+        "experimental_options": {},
+        "options": {},
+        "parse_mode": {
+          "ui:enumNames": [
+            "Simple",
+            "Advanced"
+          ]
+        },
+        "Summarize_Text": {
+          "ui:enumNames": [
+            "Yes",
+            "No"
+          ]
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "api_key",
+          "parse_mode",
+          "Contains_Handwritten_Text",
+          "Contains_Non_English_Text",
+          "Summarize_Text",
+          "advanced_documentation",
+          "options",
+          "advanced_options",
+          "experimental_options"
+        ]
+      },
+      "ui:order": [
+        "default"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "reducto",
+  "protocol": "reducto://",
+  "title": "Reducto"
+}

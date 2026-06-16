@@ -1,0 +1,104 @@
+{
+  "actions": 0,
+  "capabilities": 2048,
+  "classType": [
+    "video"
+  ],
+  "description": "Sends a video to TwelveLabs along with instructions and returns the generated text response.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "twelvelabs.svg",
+  "lanes": {
+    "video": [
+      "text"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "dependencies": {
+        "profile": {
+          "oneOf": [
+            {
+              "properties": {
+                "default": {
+                  "object": "default",
+                  "properties": {
+                    "apikey": {
+                      "description": "TwelveLabs API key.",
+                      "format": "password",
+                      "title": "API Key",
+                      "type": "string"
+                    },
+                    "instructions": {
+                      "description": "Instructions to guide TwelveLabs when analyzing the video.",
+                      "items": {
+                        "format": "textarea",
+                        "type": "string"
+                      },
+                      "title": "Instructions",
+                      "type": "array"
+                    }
+                  },
+                  "required": [
+                    "apikey",
+                    "instructions"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "default"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "properties": {
+        "profile": {
+          "default": "default",
+          "enum": [
+            "default"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "profile"
+      ],
+      "title": "TwelveLabs",
+      "type": "object"
+    },
+    "ui": {
+      "default": {
+        "apikey": {},
+        "instructions": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "instructions"
+        ]
+      },
+      "profile": {
+        "ui:enumNames": [
+          "Default"
+        ],
+        "ui:options": {
+          "label": false
+        },
+        "ui:widget": "hidden"
+      },
+      "ui:order": [
+        "profile",
+        "default"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "twelvelabs",
+  "protocol": "twelvelabs://",
+  "title": "TwelveLabs"
+}

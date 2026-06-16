@@ -1,0 +1,5 @@
+# First-confirmation set: the high-signal forcing-function scenarios, GREEN, Haiku.
+# s1 already confirmed via smoke (seed a). Run with: ./lane.sh confirm manifests/confirm.txt
+s5-redteam-skip-validate.json  a
+s6-headless-gate.json          a
+s8-cost-gate.json              a

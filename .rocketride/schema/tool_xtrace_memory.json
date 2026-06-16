@@ -1,0 +1,217 @@
+{
+  "actions": 0,
+  "capabilities": 3072,
+  "classType": [
+    "tool"
+  ],
+  "description": "Long-term, shared agent memory exposed as tools, backed by xTrace Memory Manager.\nExposes two agent tools: 'remember' stores conversation turns and 'recall' returns the relevant, ready-to-inject context. Set your API key and org id and it works; point several agents at the same org (and group) to share one memory.",
+  "documentation": "https://docs.mem.xtrace.ai",
+  "icon": "xtrace.svg",
+  "lanes": {},
+  "Pipe": {
+    "schema": {
+      "dependencies": {
+        "show_advanced": {
+          "oneOf": [
+            {
+              "properties": {
+                "agent_id": {
+                  "default": "",
+                  "description": "Optional agent scope stamped on ingested memories and AND-narrowed on recall.",
+                  "title": "Agent id",
+                  "type": "string"
+                },
+                "app_id": {
+                  "default": "",
+                  "description": "Optional app scope stamped on ingested memories and AND-narrowed on recall.",
+                  "title": "App id",
+                  "type": "string"
+                },
+                "base_url": {
+                  "default": "https://api.production.xtrace.ai",
+                  "description": "xTrace Memory API base URL. Production by default; use https://api.staging.xtrace.ai for staging.",
+                  "title": "Base URL",
+                  "type": "string"
+                },
+                "extract_artifacts": {
+                  "default": false,
+                  "description": "Opt into artifact extraction (the most expensive stage). Facts and episodes are always extracted. Leave off unless you need it.",
+                  "enum": [
+                    true,
+                    false
+                  ],
+                  "title": "Extract artifacts",
+                  "type": "boolean"
+                },
+                "ingest_timeout": {
+                  "default": 30,
+                  "description": "Max seconds to wait/poll for an ingest job to reach a terminal state.",
+                  "maximum": 120,
+                  "minimum": 1,
+                  "title": "Ingest timeout (s)",
+                  "type": "integer"
+                },
+                "search_limit": {
+                  "default": 10,
+                  "description": "Maximum number of memory rows to retrieve per recall.",
+                  "maximum": 100,
+                  "minimum": 1,
+                  "title": "Recall limit",
+                  "type": "integer"
+                },
+                "search_mode": {
+                  "default": "compose",
+                  "description": "'compose' returns a ready-to-inject markdown context block (LLM-selected); 'retrieve' returns ranked rows only.",
+                  "enum": [
+                    "compose",
+                    "retrieve"
+                  ],
+                  "title": "Recall mode",
+                  "type": "string"
+                },
+                "show_advanced": {
+                  "enum": [
+                    true
+                  ]
+                },
+                "wait": {
+                  "default": true,
+                  "description": "When on, ingest waits (up to ~30s) for extraction to finish so the agent gets a terminal result. When off, ingest returns immediately and runs in the background.",
+                  "enum": [
+                    true,
+                    false
+                  ],
+                  "title": "Synchronous ingest",
+                  "type": "boolean"
+                }
+              }
+            },
+            {
+              "properties": {
+                "show_advanced": {
+                  "enum": [
+                    false
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "properties": {
+        "api_key": {
+          "default": "",
+          "description": "xTrace API key (xtk_...). Get it from the <b>Developer Portal</b>: <a href='https://app.xtrace.ai' target='_blank'>app.xtrace.ai</a> → Settings → API Keys (not in mem.xtrace.ai).",
+          "title": "API Key",
+          "type": "string"
+        },
+        "group_ids": {
+          "default": "",
+          "description": "Optional. Comma-separated group ids (grp_...) to share memory across users/agents. Leave empty for private memory.",
+          "title": "Group ids (shared memory)",
+          "type": "string"
+        },
+        "org_id": {
+          "default": "",
+          "description": "xTrace organization id (org_...). Same place as the API key: <a href='https://app.xtrace.ai' target='_blank'>app.xtrace.ai</a> → Settings → API Keys.",
+          "title": "Org id",
+          "type": "string"
+        },
+        "show_advanced": {
+          "default": false,
+          "description": "Show advanced options. The defaults work for most cases — leave off for a simple setup.",
+          "enum": [
+            true,
+            false
+          ],
+          "title": "Advanced settings",
+          "type": "boolean"
+        },
+        "type": {
+          "default": "tool_xtrace_memory",
+          "type": "string"
+        },
+        "user_id": {
+          "default": "",
+          "description": "Who this memory belongs to (used to store and recall). Can be passed by the agent per call.",
+          "title": "User id",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "api_key",
+        "org_id"
+      ],
+      "title": "xTrace Memory",
+      "type": "object"
+    },
+    "ui": {
+      "agent_id": {},
+      "api_key": {
+        "ui:secure": true,
+        "ui:widget": "ApiKeyWidget"
+      },
+      "app_id": {},
+      "base_url": {},
+      "extract_artifacts": {
+        "ui:enumNames": [
+          "Yes",
+          "No"
+        ]
+      },
+      "group_ids": {},
+      "ingest_timeout": {},
+      "org_id": {},
+      "search_limit": {},
+      "search_mode": {
+        "ui:enumNames": [
+          "Compose (ready-to-inject context)",
+          "Retrieve (ranked rows only)"
+        ]
+      },
+      "show_advanced": {
+        "ui:enumNames": [
+          "Yes",
+          "No"
+        ]
+      },
+      "type": {
+        "ui:options": {
+          "label": false
+        },
+        "ui:widget": "hidden"
+      },
+      "ui:order": [
+        "type",
+        "api_key",
+        "org_id",
+        "user_id",
+        "group_ids",
+        "show_advanced",
+        "base_url",
+        "agent_id",
+        "app_id",
+        "wait",
+        "ingest_timeout",
+        "extract_artifacts",
+        "search_mode",
+        "search_limit"
+      ],
+      "user_id": {},
+      "wait": {
+        "ui:enumNames": [
+          "Yes",
+          "No"
+        ]
+      }
+    }
+  },
+  "plans": null,
+  "prefix": "xtrace",
+  "protocol": "tool_xtrace_memory://",
+  "tile": [
+    "Org: ${parameters.xtrace_memory.org_id}"
+  ],
+  "title": "xTrace Memory"
+}

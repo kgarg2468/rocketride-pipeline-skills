@@ -1,0 +1,336 @@
+{
+  "actions": 0,
+  "capabilities": 67584,
+  "classType": [
+    "guard"
+  ],
+  "description": "A comprehensive input/output guardrails filter for AI safety. \nChecks questions before they reach the LLM (prompt injection, topic restriction, \ninput length) and checks answers after the LLM responds (hallucination detection, \ncontent safety, PII leak detection, format compliance).</br>\n</br>\n<b>Policy modes</b>: block (reject violations), warn (log and continue), log (silent logging).",
+  "icon": "util-guard.svg",
+  "lanes": {
+    "answers": [
+      "answers"
+    ],
+    "documents": [
+      "documents"
+    ],
+    "questions": [
+      "questions"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "dependencies": {
+        "profile": {
+          "oneOf": [
+            {
+              "properties": {
+                "basic": {
+                  "object": "basic",
+                  "properties": {
+                    "policy_mode": {
+                      "default": "warn",
+                      "description": "How to handle violations: block (reject), warn (log + continue), log (silent)",
+                      "enum": [
+                        "block",
+                        "warn",
+                        "log"
+                      ],
+                      "title": "Policy mode",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "policy_mode"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "basic"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "profile": {
+                  "enum": [
+                    "strict"
+                  ]
+                },
+                "strict": {
+                  "object": "strict",
+                  "properties": {
+                    "expected_format": {
+                      "default": "",
+                      "description": "Validate that output matches this format (empty = no check)",
+                      "enum": [
+                        "",
+                        "json",
+                        "markdown",
+                        "bullet_list",
+                        "numbered_list"
+                      ],
+                      "title": "Expected output format",
+                      "type": "string"
+                    },
+                    "max_tokens_estimate": {
+                      "default": 0,
+                      "description": "Maximum estimated token count for input text (0 = no limit)",
+                      "title": "Max tokens (estimate)",
+                      "type": "number"
+                    },
+                    "policy_mode": {
+                      "default": "warn",
+                      "description": "How to handle violations: block (reject), warn (log + continue), log (silent)",
+                      "enum": [
+                        "block",
+                        "warn",
+                        "log"
+                      ],
+                      "title": "Policy mode",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "policy_mode",
+                    "max_tokens_estimate",
+                    "expected_format"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "properties": {
+                "custom": {
+                  "object": "custom",
+                  "properties": {
+                    "allowed_topics": {
+                      "description": "If set, input must contain at least one of these keywords",
+                      "items": {
+                        "type": "string"
+                      },
+                      "title": "Allowed topics",
+                      "type": "array"
+                    },
+                    "blocked_topics": {
+                      "description": "Keywords for topics that should be rejected",
+                      "items": {
+                        "type": "string"
+                      },
+                      "title": "Blocked topics",
+                      "type": "array"
+                    },
+                    "enable_content_safety": {
+                      "default": true,
+                      "description": "Detect harmful or unsafe content in output",
+                      "title": "Enable content safety check",
+                      "type": "boolean"
+                    },
+                    "enable_hallucination_check": {
+                      "default": false,
+                      "description": "Verify that output claims are grounded in source documents",
+                      "title": "Enable hallucination check",
+                      "type": "boolean"
+                    },
+                    "enable_pii_detection": {
+                      "default": true,
+                      "description": "Detect personal identifiable information (emails, phones, SSNs, credit cards) in output",
+                      "title": "Enable PII detection",
+                      "type": "boolean"
+                    },
+                    "enable_prompt_injection": {
+                      "default": true,
+                      "description": "Detect and flag prompt injection attempts in input",
+                      "title": "Enable prompt injection detection",
+                      "type": "boolean"
+                    },
+                    "expected_format": {
+                      "default": "",
+                      "description": "Validate that output matches this format (empty = no check)",
+                      "enum": [
+                        "",
+                        "json",
+                        "markdown",
+                        "bullet_list",
+                        "numbered_list"
+                      ],
+                      "title": "Expected output format",
+                      "type": "string"
+                    },
+                    "max_input_length": {
+                      "default": 0,
+                      "description": "Maximum character count for input text (0 = no limit)",
+                      "title": "Max input length (chars)",
+                      "type": "number"
+                    },
+                    "max_tokens_estimate": {
+                      "default": 0,
+                      "description": "Maximum estimated token count for input text (0 = no limit)",
+                      "title": "Max tokens (estimate)",
+                      "type": "number"
+                    },
+                    "policy_mode": {
+                      "default": "warn",
+                      "description": "How to handle violations: block (reject), warn (log + continue), log (silent)",
+                      "enum": [
+                        "block",
+                        "warn",
+                        "log"
+                      ],
+                      "title": "Policy mode",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "policy_mode",
+                    "enable_prompt_injection",
+                    "enable_content_safety",
+                    "enable_pii_detection",
+                    "enable_hallucination_check",
+                    "max_input_length",
+                    "max_tokens_estimate",
+                    "expected_format",
+                    "blocked_topics",
+                    "allowed_topics"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "custom"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "properties": {
+        "profile": {
+          "default": "basic",
+          "description": "Guardrails profile",
+          "enum": [
+            "basic",
+            "custom",
+            "strict"
+          ],
+          "title": "Profile",
+          "type": "string"
+        }
+      },
+      "required": [
+        "profile"
+      ],
+      "title": "Guardrails",
+      "type": "object"
+    },
+    "ui": {
+      "basic": {
+        "policy_mode": {
+          "ui:enumNames": [
+            "Block — Reject on violation",
+            "Warn — Log and continue",
+            "Log — Silent logging only"
+          ]
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "policy_mode"
+        ]
+      },
+      "custom": {
+        "allowed_topics": {},
+        "blocked_topics": {},
+        "enable_content_safety": {},
+        "enable_hallucination_check": {},
+        "enable_pii_detection": {},
+        "enable_prompt_injection": {},
+        "expected_format": {
+          "ui:enumNames": [
+            "None — No format check",
+            "JSON",
+            "Markdown",
+            "Bullet list",
+            "Numbered list"
+          ]
+        },
+        "max_input_length": {},
+        "max_tokens_estimate": {},
+        "policy_mode": {
+          "ui:enumNames": [
+            "Block — Reject on violation",
+            "Warn — Log and continue",
+            "Log — Silent logging only"
+          ]
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "policy_mode",
+          "enable_prompt_injection",
+          "enable_content_safety",
+          "enable_pii_detection",
+          "enable_hallucination_check",
+          "max_input_length",
+          "max_tokens_estimate",
+          "expected_format",
+          "blocked_topics",
+          "allowed_topics"
+        ]
+      },
+      "profile": {
+        "ui:enumNames": [
+          "Basic — Prompt injection + PII detection",
+          "Custom — Configure checks individually",
+          "Strict — All checks enabled, block on violation"
+        ]
+      },
+      "strict": {
+        "expected_format": {
+          "ui:enumNames": [
+            "None — No format check",
+            "JSON",
+            "Markdown",
+            "Bullet list",
+            "Numbered list"
+          ]
+        },
+        "max_tokens_estimate": {},
+        "policy_mode": {
+          "ui:enumNames": [
+            "Block — Reject on violation",
+            "Warn — Log and continue",
+            "Log — Silent logging only"
+          ]
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "policy_mode",
+          "max_tokens_estimate",
+          "expected_format"
+        ]
+      },
+      "ui:order": [
+        "profile",
+        "basic",
+        "strict",
+        "custom"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "guardrails",
+  "protocol": "guardrails://",
+  "tile": [],
+  "title": "Guardrails"
+}

@@ -1,0 +1,269 @@
+{
+  "actions": 0,
+  "capabilities": 2048,
+  "classType": [
+    "video"
+  ],
+  "description": "A component that extracts frames from video files and outputs them as image data. It \nsupports a variety of video formats and allows users to specify frame extraction \nintervals (e.g., every 5 seconds or at specific time points). The component processes \nvideo content, extracting selected frames as image objects, which can then be passed downstream \nfor further processing, analysis, or display.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "frame_grabber.svg",
+  "lanes": {
+    "video": [
+      "image",
+      "table",
+      "documents"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "dependencies": {
+        "profile": {
+          "oneOf": [
+            {
+              "properties": {
+                "interval": {
+                  "object": "interval",
+                  "properties": {
+                    "duration": {
+                      "default": 0,
+                      "title": "Duration  (in seconds) for frame extraction (0=end of video)",
+                      "type": "number"
+                    },
+                    "interval": {
+                      "default": 5,
+                      "title": "Interval (in seconds) between frames",
+                      "type": "number"
+                    },
+                    "start_time": {
+                      "default": 0,
+                      "title": "Start time (in seconds) for frame extraction (0=beginning)",
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "interval",
+                    "start_time",
+                    "duration"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "interval"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "profile": {
+                  "enum": [
+                    "transition"
+                  ]
+                },
+                "transition": {
+                  "object": "transition",
+                  "properties": {
+                    "duration": {
+                      "default": 0,
+                      "title": "Duration  (in seconds) for frame extraction (0=end of video)",
+                      "type": "number"
+                    },
+                    "max_frames": {
+                      "default": 0,
+                      "title": "Maximum number of frames to extract (0=unlimited)",
+                      "type": "number"
+                    },
+                    "min_scene_gap": {
+                      "default": 0,
+                      "description": "Minimum time gap between extracted frames. Helps reduce burst detections in high-motion segments. Set to 0 to disable.",
+                      "enum": [
+                        0,
+                        0.5,
+                        1,
+                        2,
+                        3,
+                        5
+                      ],
+                      "title": "Minimum gap between scenes (seconds)",
+                      "type": "number"
+                    },
+                    "percent": {
+                      "default": 0.4,
+                      "enum": [
+                        0.1,
+                        0.2,
+                        0.3,
+                        0.4,
+                        0.5,
+                        0.6,
+                        0.7,
+                        0.8,
+                        0.9,
+                        1
+                      ],
+                      "title": "Percentage change for frame",
+                      "type": "number"
+                    },
+                    "start_time": {
+                      "default": 0,
+                      "title": "Start time (in seconds) for frame extraction (0=beginning)",
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "percent",
+                    "min_scene_gap",
+                    "start_time",
+                    "duration",
+                    "max_frames"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "properties": {
+                "key": {
+                  "object": "key",
+                  "properties": {
+                    "duration": {
+                      "default": 0,
+                      "title": "Duration  (in seconds) for frame extraction (0=end of video)",
+                      "type": "number"
+                    },
+                    "max_frames": {
+                      "default": 0,
+                      "title": "Maximum number of frames to extract (0=unlimited)",
+                      "type": "number"
+                    },
+                    "start_time": {
+                      "default": 0,
+                      "title": "Start time (in seconds) for frame extraction (0=beginning)",
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "start_time",
+                    "duration",
+                    "max_frames"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "key"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "properties": {
+        "profile": {
+          "default": "interval",
+          "enum": [
+            "interval",
+            "key",
+            "transition"
+          ],
+          "title": "Frame grabber mode",
+          "type": "string"
+        }
+      },
+      "required": [
+        "profile"
+      ],
+      "title": "Video Frame Grabber",
+      "type": "object"
+    },
+    "ui": {
+      "interval": {
+        "duration": {},
+        "interval": {},
+        "start_time": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "interval",
+          "start_time",
+          "duration"
+        ]
+      },
+      "key": {
+        "duration": {},
+        "max_frames": {},
+        "start_time": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "start_time",
+          "duration",
+          "max_frames"
+        ]
+      },
+      "profile": {
+        "ui:enumNames": [
+          "Extract video frames at intervals",
+          "Extract video frames at keyframes",
+          "Extract video frames at scene transitions "
+        ]
+      },
+      "transition": {
+        "duration": {},
+        "max_frames": {},
+        "min_scene_gap": {
+          "ui:enumNames": [
+            "Disabled",
+            "0.5 seconds",
+            "1 second",
+            "2 seconds",
+            "3 seconds",
+            "5 seconds"
+          ]
+        },
+        "percent": {
+          "ui:enumNames": [
+            "10%",
+            "20%",
+            "30%",
+            "40%",
+            "50%",
+            "60%",
+            "70%",
+            "80%",
+            "90%",
+            "100%"
+          ]
+        },
+        "start_time": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "percent",
+          "min_scene_gap",
+          "start_time",
+          "duration",
+          "max_frames"
+        ]
+      },
+      "ui:order": [
+        "profile",
+        "interval",
+        "transition",
+        "key"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "frame_grabber",
+  "protocol": "frame_grabber://",
+  "title": "Frame Grabber"
+}

@@ -1,0 +1,181 @@
+{
+  "actions": 0,
+  "capabilities": 1024,
+  "classType": [
+    "database",
+    "tool"
+  ],
+  "description": "A ClickHouse component that answers natural-language questions by translating \nthem into SQL and executing them against the database, returning rows as a table, \ntext, or structured answers. It also exposes an agent tool surface (get_data, \nget_schema, get_sql) for question-to-SQL querying. Read-only by default; raw SQL \nexecution is available to trusted callers via the allow_execute option.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "clickhouse.svg",
+  "invoke": {
+    "llm": {
+      "description": "LLM to use to craft SQL queries from question",
+      "min": 1
+    }
+  },
+  "lanes": {
+    "questions": [
+      "table",
+      "text",
+      "answers"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "dependencies": {
+        "profile": {
+          "oneOf": [
+            {
+              "properties": {
+                "default": {
+                  "object": "default",
+                  "properties": {
+                    "allow_execute": {
+                      "default": false,
+                      "description": "Permit QuestionType.EXECUTE callers to run raw SQL without LLM translation or safety checks. Leave OFF unless a trusted application explicitly needs to issue SQL directly.",
+                      "title": "Allow direct query execution",
+                      "type": "boolean"
+                    },
+                    "database": {
+                      "default": "default",
+                      "description": "Name of database",
+                      "maxLength": 63,
+                      "minLength": 1,
+                      "title": "Database name",
+                      "type": "string"
+                    },
+                    "db_description": {
+                      "default": "",
+                      "description": "What is this database used for? Describe its content and purpose — this helps the LLM generate more accurate queries.",
+                      "title": "Database description",
+                      "type": "string"
+                    },
+                    "host": {
+                      "default": "localhost",
+                      "description": "Host name or IP address of the ClickHouse server, optionally including a native-protocol port (e.g. localhost:9440). Defaults to port 9000 when none is given.",
+                      "title": "ClickHouse host",
+                      "type": "string"
+                    },
+                    "max_attempts": {
+                      "default": 5,
+                      "description": "Maximum number of times to re-ask the LLM if EXPLAIN rejects the generated SQL",
+                      "maximum": 20,
+                      "minimum": 1,
+                      "title": "Max validation attempts",
+                      "type": "integer"
+                    },
+                    "password": {
+                      "description": "Password to connect to the ClickHouse server",
+                      "title": "Password",
+                      "type": "string"
+                    },
+                    "table": {
+                      "default": "table",
+                      "description": "Name of table",
+                      "title": "Table name",
+                      "type": "string"
+                    },
+                    "tls": {
+                      "default": false,
+                      "description": "Connect over TLS. Required for managed services such as ClickHouse Cloud (native TLS port 9440 is assumed when the host has no explicit port). Leave OFF for a plaintext local server on port 9000. ClickHouse-specific — MySQL/PostgreSQL nodes do not expose this.",
+                      "title": "Use TLS",
+                      "type": "boolean"
+                    },
+                    "user": {
+                      "default": "default",
+                      "description": "User to connect to the ClickHouse server",
+                      "title": "User",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "db_description",
+                    "host",
+                    "user",
+                    "password",
+                    "database",
+                    "tls",
+                    "table",
+                    "max_attempts",
+                    "allow_execute"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "default"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "properties": {
+        "profile": {
+          "default": "default",
+          "enum": [
+            "default"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "profile"
+      ],
+      "title": "ClickHouse",
+      "type": "object"
+    },
+    "ui": {
+      "default": {
+        "allow_execute": {},
+        "database": {},
+        "db_description": {
+          "ui:widget": "textarea"
+        },
+        "host": {},
+        "max_attempts": {},
+        "password": {
+          "ui:secure": true,
+          "ui:widget": "password"
+        },
+        "table": {},
+        "tls": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "db_description",
+          "host",
+          "user",
+          "password",
+          "database",
+          "tls",
+          "table",
+          "max_attempts",
+          "allow_execute"
+        ],
+        "user": {}
+      },
+      "profile": {
+        "ui:enumNames": [
+          "Default"
+        ],
+        "ui:options": {
+          "label": false
+        },
+        "ui:widget": "hidden"
+      },
+      "ui:order": [
+        "profile",
+        "default"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "clickhouse",
+  "protocol": "db_clickhouse://",
+  "title": "ClickHouse"
+}

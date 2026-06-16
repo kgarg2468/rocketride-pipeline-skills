@@ -1,0 +1,86 @@
+{
+  "actions": 0,
+  "capabilities": 3072,
+  "classType": [
+    "tool"
+  ],
+  "description": "Executes Python code in a restricted in-process sandbox via exec().\nOnly whitelisted modules can be imported. Dangerous builtins are removed.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "python.svg",
+  "lanes": {},
+  "Pipe": {
+    "schema": {
+      "properties": {
+        "allowedModules": {
+          "description": "Modules the agent is allowed to import, in addition to the built-in defaults (math, json, re, collections, datetime, etc.).",
+          "items": {
+            "properties": {
+              "moduleName": {
+                "default": "",
+                "title": "Module name",
+                "type": "string"
+              }
+            },
+            "required": [
+              "moduleName"
+            ],
+            "type": "object"
+          },
+          "minItems": 0,
+          "title": "Additional Allowed Modules",
+          "type": "array"
+        },
+        "timeout": {
+          "default": 20,
+          "description": "Maximum seconds a script may run before it is killed. Useful for long-running operations like network scans. Default is 20s, max is 1200s.",
+          "maximum": 1200,
+          "minimum": 1,
+          "title": "Execution timeout (seconds)",
+          "type": "integer"
+        },
+        "type": {
+          "default": "tool_python",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "allowedModules"
+      ],
+      "title": "Python",
+      "type": "object"
+    },
+    "ui": {
+      "allowedModules": {
+        "items": {
+          "moduleName": {},
+          "ui:order": [
+            "moduleName"
+          ]
+        },
+        "ui:order": [
+          "items"
+        ]
+      },
+      "timeout": {},
+      "type": {
+        "ui:options": {
+          "label": false
+        },
+        "ui:widget": "hidden"
+      },
+      "ui:order": [
+        "type",
+        "timeout",
+        "allowedModules"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "python",
+  "protocol": "tool_python://",
+  "tile": [
+    "Tool: python.execute"
+  ],
+  "title": "Python"
+}

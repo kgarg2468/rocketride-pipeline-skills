@@ -1,0 +1,127 @@
+{
+  "actions": 0,
+  "capabilities": 3072,
+  "classType": [
+    "llm"
+  ],
+  "description": "A component that connects to any OpenAI-compatible API endpoint for language model \ninference. Supports custom base URLs for providers like Featherless, Together, Groq, \nOllama, LM Studio, and any other OpenAI SDK-compatible service. Configure with your \nprovider's base URL, API key, and model name.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "openai.svg",
+  "lanes": {
+    "questions": [
+      "answers"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "dependencies": {
+        "profile": {
+          "oneOf": [
+            {
+              "properties": {
+                "custom": {
+                  "object": "custom",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "base_url": {
+                      "description": "API base URL (e.g. https://api.featherless.ai/v1)",
+                      "title": "Base URL",
+                      "type": "string"
+                    },
+                    "model": {
+                      "description": "Model name (e.g. zai-org/GLM-5, meta-llama/Llama-3-70b)",
+                      "title": "Model",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    },
+                    "modelTotalTokens": {
+                      "description": "Total Tokens",
+                      "title": "Tokens",
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "model",
+                    "base_url",
+                    "modelTotalTokens",
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "custom"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "properties": {
+        "profile": {
+          "default": "custom",
+          "description": "Profile selection",
+          "enum": [
+            "custom"
+          ],
+          "title": "Model",
+          "type": "string"
+        }
+      },
+      "required": [
+        "profile"
+      ],
+      "title": "OpenAI-Compatible API",
+      "type": "object"
+    },
+    "ui": {
+      "custom": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "base_url": {},
+        "model": {},
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "modelTotalTokens": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "model",
+          "base_url",
+          "modelTotalTokens",
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "profile": {
+        "ui:enumNames": [
+          null
+        ]
+      },
+      "ui:order": [
+        "profile",
+        "custom"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "llm",
+  "protocol": "llm_openai_api://",
+  "tile": [
+    "Model: ${parameters.llm_openai_api.profile}"
+  ],
+  "title": "OpenAI-Compatible API"
+}

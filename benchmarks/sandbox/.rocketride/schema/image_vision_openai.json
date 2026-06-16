@@ -1,0 +1,366 @@
+{
+  "actions": 0,
+  "capabilities": 3072,
+  "classType": [
+    "image"
+  ],
+  "description": "A component that connects to OpenAI's vision-capable models for image analysis, \nOCR, visual understanding, and scene description. Supports GPT-4.1 and GPT-4o model families \nwith multimodal capabilities. Features robust error handling, automatic image processing, \nand flexible prompt configuration for a wide range of vision use cases.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "openai.svg",
+  "input": [
+    {
+      "description": "Image to analyze with OpenAI Vision models",
+      "lane": "image",
+      "output": [
+        {
+          "description": "Text analysis of the image content",
+          "lane": "text"
+        }
+      ]
+    },
+    {
+      "description": "Image documents to analyze with OpenAI Vision models",
+      "lane": "documents",
+      "output": [
+        {
+          "description": "Text analysis of each image document with original metadata (frame number, timestamp) preserved",
+          "lane": "documents"
+        }
+      ]
+    }
+  ],
+  "lanes": {
+    "documents": [
+      "documents"
+    ],
+    "image": [
+      "text"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "dependencies": {
+        "profile": {
+          "oneOf": [
+            {
+              "properties": {
+                "openai-4-1": {
+                  "object": "openai-4-1",
+                  "properties": {
+                    "apikey": {
+                      "description": "OpenAI API key. Get one at https://platform.openai.com/api-keys",
+                      "title": "API Key",
+                      "type": "string"
+                    },
+                    "prompt": {
+                      "description": "Describe what you want to analyze or extract from the image",
+                      "format": "textarea",
+                      "title": "Analysis Prompt",
+                      "type": "string"
+                    },
+                    "systemPrompt": {
+                      "description": "Define the model's role and behavior for image analysis",
+                      "format": "textarea",
+                      "title": "System Instructions",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey",
+                    "systemPrompt",
+                    "prompt"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "openai-4-1"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "openai-4-1-mini": {
+                  "object": "openai-4-1-mini",
+                  "properties": {
+                    "apikey": {
+                      "description": "OpenAI API key. Get one at https://platform.openai.com/api-keys",
+                      "title": "API Key",
+                      "type": "string"
+                    },
+                    "prompt": {
+                      "description": "Describe what you want to analyze or extract from the image",
+                      "format": "textarea",
+                      "title": "Analysis Prompt",
+                      "type": "string"
+                    },
+                    "systemPrompt": {
+                      "description": "Define the model's role and behavior for image analysis",
+                      "format": "textarea",
+                      "title": "System Instructions",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey",
+                    "systemPrompt",
+                    "prompt"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "openai-4-1-mini"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "openai-4-1-nano": {
+                  "object": "openai-4-1-nano",
+                  "properties": {
+                    "apikey": {
+                      "description": "OpenAI API key. Get one at https://platform.openai.com/api-keys",
+                      "title": "API Key",
+                      "type": "string"
+                    },
+                    "prompt": {
+                      "description": "Describe what you want to analyze or extract from the image",
+                      "format": "textarea",
+                      "title": "Analysis Prompt",
+                      "type": "string"
+                    },
+                    "systemPrompt": {
+                      "description": "Define the model's role and behavior for image analysis",
+                      "format": "textarea",
+                      "title": "System Instructions",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey",
+                    "systemPrompt",
+                    "prompt"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "openai-4-1-nano"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "openai-4o": {
+                  "object": "openai-4o",
+                  "properties": {
+                    "apikey": {
+                      "description": "OpenAI API key. Get one at https://platform.openai.com/api-keys",
+                      "title": "API Key",
+                      "type": "string"
+                    },
+                    "prompt": {
+                      "description": "Describe what you want to analyze or extract from the image",
+                      "format": "textarea",
+                      "title": "Analysis Prompt",
+                      "type": "string"
+                    },
+                    "systemPrompt": {
+                      "description": "Define the model's role and behavior for image analysis",
+                      "format": "textarea",
+                      "title": "System Instructions",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey",
+                    "systemPrompt",
+                    "prompt"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "openai-4o"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "openai-4o-mini": {
+                  "object": "openai-4o-mini",
+                  "properties": {
+                    "apikey": {
+                      "description": "OpenAI API key. Get one at https://platform.openai.com/api-keys",
+                      "title": "API Key",
+                      "type": "string"
+                    },
+                    "prompt": {
+                      "description": "Describe what you want to analyze or extract from the image",
+                      "format": "textarea",
+                      "title": "Analysis Prompt",
+                      "type": "string"
+                    },
+                    "systemPrompt": {
+                      "description": "Define the model's role and behavior for image analysis",
+                      "format": "textarea",
+                      "title": "System Instructions",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey",
+                    "systemPrompt",
+                    "prompt"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "openai-4o-mini"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "properties": {
+        "profile": {
+          "default": "openai-4-1",
+          "description": "Select the OpenAI vision model to use",
+          "enum": [
+            "openai-4-1",
+            "openai-4-1-mini",
+            "openai-4-1-nano",
+            "openai-4o",
+            "openai-4o-mini"
+          ],
+          "title": "Vision Model",
+          "type": "string"
+        }
+      },
+      "required": [
+        "profile"
+      ],
+      "title": "OpenAI Vision",
+      "type": "object"
+    },
+    "ui": {
+      "openai-4-1": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "prompt": {},
+        "systemPrompt": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "systemPrompt",
+          "prompt"
+        ]
+      },
+      "openai-4-1-mini": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "prompt": {},
+        "systemPrompt": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "systemPrompt",
+          "prompt"
+        ]
+      },
+      "openai-4-1-nano": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "prompt": {},
+        "systemPrompt": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "systemPrompt",
+          "prompt"
+        ]
+      },
+      "openai-4o": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "prompt": {},
+        "systemPrompt": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "systemPrompt",
+          "prompt"
+        ]
+      },
+      "openai-4o-mini": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "prompt": {},
+        "systemPrompt": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "systemPrompt",
+          "prompt"
+        ]
+      },
+      "profile": {
+        "ui:enumNames": [
+          "GPT-4.1",
+          "GPT-4.1-mini",
+          "GPT-4.1-nano",
+          "GPT-4o",
+          "GPT-4o-mini"
+        ]
+      },
+      "ui:order": [
+        "profile",
+        "openai-4-1",
+        "openai-4-1-mini",
+        "openai-4-1-nano",
+        "openai-4o",
+        "openai-4o-mini"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "image_vision_openai",
+  "protocol": "image_vision_openai://",
+  "tile": [
+    "Model: ${parameters.image_vision_openai.profile}"
+  ],
+  "title": "OpenAI Vision"
+}

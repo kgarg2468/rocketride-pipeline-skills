@@ -1,0 +1,298 @@
+{
+  "actions": 0,
+  "capabilities": 2048,
+  "classType": [
+    "preprocessor"
+  ],
+  "description": "A specialized component designed to parse and tokenize source code. It extracts \nstructural elements such as functions, classes, and comments, enabling deeper semantic \nanalysis. This component prepares source files for tasks like classification, embedding, \nor search by breaking them into meaningful syntactic units. Supporting multiple programming \nlanguages, it enables intelligent workflows involving code understanding, summarization, \nand reasoning.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "preprocessor-code.svg",
+  "lanes": {
+    "text": [
+      "documents"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "dependencies": {
+        "profile": {
+          "oneOf": [
+            {
+              "properties": {
+                "auto": {
+                  "object": "auto",
+                  "properties": {
+                    "language": {
+                      "const": "auto",
+                      "default": "auto",
+                      "type": "string"
+                    },
+                    "strlen": {
+                      "default": 512,
+                      "title": "Maximum string length",
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "language",
+                    "strlen"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "auto"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "c": {
+                  "object": "c",
+                  "properties": {
+                    "language": {
+                      "const": "c",
+                      "default": "c",
+                      "type": "string"
+                    },
+                    "strlen": {
+                      "default": 512,
+                      "title": "Maximum string length",
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "language",
+                    "strlen"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "c"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "profile": {
+                  "enum": [
+                    "python"
+                  ]
+                },
+                "python": {
+                  "object": "python",
+                  "properties": {
+                    "language": {
+                      "const": "python",
+                      "default": "python",
+                      "type": "string"
+                    },
+                    "strlen": {
+                      "default": 512,
+                      "title": "Maximum string length",
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "language",
+                    "strlen"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "properties": {
+                "javascript": {
+                  "object": "javascript",
+                  "properties": {
+                    "language": {
+                      "const": "javascript",
+                      "default": "javascript",
+                      "type": "string"
+                    },
+                    "strlen": {
+                      "default": 512,
+                      "title": "Maximum string length",
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "language",
+                    "strlen"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "javascript"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "profile": {
+                  "enum": [
+                    "typescript"
+                  ]
+                },
+                "typescript": {
+                  "object": "typescript",
+                  "properties": {
+                    "language": {
+                      "const": "typescript",
+                      "default": "typescript",
+                      "type": "string"
+                    },
+                    "strlen": {
+                      "default": 512,
+                      "title": "Maximum string length",
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "language",
+                    "strlen"
+                  ],
+                  "type": "object"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "properties": {
+        "profile": {
+          "default": "auto",
+          "enum": [
+            "auto",
+            "c",
+            "python",
+            "javascript",
+            "typescript"
+          ],
+          "title": "Code splitter profile",
+          "type": "string"
+        }
+      },
+      "required": [
+        "profile"
+      ],
+      "title": "Code",
+      "type": "object"
+    },
+    "ui": {
+      "auto": {
+        "language": {
+          "ui:options": {
+            "label": false
+          },
+          "ui:widget": "hidden"
+        },
+        "strlen": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "language",
+          "strlen"
+        ]
+      },
+      "c": {
+        "language": {
+          "ui:options": {
+            "label": false
+          },
+          "ui:widget": "hidden"
+        },
+        "strlen": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "language",
+          "strlen"
+        ]
+      },
+      "javascript": {
+        "language": {
+          "ui:options": {
+            "label": false
+          },
+          "ui:widget": "hidden"
+        },
+        "strlen": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "language",
+          "strlen"
+        ]
+      },
+      "profile": {
+        "ui:enumNames": [
+          "Auto detect - autodetect language based on filename extension",
+          "C/C++ source",
+          "Python source",
+          "Javascript source",
+          "Typescript source"
+        ]
+      },
+      "python": {
+        "language": {
+          "ui:options": {
+            "label": false
+          },
+          "ui:widget": "hidden"
+        },
+        "strlen": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "language",
+          "strlen"
+        ]
+      },
+      "typescript": {
+        "language": {
+          "ui:options": {
+            "label": false
+          },
+          "ui:widget": "hidden"
+        },
+        "strlen": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "language",
+          "strlen"
+        ]
+      },
+      "ui:order": [
+        "profile",
+        "auto",
+        "c",
+        "python",
+        "javascript",
+        "typescript"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "Preprocessor",
+  "protocol": "preprocessor_code://",
+  "tile": [],
+  "title": "Code"
+}

@@ -1,0 +1,66 @@
+{
+  "actions": 0,
+  "capabilities": 3072,
+  "classType": [
+    "agent",
+    "tool"
+  ],
+  "description": "Single-agent execution using LangChain.\nCan be invoked as a tool (`<nodeId>.run_agent`) for hierarchical agent orchestration.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "langchain.svg",
+  "invoke": {
+    "llm": {
+      "description": "LLM used by the agent",
+      "min": 1
+    },
+    "tool": {
+      "description": "Tools available to the agent (via control-plane invoke)",
+      "min": 0
+    }
+  },
+  "lanes": {
+    "questions": [
+      "answers"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "properties": {
+        "agent_description": {
+          "default": "",
+          "description": "What does this agent do? Describe its purpose and capabilities — this helps parent agents select and invoke it correctly.",
+          "title": "Agent description",
+          "type": "string"
+        },
+        "instructions": {
+          "description": "Additional instructions to guide the agent.",
+          "items": {
+            "format": "textarea",
+            "type": "string"
+          },
+          "title": "Instructions",
+          "type": "array"
+        }
+      },
+      "required": [
+        "instructions"
+      ],
+      "title": "LangChain",
+      "type": "object"
+    },
+    "ui": {
+      "agent_description": {
+        "ui:widget": "textarea"
+      },
+      "instructions": {},
+      "ui:order": [
+        "agent_description",
+        "instructions"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "agent",
+  "protocol": "agent_langchain://",
+  "title": "LangChain"
+}

@@ -1,0 +1,82 @@
+{
+  "actions": 0,
+  "capabilities": 3072,
+  "classType": [
+    "tool"
+  ],
+  "description": "Exposes an inline pipeline as an agent tool.\nConnect this node's output lanes to any pipeline nodes on the same canvas.\nWhen an agent calls the tool, the input is routed to every connected output lane.\nEnd each connected branch with a response node to return results.",
+  "icon": "pipetool.svg",
+  "lanes": {
+    "_source": [
+      "text",
+      "questions",
+      "documents",
+      "table",
+      "answers"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "properties": {
+        "return_type": {
+          "default": "text",
+          "description": "Which response lane value to return to the agent",
+          "enum": [
+            "text",
+            "answers",
+            "documents",
+            "table"
+          ],
+          "title": "Return Type",
+          "type": "string"
+        },
+        "tool_description": {
+          "default": "",
+          "description": "Natural-language description the agent uses to decide when to call this tool",
+          "title": "Tool Description",
+          "type": "string"
+        },
+        "type": {
+          "default": "tool_pipe",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "tool_description",
+        "return_type"
+      ],
+      "title": "Pipeline Tool",
+      "type": "object"
+    },
+    "ui": {
+      "return_type": {
+        "ui:enumNames": [
+          "text",
+          "answers",
+          "documents",
+          "table"
+        ]
+      },
+      "tool_description": {},
+      "type": {
+        "ui:options": {
+          "label": false
+        },
+        "ui:widget": "hidden"
+      },
+      "ui:order": [
+        "type",
+        "tool_description",
+        "return_type"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "tool_pipe",
+  "protocol": "tool_pipe://",
+  "tile": [
+    "run_pipe"
+  ],
+  "title": "Pipeline Tool"
+}

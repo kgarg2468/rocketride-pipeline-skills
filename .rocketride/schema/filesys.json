@@ -1,0 +1,502 @@
+{
+  "actions": 7,
+  "capabilities": 8195,
+  "classType": [
+    "source"
+  ],
+  "description": "A source component that reads data from the local file system. It \nenables ingestion of files and documents stored in directories for \nfurther processing within the pipeline. Configurable with path settings \nand file filters, the component supports flexible access to unstructured \ndata across various formats.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "file-system.svg",
+  "lanes": {
+    "_source": [
+      "tags"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "properties": {
+        "actions": {
+          "type": "object"
+        },
+        "exclude": {
+          "description": "Example Path: /Users/usr/Documents/product-images/*",
+          "items": {
+            "properties": {
+              "path": {
+                "title": "Exclude path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "path"
+            ],
+            "type": "object"
+          },
+          "title": "Provide the path to exclude",
+          "type": "array"
+        },
+        "include": {
+          "description": "Example Path: /Users/usr/Documents/product-images/*",
+          "items": {
+            "properties": {
+              "path": {
+                "title": "Include path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "path"
+            ],
+            "type": "object"
+          },
+          "minItems": 1,
+          "title": "Provide the path to your data",
+          "type": "array"
+        },
+        "mode": {
+          "default": "Source",
+          "type": "string"
+        },
+        "parameters": {
+          "properties": {
+            "excludeEnableGlobal": {
+              "default": true,
+              "title": "Exclude typical OS files and directories",
+              "type": "boolean"
+            },
+            "excludeExternalDrives": {
+              "default": true,
+              "title": "Exclude external drives",
+              "type": "boolean"
+            },
+            "excludeSymlinks": {
+              "default": true,
+              "title": "Exclude symlinks",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "excludeExternalDrives",
+            "excludeEnableGlobal",
+            "excludeSymlinks"
+          ],
+          "type": "object"
+        },
+        "type": {
+          "default": "filesys",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "actions",
+        "mode",
+        "include"
+      ],
+      "title": "File System",
+      "type": "object"
+    },
+    "ui": {
+      "actions": {
+        "ui:options": {
+          "label": false
+        },
+        "ui:widget": "hidden"
+      },
+      "exclude": {
+        "items": {
+          "path": {},
+          "ui:order": [
+            "path"
+          ]
+        },
+        "ui:order": [
+          "items"
+        ]
+      },
+      "include": {
+        "items": {
+          "path": {},
+          "ui:order": [
+            "path"
+          ]
+        },
+        "ui:order": [
+          "items"
+        ]
+      },
+      "mode": {
+        "ui:options": {
+          "label": false
+        },
+        "ui:widget": "hidden"
+      },
+      "parameters": {
+        "excludeEnableGlobal": {},
+        "excludeExternalDrives": {},
+        "excludeSymlinks": {},
+        "ui:options": {
+          "label": false
+        },
+        "ui:order": [
+          "excludeExternalDrives",
+          "excludeEnableGlobal",
+          "excludeSymlinks"
+        ]
+      },
+      "type": {
+        "ui:options": {
+          "label": false
+        },
+        "ui:widget": "hidden"
+      },
+      "ui:order": [
+        "type",
+        "actions",
+        "mode",
+        "parameters",
+        "include",
+        "exclude"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "File System",
+  "protocol": "filesys://",
+  "Source": {
+    "schema": {
+      "properties": {
+        "actions": {
+          "type": "object"
+        },
+        "estimation": {
+          "properties": {
+            "accessCost": {
+              "default": 0,
+              "description": "The egress cost per MB to recall a file.",
+              "minimum": 0,
+              "title": "Access cost",
+              "type": "number"
+            },
+            "accessDelay": {
+              "default": 0,
+              "description": "Elapsed time before access to a file starts. (For example: S3 could be 0 second delay, while Glacier could be hours.",
+              "minimum": 0,
+              "title": "Access delay",
+              "type": "number"
+            },
+            "accessRate": {
+              "default": 0,
+              "description": "Time required to recall a file in MB per second.",
+              "minimum": 0,
+              "title": "Access rate",
+              "type": "number"
+            },
+            "storeCost": {
+              "default": 0,
+              "description": "The cost per MB to store a file for a month.",
+              "minimum": 0,
+              "title": "Store cost",
+              "type": "number"
+            }
+          },
+          "title": "Cost estimations",
+          "type": "object"
+        },
+        "exclude": {
+          "description": "This path defines the paths excluded for Scan, Index, Classify and OCR. By default, its empty.\n\nFormat for Windows : C:\\foldername (for local filesystem) or \\\\file.core.net\\foldername (for shared folders)\n\nFormat for Linux : /file.core.net/foldername",
+          "items": {
+            "properties": {
+              "path": {
+                "title": "Exclude path",
+                "type": "string"
+              }
+            },
+            "required": [
+              "path"
+            ],
+            "type": "object"
+          },
+          "title": "Exclude paths",
+          "type": "array"
+        },
+        "include": {
+          "description": "This path defines the paths included for Scan, Index, Classify and OCR. By default, its empty.\n\nFormat for Windows : C:\\foldername (for local filesystem) or \\\\file.core.net\\foldername (for shared folders)\n\nFormat for Linux : /file.core.net/foldername",
+          "items": {
+            "dependencies": {
+              "index": {
+                "oneOf": [
+                  {
+                    "properties": {
+                      "classify": {
+                        "default": false,
+                        "description": "Classification will assign each file to one or more classification policies. Once enabled, all supported files will be classified into one or more of the activated classification policies.",
+                        "title": "Enable Classification",
+                        "type": "boolean"
+                      },
+                      "index": {
+                        "enum": [
+                          true
+                        ]
+                      },
+                      "ocr": {
+                        "default": false,
+                        "description": "Optical Character Recognition (OCR) will convert typed or handwritten text found in images into text.Once enabled, all image files such as jpgs will have text extracted for use in classification and search.",
+                        "title": "Enable OCR",
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "index": {
+                        "enum": [
+                          false
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              "signing": {
+                "oneOf": [
+                  {
+                    "properties": {
+                      "index": {
+                        "default": false,
+                        "description": "Indexing will allow for full-text search of all processed files. Once enabled, all supported files will be scanned and indexed as they are processed.\nOnce Index is enabled, other parameters like OCR and classify could be enabled too.",
+                        "title": "Enable Indexing",
+                        "type": "boolean"
+                      },
+                      "signing": {
+                        "enum": [
+                          true
+                        ]
+                      },
+                      "vectorize": {
+                        "default": false,
+                        "description": "AI embeddings make text content accessible to AI technologies like semantic relevancy and generative AP chants.\nOnce AI embeddings are enabled, other parameters like OCR and classify could be enabled too.",
+                        "title": "Enable AI Embeddings",
+                        "type": "boolean"
+                      }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "signing": {
+                        "enum": [
+                          false
+                        ]
+                      }
+                    }
+                  }
+                ]
+              },
+              "vectorize": {
+                "oneOf": [
+                  {
+                    "properties": {
+                      "classify": {
+                        "default": false,
+                        "description": "Classification will assign each file to one or more classification policies. Once enabled, all supported files will be classified into one or more of the activated classification policies.",
+                        "title": "Enable Classification",
+                        "type": "boolean"
+                      },
+                      "ocr": {
+                        "default": false,
+                        "description": "Optical Character Recognition (OCR) will convert typed or handwritten text found in images into text.Once enabled, all image files such as jpgs will have text extracted for use in classification and search.",
+                        "title": "Enable OCR",
+                        "type": "boolean"
+                      },
+                      "vectorize": {
+                        "enum": [
+                          true
+                        ]
+                      }
+                    }
+                  },
+                  {
+                    "properties": {
+                      "vectorize": {
+                        "enum": [
+                          false
+                        ]
+                      }
+                    }
+                  }
+                ]
+              }
+            },
+            "properties": {
+              "path": {
+                "title": "Include path",
+                "type": "string"
+              },
+              "permissions": {
+                "default": false,
+                "description": "Permissions allow gathering of file ownerships and permissions from all connected and scanned sources.",
+                "title": "Enable Permissions",
+                "type": "boolean"
+              },
+              "signing": {
+                "default": true,
+                "description": "Content Signature executes a hash algorithm on the content of every object to generate a \"signature\". Identical signatures indicate identical content and are an effective method to detect duplicate objects.",
+                "title": "Content Signature",
+                "type": "boolean"
+              }
+            },
+            "required": [
+              "path",
+              "permissions",
+              "signing"
+            ],
+            "type": "object"
+          },
+          "minItems": 1,
+          "title": "Include paths",
+          "type": "array"
+        },
+        "mode": {
+          "default": "Source",
+          "type": "string"
+        },
+        "parameters": {
+          "properties": {
+            "excludeEnableGlobal": {
+              "default": true,
+              "title": "Exclude typical OS files and directories",
+              "type": "boolean"
+            },
+            "excludeExternalDrives": {
+              "default": true,
+              "title": "Exclude external drives",
+              "type": "boolean"
+            },
+            "excludeSymlinks": {
+              "default": true,
+              "title": "Exclude symlinks",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "excludeExternalDrives",
+            "excludeEnableGlobal",
+            "excludeSymlinks"
+          ],
+          "title": "Parameters",
+          "type": "object"
+        },
+        "type": {
+          "default": "filesys",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "actions",
+        "mode",
+        "include"
+      ],
+      "title": "File System",
+      "type": "object"
+    },
+    "ui": {
+      "actions": {
+        "ui:options": {
+          "label": false
+        },
+        "ui:widget": "hidden"
+      },
+      "estimation": {
+        "accessCost": {},
+        "accessDelay": {},
+        "accessRate": {},
+        "storeCost": {},
+        "ui:order": [
+          "accessDelay",
+          "accessRate",
+          "storeCost",
+          "accessCost"
+        ]
+      },
+      "exclude": {
+        "items": {
+          "path": {},
+          "ui:order": [
+            "path"
+          ]
+        },
+        "ui:order": [
+          "items"
+        ]
+      },
+      "include": {
+        "items": {
+          "classify": {
+            "chip": "Classify"
+          },
+          "index": {
+            "chip": "Index"
+          },
+          "ocr": {
+            "chip": "OCR"
+          },
+          "path": {},
+          "permissions": {
+            "chip": "Permissions"
+          },
+          "signing": {
+            "chip": "Signing"
+          },
+          "ui:order": [
+            "path",
+            "permissions",
+            "signing",
+            "index",
+            "vectorize",
+            "classify",
+            "ocr"
+          ],
+          "vectorize": {
+            "chip": "AI"
+          }
+        },
+        "ui:order": [
+          "items"
+        ]
+      },
+      "mode": {
+        "ui:options": {
+          "label": false
+        },
+        "ui:widget": "hidden"
+      },
+      "parameters": {
+        "excludeEnableGlobal": {},
+        "excludeExternalDrives": {},
+        "excludeSymlinks": {},
+        "ui:order": [
+          "excludeExternalDrives",
+          "excludeEnableGlobal",
+          "excludeSymlinks"
+        ]
+      },
+      "type": {
+        "ui:options": {
+          "label": false
+        },
+        "ui:widget": "hidden"
+      },
+      "ui:order": [
+        "type",
+        "actions",
+        "mode",
+        "parameters",
+        "include",
+        "exclude",
+        "estimation"
+      ]
+    }
+  },
+  "title": "Local File System"
+}

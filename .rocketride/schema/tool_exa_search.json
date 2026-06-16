@@ -1,0 +1,120 @@
+{
+  "actions": 0,
+  "capabilities": 68608,
+  "classType": [
+    "tool"
+  ],
+  "description": "Exposes Exa semantic web search as an agent tool.\nPerforms real-time web searches via the Exa API and returns structured results with titles, URLs, text content, relevance scores, and dates.",
+  "icon": "exa.svg",
+  "lanes": {},
+  "Pipe": {
+    "schema": {
+      "properties": {
+        "apikey": {
+          "default": "",
+          "description": "Exa API key (from https://exa.ai)",
+          "title": "API Key",
+          "type": "string"
+        },
+        "includeText": {
+          "default": true,
+          "description": "Include full text content in results",
+          "enum": [
+            true,
+            false
+          ],
+          "title": "Include Text Content",
+          "type": "boolean"
+        },
+        "numResults": {
+          "default": 10,
+          "description": "Maximum number of search results to return (1-50)",
+          "maximum": 50,
+          "minimum": 1,
+          "title": "Number of Results",
+          "type": "integer"
+        },
+        "searchType": {
+          "default": "auto",
+          "description": "Type of search to perform",
+          "enum": [
+            "auto",
+            "neural",
+            "keyword"
+          ],
+          "title": "Search Type",
+          "type": "string"
+        },
+        "type": {
+          "default": "tool_exa_search",
+          "type": "string"
+        },
+        "useAutoprompt": {
+          "default": true,
+          "description": "Let Exa optimize the query for better results",
+          "enum": [
+            true,
+            false
+          ],
+          "title": "Use Autoprompt",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "type",
+        "apikey",
+        "numResults",
+        "useAutoprompt",
+        "searchType",
+        "includeText"
+      ],
+      "title": "Exa Search",
+      "type": "object"
+    },
+    "ui": {
+      "apikey": {
+        "ui:secure": true,
+        "ui:widget": "ApiKeyWidget"
+      },
+      "includeText": {
+        "ui:enumNames": [
+          "Yes",
+          "No"
+        ]
+      },
+      "numResults": {},
+      "searchType": {
+        "ui:enumNames": [
+          "Auto",
+          "Neural",
+          "Keyword"
+        ]
+      },
+      "type": {
+        "ui:options": {
+          "label": false
+        },
+        "ui:widget": "hidden"
+      },
+      "ui:order": [
+        "type",
+        "apikey",
+        "numResults",
+        "useAutoprompt",
+        "searchType",
+        "includeText"
+      ],
+      "useAutoprompt": {
+        "ui:enumNames": [
+          "Yes",
+          "No"
+        ]
+      }
+    }
+  },
+  "plans": null,
+  "prefix": "exa",
+  "protocol": "tool_exa_search://",
+  "tile": [],
+  "title": "Exa Search"
+}

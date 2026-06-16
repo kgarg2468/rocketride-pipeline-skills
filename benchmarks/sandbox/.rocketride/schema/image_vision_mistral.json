@@ -1,0 +1,401 @@
+{
+  "actions": 0,
+  "capabilities": 3072,
+  "classType": [
+    "image"
+  ],
+  "description": "A component that connects to Mistral AI's vision-capable models for image analysis, \nOCR, and visual understanding tasks. Supports all Mistral vision models including \nMistral Large 3, Medium 3.1, Small 3.2, and Ministral models. Features robust error \nhandling, automatic image processing, and flexible prompt configuration for various use cases.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "mistral-vision.svg",
+  "lanes": {
+    "documents": [
+      "documents"
+    ],
+    "image": [
+      "text"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "dependencies": {
+        "profile": {
+          "oneOf": [
+            {
+              "properties": {
+                "mistral-large-3": {
+                  "object": "mistral-large-3",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "prompt": {
+                      "description": "Describe what you want to analyze or extract from the image",
+                      "format": "textarea",
+                      "title": "Analysis Prompt",
+                      "type": "string"
+                    },
+                    "systemPrompt": {
+                      "description": "Define the model's role and behavior for image analysis",
+                      "format": "textarea",
+                      "title": "System Instructions",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey",
+                    "systemPrompt",
+                    "prompt"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "mistral-large-3"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "1": {
+                  "object": "mistral-medium-3.1",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "prompt": {
+                      "description": "Describe what you want to analyze or extract from the image",
+                      "format": "textarea",
+                      "title": "Analysis Prompt",
+                      "type": "string"
+                    },
+                    "systemPrompt": {
+                      "description": "Define the model's role and behavior for image analysis",
+                      "format": "textarea",
+                      "title": "System Instructions",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey",
+                    "systemPrompt",
+                    "prompt"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "mistral-medium-3.1"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "2": {
+                  "object": "mistral-small-3.2",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "prompt": {
+                      "description": "Describe what you want to analyze or extract from the image",
+                      "format": "textarea",
+                      "title": "Analysis Prompt",
+                      "type": "string"
+                    },
+                    "systemPrompt": {
+                      "description": "Define the model's role and behavior for image analysis",
+                      "format": "textarea",
+                      "title": "System Instructions",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey",
+                    "systemPrompt",
+                    "prompt"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "mistral-small-3.2"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "ministral-14b-3": {
+                  "object": "ministral-14b-3",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "prompt": {
+                      "description": "Describe what you want to analyze or extract from the image",
+                      "format": "textarea",
+                      "title": "Analysis Prompt",
+                      "type": "string"
+                    },
+                    "systemPrompt": {
+                      "description": "Define the model's role and behavior for image analysis",
+                      "format": "textarea",
+                      "title": "System Instructions",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey",
+                    "systemPrompt",
+                    "prompt"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "ministral-14b-3"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "ministral-8b-3": {
+                  "object": "ministral-8b-3",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "prompt": {
+                      "description": "Describe what you want to analyze or extract from the image",
+                      "format": "textarea",
+                      "title": "Analysis Prompt",
+                      "type": "string"
+                    },
+                    "systemPrompt": {
+                      "description": "Define the model's role and behavior for image analysis",
+                      "format": "textarea",
+                      "title": "System Instructions",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey",
+                    "systemPrompt",
+                    "prompt"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "ministral-8b-3"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "ministral-3b-3": {
+                  "object": "ministral-3b-3",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "prompt": {
+                      "description": "Describe what you want to analyze or extract from the image",
+                      "format": "textarea",
+                      "title": "Analysis Prompt",
+                      "type": "string"
+                    },
+                    "systemPrompt": {
+                      "description": "Define the model's role and behavior for image analysis",
+                      "format": "textarea",
+                      "title": "System Instructions",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey",
+                    "systemPrompt",
+                    "prompt"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "ministral-3b-3"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "properties": {
+        "profile": {
+          "default": "mistral-large-3",
+          "description": "Select the Mistral vision model to use",
+          "enum": [
+            "ministral-14b-3",
+            "ministral-3b-3",
+            "ministral-8b-3",
+            "mistral-large-3",
+            "mistral-medium-3.1",
+            "mistral-small-3.2"
+          ],
+          "title": "Vision Model",
+          "type": "string"
+        }
+      },
+      "required": [
+        "profile"
+      ],
+      "title": "Mistral Vision",
+      "type": "object"
+    },
+    "ui": {
+      "1": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "prompt": {},
+        "systemPrompt": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "systemPrompt",
+          "prompt"
+        ]
+      },
+      "2": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "prompt": {},
+        "systemPrompt": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "systemPrompt",
+          "prompt"
+        ]
+      },
+      "ministral-14b-3": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "prompt": {},
+        "systemPrompt": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "systemPrompt",
+          "prompt"
+        ]
+      },
+      "ministral-3b-3": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "prompt": {},
+        "systemPrompt": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "systemPrompt",
+          "prompt"
+        ]
+      },
+      "ministral-8b-3": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "prompt": {},
+        "systemPrompt": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "systemPrompt",
+          "prompt"
+        ]
+      },
+      "mistral-large-3": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "prompt": {},
+        "systemPrompt": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey",
+          "systemPrompt",
+          "prompt"
+        ]
+      },
+      "profile": {
+        "ui:enumNames": [
+          "Ministral 3 14B - High Performance Vision (256k tokens)",
+          "Ministral 3 3B - Efficient Vision (256k tokens)",
+          "Ministral 3 8B - Balanced Vision (256k tokens)",
+          "Mistral Large 3 - Premier Vision (256k tokens)",
+          "Mistral Medium 3.1 - Balanced Vision (128k tokens)",
+          "Mistral Small 3.2 - Fast & Cheap Vision (128k tokens)"
+        ]
+      },
+      "ui:order": [
+        "profile",
+        "mistral-large-3",
+        "1",
+        "2",
+        "ministral-14b-3",
+        "ministral-8b-3",
+        "ministral-3b-3"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "image_vision_mistral",
+  "protocol": "image_vision_mistral://",
+  "tile": [
+    "Model: ${parameters.image_vision_mistral.profile}"
+  ],
+  "title": "Mistral Vision"
+}

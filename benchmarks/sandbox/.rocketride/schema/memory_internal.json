@@ -1,0 +1,41 @@
+{
+  "actions": 0,
+  "capabilities": 3072,
+  "classType": [
+    "memory"
+  ],
+  "description": "Run-scoped keyed memory store exposed as agent tools.\nProvides put, get, peek, list, and clear operations so agents can\npersist intermediate results across planning waves without bloating\nthe LLM context window.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "memory.svg",
+  "lanes": {},
+  "Pipe": {
+    "schema": {
+      "properties": {
+        "type": {
+          "default": "memory_internal",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type"
+      ],
+      "title": "Memory (Internal)",
+      "type": "object"
+    },
+    "ui": {
+      "type": {
+        "ui:options": {
+          "label": false
+        },
+        "ui:widget": "hidden"
+      },
+      "ui:order": [
+        "type"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "memory",
+  "protocol": "memory_internal://",
+  "title": "Memory (Internal)"
+}

@@ -1,0 +1,26 @@
+{
+  "actions": 0,
+  "capabilities": 2048,
+  "classType": [
+    "image"
+  ],
+  "description": "A component that processes an image, cleans it up for OCR tasks by converting to\ngray scale, removing noise, deskewing, and enhancing contrast. If you have 'noisy'\nimages of lesser quality, this can significantly improve the OCR accuracy.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "image_cleanup.svg",
+  "lanes": {
+    "image": [
+      "image"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "title": "Image Cleanup",
+      "type": "object"
+    },
+    "ui": {}
+  },
+  "plans": null,
+  "prefix": "image_cleanup",
+  "protocol": "image_cleanup://",
+  "title": "Cleanup"
+}

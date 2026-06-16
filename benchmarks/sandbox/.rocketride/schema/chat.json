@@ -1,0 +1,79 @@
+{
+  "actions": 0,
+  "capabilities": 2560,
+  "classType": [
+    "source"
+  ],
+  "description": "A user interface component that provides a web-based chat experience. It \ncreates its own HTTP endpoint, configured by host and port, to serve a simple \nchat UI. Users can interact with the interface to submit questions, which \nare routed through the attached pipeline for processing. Designed for easy \nintegration, it enables the addition of conversational capabilities to any \npipeline workflow.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "chat.svg",
+  "lanes": {
+    "_source": [
+      "questions"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "properties": {
+        "hideForm": {
+          "default": true,
+          "type": "boolean"
+        },
+        "mode": {
+          "default": "Source",
+          "type": "string"
+        },
+        "parameters": {
+          "type": "object"
+        },
+        "type": {
+          "default": "chat",
+          "type": "string"
+        }
+      },
+      "required": [
+        "hideForm",
+        "type",
+        "mode"
+      ],
+      "title": "Chat",
+      "type": "object"
+    },
+    "ui": {
+      "hideForm": {
+        "ui:options": {
+          "label": false
+        },
+        "ui:widget": "hidden"
+      },
+      "mode": {
+        "ui:options": {
+          "label": false
+        },
+        "ui:widget": "hidden"
+      },
+      "parameters": {
+        "ui:options": {
+          "label": false
+        }
+      },
+      "type": {
+        "ui:options": {
+          "label": false
+        },
+        "ui:widget": "hidden"
+      },
+      "ui:order": [
+        "hideForm",
+        "type",
+        "mode",
+        "parameters"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "Chat",
+  "protocol": "chat://",
+  "tile": [],
+  "title": "Chat"
+}

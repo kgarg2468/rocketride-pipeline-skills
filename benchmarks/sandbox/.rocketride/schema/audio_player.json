@@ -1,0 +1,25 @@
+{
+  "actions": 0,
+  "capabilities": 10240,
+  "classType": [
+    "audio"
+  ],
+  "description": "The Audio Player component plays audio through the system’s default audio\noutput device, including the audio track from video content. It supports\na variety of common audio formats and delivers clear, consistent playback\nfor speech, music, or sound effects.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "audio-player.svg",
+  "lanes": {
+    "audio": [],
+    "video": []
+  },
+  "Pipe": {
+    "schema": {
+      "title": "Audio Player",
+      "type": "object"
+    },
+    "ui": {}
+  },
+  "plans": null,
+  "prefix": "audio_player",
+  "protocol": "audio_player://",
+  "title": "Player"
+}

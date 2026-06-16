@@ -1,0 +1,138 @@
+{
+  "actions": 0,
+  "capabilities": 3072,
+  "classType": [
+    "agent",
+    "tool"
+  ],
+  "description": "Multi-agent manager using CrewAI hierarchical process.\nFans out to connected CrewAI Subagent nodes, assembles a Crew, and synthesizes their outputs.\nCan be invoked as a tool (`<nodeId>.run_agent`) for nested orchestration.",
+  "icon": "crewai.svg",
+  "invoke": {
+    "crewai": {
+      "description": "Connected CrewAI Subagent nodes",
+      "min": 1
+    },
+    "llm": {
+      "description": "LLM used by the manager agent",
+      "min": 1
+    }
+  },
+  "lanes": {
+    "questions": [
+      "answers"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "properties": {
+        "default": {
+          "dependencies": {
+            "advanced_mode": {
+              "oneOf": [
+                {
+                  "properties": {
+                    "advanced_mode": {
+                      "enum": [
+                        true
+                      ]
+                    },
+                    "backstory": {
+                      "description": "Background context for the manager's persona. Maps to CrewAI Agent(backstory=...).",
+                      "format": "textarea",
+                      "title": "Manager Backstory",
+                      "type": "string"
+                    },
+                    "goal": {
+                      "description": "What the manager is trying to achieve. Maps to CrewAI Agent(goal=...).",
+                      "format": "textarea",
+                      "title": "Manager Goal",
+                      "type": "string"
+                    }
+                  }
+                },
+                {
+                  "properties": {
+                    "advanced_mode": {
+                      "enum": [
+                        false
+                      ]
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "object": "default",
+          "properties": {
+            "advanced_mode": {
+              "default": false,
+              "description": "Expose CrewAI manager Agent configuration directly.",
+              "enum": [
+                false,
+                true
+              ],
+              "title": "Advanced Mode",
+              "type": "boolean"
+            },
+            "agent_description": {
+              "default": "",
+              "description": "What this manager + its sub-agent crew does. Used by parent agents that call this manager as a tool via `<nodeId>.run_agent` to decide when to invoke it.",
+              "title": "Agent description",
+              "type": "string"
+            },
+            "instructions": {
+              "description": "Additional instructions to guide the manager's delegation strategy.",
+              "items": {
+                "format": "textarea",
+                "type": "string"
+              },
+              "title": "Instructions",
+              "type": "array"
+            }
+          },
+          "required": [
+            "instructions",
+            "advanced_mode"
+          ],
+          "type": "object"
+        }
+      },
+      "title": "CrewAI Manager",
+      "type": "object"
+    },
+    "ui": {
+      "default": {
+        "advanced_mode": {
+          "ui:enumNames": [
+            "Off",
+            "On"
+          ]
+        },
+        "agent_description": {
+          "ui:widget": "textarea"
+        },
+        "backstory": {},
+        "goal": {},
+        "instructions": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "agent_description",
+          "instructions",
+          "advanced_mode",
+          "goal",
+          "backstory"
+        ]
+      },
+      "ui:order": [
+        "default"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "agent",
+  "protocol": "agent_crewai_manager://",
+  "title": "CrewAI Manager"
+}

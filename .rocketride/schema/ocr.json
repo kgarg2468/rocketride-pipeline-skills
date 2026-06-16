@@ -1,0 +1,158 @@
+{
+  "actions": 0,
+  "capabilities": 6144,
+  "classType": [
+    "image"
+  ],
+  "description": "A component that extracts machine-readable text from images and scanned documents \nusing optical character recognition. It enables the transformation of visual content—such \nas PDFs, screenshots, and photos—into structured text for further analysis and processing. \nSupporting various image formats and multilingual text, the component is ideal for digitizing \nprinted materials, enabling search, indexing, and downstream natural language tasks.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "ocr.svg",
+  "lanes": {
+    "documents": [
+      "text"
+    ],
+    "image": [
+      "text",
+      "table"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "properties": {
+        "engine": {
+          "default": "easyocr",
+          "description": "Select the OCR engine for text extraction. EasyOCR supports many languages with script families. DocTR is language-agnostic and good for documents. Surya supports multi-language. TrOCR uses transformer models.",
+          "enum": [
+            "easyocr",
+            "doctr",
+            "surya",
+            "trocr"
+          ],
+          "title": "OCR Engine",
+          "type": "string"
+        },
+        "profile": {
+          "default": "latin",
+          "description": "Select a preconfigured OCR profile optimized for different languages and use cases.",
+          "enum": [
+            "arabic",
+            "chinese-simplified",
+            "chinese-traditional",
+            "cyrillic",
+            "devanagari",
+            "doctr",
+            "japanese",
+            "korean",
+            "latin",
+            "latin-extended",
+            "surya",
+            "trocr"
+          ],
+          "title": "OCR Profile",
+          "type": "string"
+        },
+        "script_family": {
+          "default": "latin",
+          "description": "Select the script family for OCR. This determines which languages are loaded for text recognition. Only applies to EasyOCR engine.",
+          "enum": [
+            "latin",
+            "latin-extended",
+            "cyrillic",
+            "arabic",
+            "devanagari",
+            "bengali",
+            "chinese-simplified",
+            "chinese-traditional",
+            "japanese",
+            "korean",
+            "thai",
+            "tamil",
+            "telugu"
+          ],
+          "title": "Script Family",
+          "type": "string"
+        },
+        "table_engine": {
+          "default": "doctr",
+          "description": "Select the OCR engine used for table text extraction. DocTR is optimized for document tables. EasyOCR and Surya are general-purpose alternatives.",
+          "enum": [
+            "doctr",
+            "easyocr",
+            "surya"
+          ],
+          "title": "Table OCR Engine",
+          "type": "string"
+        }
+      },
+      "required": [
+        "profile",
+        "engine",
+        "script_family",
+        "table_engine"
+      ],
+      "title": "OCR Settings",
+      "type": "object"
+    },
+    "ui": {
+      "engine": {
+        "ui:enumNames": [
+          "EasyOCR (Multi-language)",
+          "DocTR (Document-focused)",
+          "Surya (Multi-language)",
+          "TrOCR (Transformer)"
+        ]
+      },
+      "profile": {
+        "ui:enumNames": [
+          "Arabic/Persian/Urdu",
+          "Chinese (Simplified)",
+          "Chinese (Traditional)",
+          "Cyrillic (Russian, etc.)",
+          "Devanagari (Hindi, etc.)",
+          "DocTR (Language-agnostic)",
+          "Japanese",
+          "Korean",
+          "Latin (English)",
+          "Latin Extended (European)",
+          "Surya (Multi-language)",
+          "TrOCR (Transformer)"
+        ]
+      },
+      "script_family": {
+        "ui:enumNames": [
+          "Latin (English only)",
+          "Latin Extended (European languages)",
+          "Cyrillic (Russian, Ukrainian, etc.)",
+          "Arabic/Persian/Urdu",
+          "Devanagari (Hindi, Marathi, Nepali)",
+          "Bengali/Assamese",
+          "Chinese (Simplified)",
+          "Chinese (Traditional)",
+          "Japanese",
+          "Korean",
+          "Thai",
+          "Tamil",
+          "Telugu"
+        ]
+      },
+      "table_engine": {
+        "ui:enumNames": [
+          "DocTR (Document-focused)",
+          "EasyOCR",
+          "Surya"
+        ]
+      },
+      "ui:order": [
+        "profile",
+        "engine",
+        "script_family",
+        "table_engine"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "ocr",
+  "protocol": "ocr://",
+  "tile": [],
+  "title": "OCR"
+}

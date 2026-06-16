@@ -1,0 +1,63 @@
+{
+  "actions": 0,
+  "capabilities": 10243,
+  "classType": [
+    "target"
+  ],
+  "description": "A target component that writes data to the file system. It supports \noutputting structured or unstructured content to files in a variety \nof formats such as JSON, CSV, or plain text. Configurable with output \npaths and naming conventions, the component enables flexible persistence \nof processed data to networked storage.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "text-output.svg",
+  "lanes": {
+    "text": []
+  },
+  "Pipe": {
+    "schema": {
+      "properties": {
+        "parameters": {
+          "object": "parameters",
+          "properties": {
+            "exclude": {
+              "default": "N/A",
+              "description": "Which paths to exclude from the output path, if not required put N/A. e.g Users/Downloads/ or N/A",
+              "title": "exclude",
+              "type": "string"
+            },
+            "storePath": {
+              "description": "This path defines the exact specific folder in the filesystem.\n\nFormat for Windows : C:\\foldername (for local filesystem) or \\\\file.core.net\\foldername (for shared folders)\n\nFormat for Linux : /file.core.net/foldername\n\nFormat for AWS/S3 : bucketname/foldername\nFormat for Azure blob : containername/foldername\nFormat for SharePoint: sitename/drivename/foldername\nFormat for onedrive: account/foldername",
+              "title": "Store path",
+              "type": "string"
+            }
+          },
+          "required": [
+            "storePath",
+            "exclude"
+          ],
+          "type": "object"
+        }
+      },
+      "title": "Destination path",
+      "type": "object"
+    },
+    "ui": {
+      "parameters": {
+        "exclude": {},
+        "storePath": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "storePath",
+          "exclude"
+        ]
+      },
+      "ui:order": [
+        "parameters"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "Local Text Output",
+  "protocol": "local-text-output://",
+  "title": "Local Text Output"
+}

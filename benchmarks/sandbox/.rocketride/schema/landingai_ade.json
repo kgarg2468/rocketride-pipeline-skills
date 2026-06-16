@@ -1,0 +1,94 @@
+{
+  "actions": 0,
+  "capabilities": 2048,
+  "classType": [
+    "data"
+  ],
+  "description": "A document parsing component that uses LandingAI's Agentic Document Extraction (ADE) \nto convert PDFs, images, and office documents into clean Markdown text and extracted tables. \nIt handles complex layouts, multi-page tables, and mixed text/figure documents.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "landingai_ade.svg",
+  "lanes": {
+    "tags": [
+      "text",
+      "table"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "properties": {
+        "default": {
+          "object": "default",
+          "properties": {
+            "api_key": {
+              "description": "Your LandingAI Agentic Document Extraction API key. Falls back to the VISION_AGENT_API_KEY environment variable when left blank.",
+              "title": "API Key",
+              "type": "string"
+            },
+            "model": {
+              "default": "dpt-2-latest",
+              "description": "The Agentic Document Extraction model used to parse documents.",
+              "enum": [
+                "dpt-2-latest"
+              ],
+              "title": "Model",
+              "type": "string"
+            },
+            "region": {
+              "default": "production",
+              "description": "Which LandingAI deployment to call. Use EU for the eu-west-1 data-residency endpoint.",
+              "enum": [
+                "production",
+                "eu"
+              ],
+              "title": "Region",
+              "type": "string"
+            }
+          },
+          "required": [
+            "api_key",
+            "model",
+            "region"
+          ],
+          "type": "object"
+        }
+      },
+      "title": "LandingAI ADE",
+      "type": "object"
+    },
+    "ui": {
+      "default": {
+        "api_key": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "model": {
+          "ui:enumNames": [
+            "DPT-2 (latest)"
+          ]
+        },
+        "region": {
+          "ui:enumNames": [
+            "US (production)",
+            "EU (eu-west-1)"
+          ]
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "api_key",
+          "model",
+          "region"
+        ]
+      },
+      "ui:order": [
+        "default"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "landingai_ade",
+  "protocol": "landingai_ade://",
+  "title": "LandingAI ADE"
+}

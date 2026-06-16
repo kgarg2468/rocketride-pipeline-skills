@@ -1,0 +1,210 @@
+{
+  "actions": 0,
+  "capabilities": 1024,
+  "classType": [
+    "database",
+    "tool"
+  ],
+  "description": "A processing component that connects to a Neo4J graph database. \nAccepts natural-language questions, translates them to Cypher queries \nvia an LLM, and returns results to the pipeline. Designed for knowledge graph retrieval, \nentity linking, and graph-based RAG workflows.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "neo4j.svg",
+  "invoke": {
+    "llm": {
+      "description": "LLM to use to craft Cypher queries from question",
+      "min": 1
+    }
+  },
+  "lanes": {
+    "questions": [
+      "table",
+      "text",
+      "answers"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "dependencies": {
+        "profile": {
+          "oneOf": [
+            {
+              "properties": {
+                "default": {
+                  "dependencies": {
+                    "auth_method": {
+                      "oneOf": [
+                        {
+                          "properties": {
+                            "auth_method": {
+                              "enum": [
+                                "userpass"
+                              ]
+                            },
+                            "password": {
+                              "description": "Password to authenticate with the Neo4J instance.",
+                              "title": "Password",
+                              "type": "string"
+                            },
+                            "user": {
+                              "default": "neo4j",
+                              "description": "Username to authenticate with the Neo4J instance.",
+                              "title": "User",
+                              "type": "string"
+                            }
+                          }
+                        },
+                        {
+                          "properties": {
+                            "auth_method": {
+                              "enum": [
+                                "token"
+                              ]
+                            },
+                            "token": {
+                              "description": "Bearer token for token-based authentication (e.g. Neo4J Aura cloud).",
+                              "title": "Bearer token",
+                              "type": "string"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "object": "default",
+                  "properties": {
+                    "allow_execute": {
+                      "default": false,
+                      "description": "Permit QuestionType.EXECUTE callers to run raw Cypher without LLM translation or safety checks. Leave OFF unless a trusted application explicitly needs to issue Cypher directly.",
+                      "title": "Allow direct query execution",
+                      "type": "boolean"
+                    },
+                    "auth_method": {
+                      "default": "userpass",
+                      "enum": [
+                        "userpass",
+                        "token"
+                      ],
+                      "title": "Authentication",
+                      "type": "string"
+                    },
+                    "database": {
+                      "default": "neo4j",
+                      "description": "Name of the Neo4J database to connect to. Use 'neo4j' for the default database.",
+                      "title": "Database name",
+                      "type": "string"
+                    },
+                    "db_description": {
+                      "default": "",
+                      "description": "What is this graph used for? Describe its content and domain — this helps the LLM generate more accurate Cypher queries.",
+                      "title": "Graph description",
+                      "type": "string"
+                    },
+                    "max_attempts": {
+                      "default": 5,
+                      "description": "Maximum number of times to re-ask the LLM if EXPLAIN rejects the generated Cypher query",
+                      "maximum": 20,
+                      "minimum": 1,
+                      "title": "Max validation attempts",
+                      "type": "integer"
+                    },
+                    "uri": {
+                      "default": "neo4j://localhost:7687",
+                      "description": "Bolt URI for the Neo4J instance. Use neo4j:// or bolt:// for plaintext, neo4j+s:// or bolt+s:// for TLS (e.g. Neo4J Aura cloud)",
+                      "title": "Connection URI",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "db_description",
+                    "uri",
+                    "auth_method",
+                    "database",
+                    "max_attempts",
+                    "allow_execute"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "default"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "properties": {
+        "profile": {
+          "default": "default",
+          "enum": [
+            "default"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "profile"
+      ],
+      "title": "Neo4J",
+      "type": "object"
+    },
+    "ui": {
+      "default": {
+        "allow_execute": {},
+        "auth_method": {
+          "ui:enumNames": [
+            "Username & Password",
+            "Bearer Token"
+          ]
+        },
+        "database": {},
+        "db_description": {
+          "ui:widget": "textarea"
+        },
+        "max_attempts": {},
+        "password": {
+          "ui:secure": true,
+          "ui:widget": "password"
+        },
+        "token": {
+          "ui:secure": true,
+          "ui:widget": "password"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "db_description",
+          "uri",
+          "auth_method",
+          "user",
+          "password",
+          "token",
+          "database",
+          "max_attempts",
+          "allow_execute"
+        ],
+        "uri": {},
+        "user": {}
+      },
+      "profile": {
+        "ui:enumNames": [
+          "Default"
+        ],
+        "ui:options": {
+          "label": false
+        },
+        "ui:widget": "hidden"
+      },
+      "ui:order": [
+        "profile",
+        "default"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "neo4j",
+  "protocol": "db_neo4j://",
+  "title": "Neo4J"
+}

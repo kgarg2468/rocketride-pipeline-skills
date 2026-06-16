@@ -1,0 +1,244 @@
+{
+  "actions": 0,
+  "capabilities": 3072,
+  "classType": [
+    "llm"
+  ],
+  "description": "Connects to Nebius Token Factory's OpenAI-compatible inference API.\nHosts open models (Llama, Qwen, DeepSeek) for reasoning, generation, and tool-calling. This is a branded preset of the generic OpenAI-Compatible API node, so it shares the same implementation; the base URL is pinned to Nebius Token Factory.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "nebius.svg",
+  "lanes": {
+    "questions": [
+      "answers"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "dependencies": {
+        "profile": {
+          "oneOf": [
+            {
+              "properties": {
+                "llama-3-3-70b": {
+                  "object": "llama-3-3-70b",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "llama-3-3-70b"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "profile": {
+                  "enum": [
+                    "qwen3-235b"
+                  ]
+                },
+                "qwen3-235b": {
+                  "object": "qwen3-235b",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "properties": {
+                "deepseek-v3": {
+                  "object": "deepseek-v3",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "deepseek-v3"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "custom": {
+                  "object": "custom",
+                  "properties": {
+                    "apikey": {
+                      "description": "Enter your API key or token",
+                      "title": "API key (Token)",
+                      "type": "string"
+                    },
+                    "base_url": {
+                      "description": "OpenAI-compatible base URL. Defaults to Nebius Token Factory.",
+                      "title": "Base URL",
+                      "type": "string"
+                    },
+                    "model": {
+                      "description": "Nebius Token Factory model id (e.g. meta-llama/Llama-3.3-70B-Instruct). Full list: https://tokenfactory.nebius.com/models",
+                      "title": "Model",
+                      "type": "string"
+                    },
+                    "modelSource": {
+                      "title": "Model source",
+                      "type": "string"
+                    },
+                    "modelTotalTokens": {
+                      "description": "Total Tokens",
+                      "title": "Tokens",
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "model",
+                    "base_url",
+                    "modelTotalTokens",
+                    "apikey"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "custom"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "properties": {
+        "profile": {
+          "default": "llama-3-3-70b",
+          "description": "Nebius Token Factory model",
+          "enum": [
+            "custom",
+            "deepseek-v3",
+            "llama-3-3-70b",
+            "qwen3-235b"
+          ],
+          "title": "Model",
+          "type": "string"
+        }
+      },
+      "required": [
+        "profile"
+      ],
+      "title": "Nebius",
+      "type": "object"
+    },
+    "ui": {
+      "custom": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "base_url": {},
+        "model": {},
+        "modelSource": {
+          "ui:widget": "hidden"
+        },
+        "modelTotalTokens": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "model",
+          "base_url",
+          "modelTotalTokens",
+          "apikey",
+          "modelSource"
+        ]
+      },
+      "deepseek-v3": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey"
+        ]
+      },
+      "llama-3-3-70b": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey"
+        ]
+      },
+      "profile": {
+        "ui:enumNames": [
+          null,
+          "DeepSeek V3",
+          "Llama 3.3 70B Instruct",
+          "Qwen3 235B"
+        ]
+      },
+      "qwen3-235b": {
+        "apikey": {
+          "ui:secure": true,
+          "ui:widget": "ApiKeyWidget"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "apikey"
+        ]
+      },
+      "ui:order": [
+        "profile",
+        "llama-3-3-70b",
+        "qwen3-235b",
+        "deepseek-v3",
+        "custom"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "llm",
+  "protocol": "llm_nebius://",
+  "tile": [
+    "Model: ${parameters.llm_openai_api.profile}"
+  ],
+  "title": "Nebius"
+}

@@ -1,0 +1,967 @@
+{
+  "actions": 0,
+  "capabilities": 2048,
+  "classType": [
+    "store"
+  ],
+  "description": "A vector database component for MongoDB Atlas, enabling efficient storage and \nretrieval of vector embeddings using MongoDB's native vector search capabilities. \nIt supports similarity search, filtering, and management of vector data with \nhigh performance and advanced matching capabilities using Atlas Vector Search.\n</br></br><a href=\"https://www.mongodb.com/products/platform/atlas-vector-search\" target=\"_blank\">MongoDB Atlas Vector Search</a>",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "mongodb.svg",
+  "lanes": {
+    "documents": [],
+    "questions": [
+      "documents",
+      "answers",
+      "questions"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "properties": {
+        "apikey": {
+          "description": "Enter your API key",
+          "title": "API key",
+          "type": "string"
+        },
+        "collection": {
+          "default": "ROCKETRIDE",
+          "description": "Enter the name of the collection",
+          "title": "Collection",
+          "type": "string"
+        },
+        "database": {
+          "default": "rocketride_db",
+          "type": null
+        },
+        "host": {
+          "description": "Enter the server IP address e.g. <your-instance-name>.<region>.atlas.io",
+          "title": "Host",
+          "type": "string"
+        },
+        "score": {
+          "default": 0.7,
+          "description": "Minumum retrieval score",
+          "enum": [
+            0,
+            0.4,
+            0.6,
+            0.7,
+            0.8,
+            0.9,
+            1
+          ],
+          "maximum": 1,
+          "minimum": 0,
+          "title": "Retrieval Score",
+          "type": "number"
+        }
+      },
+      "required": [
+        "host",
+        "apikey",
+        "score",
+        "database",
+        "collection"
+      ],
+      "title": "MongoDB Atlas Vector Store",
+      "type": "object"
+    },
+    "ui": {
+      "apikey": {
+        "ui:secure": true,
+        "ui:widget": "ApiKeyWidget"
+      },
+      "collection": {},
+      "database": {
+        "ui:options": {
+          "label": false
+        }
+      },
+      "host": {},
+      "score": {
+        "ui:enumNames": [
+          "All results",
+          "Likely not related",
+          "Possibly related",
+          "Related",
+          "Strongly related",
+          "Highly relevant",
+          "Almost identical"
+        ]
+      },
+      "ui:order": [
+        "host",
+        "apikey",
+        "score",
+        "database",
+        "collection"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "Atlas Vector Store",
+  "protocol": "mongodb+srv://",
+  "tile": [
+    "Host/Port: ${parameters.atlas.host}:${parameters.atlas.port}",
+    "Collection: ${parameters.atlas.collection}"
+  ],
+  "title": "MongoDB Atlas",
+  "Transform": {
+    "schema": {
+      "properties": {
+        "mode": {
+          "default": "Target",
+          "type": "string"
+        },
+        "parameters": {
+          "object": "parameters",
+          "properties": {
+            "autopipe": {
+              "object": "parameters",
+              "properties": {
+                "embedding": {
+                  "dependencies": {
+                    "provider": {
+                      "oneOf": [
+                        {
+                          "properties": {
+                            "embedding_image": {
+                              "dependencies": {
+                                "profile": {
+                                  "oneOf": [
+                                    {
+                                      "properties": {
+                                        "custom": {
+                                          "object": "custom",
+                                          "properties": {
+                                            "model": {
+                                              "description": "Hugging face model to use for embedding",
+                                              "maxLength": 32,
+                                              "minLength": 2,
+                                              "title": "Model name",
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "model"
+                                          ],
+                                          "title": "",
+                                          "type": "object"
+                                        },
+                                        "profile": {
+                                          "enum": [
+                                            "custom"
+                                          ]
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "properties": {
+                                        "profile": {
+                                          "enum": [
+                                            "google16x224",
+                                            "openai-patch16",
+                                            "openai-patch32"
+                                          ]
+                                        }
+                                      }
+                                    }
+                                  ]
+                                }
+                              },
+                              "properties": {
+                                "profile": {
+                                  "default": "openai-patch16",
+                                  "description": "Embedding model",
+                                  "enum": [
+                                    "custom",
+                                    "google16x224",
+                                    "openai-patch16",
+                                    "openai-patch32"
+                                  ],
+                                  "title": "Model",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "profile"
+                              ],
+                              "title": "",
+                              "type": "object"
+                            },
+                            "provider": {
+                              "const": "embedding_image"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        {
+                          "properties": {
+                            "embedding_openai": {
+                              "dependencies": {
+                                "profile": {
+                                  "oneOf": [
+                                    {
+                                      "properties": {
+                                        "profile": {
+                                          "enum": [
+                                            "text-embedding-3-small"
+                                          ]
+                                        },
+                                        "text-embedding-3-small": {
+                                          "object": "text-embedding-3-small",
+                                          "properties": {
+                                            "apikey": {
+                                              "description": "Enter your API key or token",
+                                              "title": "API key (Token)",
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "apikey"
+                                          ],
+                                          "type": "object"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "properties": {
+                                        "profile": {
+                                          "enum": [
+                                            "text-embedding-3-large"
+                                          ]
+                                        },
+                                        "text-embedding-3-large": {
+                                          "object": "text-embedding-3-large",
+                                          "properties": {
+                                            "apikey": {
+                                              "description": "Enter your API key or token",
+                                              "title": "API key (Token)",
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "apikey"
+                                          ],
+                                          "type": "object"
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "properties": {
+                                        "profile": {
+                                          "enum": [
+                                            "text-embedding-ada-002"
+                                          ]
+                                        },
+                                        "text-embedding-ada-002": {
+                                          "object": "text-embedding-ada-002",
+                                          "properties": {
+                                            "apikey": {
+                                              "description": "Enter your API key or token",
+                                              "title": "API key (Token)",
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "apikey"
+                                          ],
+                                          "type": "object"
+                                        }
+                                      }
+                                    }
+                                  ]
+                                }
+                              },
+                              "properties": {
+                                "profile": {
+                                  "default": "text-embedding-3-small",
+                                  "description": "OpenAI embedding model",
+                                  "enum": [
+                                    "text-embedding-3-large",
+                                    "text-embedding-3-small",
+                                    "text-embedding-ada-002"
+                                  ],
+                                  "title": "Model",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "profile"
+                              ],
+                              "title": "",
+                              "type": "object"
+                            },
+                            "provider": {
+                              "const": "embedding_openai"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        {
+                          "properties": {
+                            "embedding_transformer": {
+                              "dependencies": {
+                                "profile": {
+                                  "oneOf": [
+                                    {
+                                      "properties": {
+                                        "custom": {
+                                          "object": "custom",
+                                          "properties": {
+                                            "document_prefix": {
+                                              "description": "Prefix prepended to document text before encoding (e.g. 'search_document: ', 'passage: ')",
+                                              "title": "Document prefix",
+                                              "type": "string"
+                                            },
+                                            "model": {
+                                              "description": "Hugging face model to use for embedding",
+                                              "maxLength": 32,
+                                              "minLength": 2,
+                                              "title": "Model name",
+                                              "type": "string"
+                                            },
+                                            "query_prefix": {
+                                              "description": "Prefix prepended to query text before encoding (e.g. 'search_query: ', 'query: ')",
+                                              "title": "Query prefix",
+                                              "type": "string"
+                                            },
+                                            "truncate_dim": {
+                                              "description": "Truncate embeddings to this dimensionality (0 = use model default)",
+                                              "title": "Truncate dimensions",
+                                              "type": "number"
+                                            }
+                                          },
+                                          "required": [
+                                            "model",
+                                            "truncate_dim",
+                                            "document_prefix",
+                                            "query_prefix"
+                                          ],
+                                          "title": "",
+                                          "type": "object"
+                                        },
+                                        "profile": {
+                                          "enum": [
+                                            "custom"
+                                          ]
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "properties": {
+                                        "profile": {
+                                          "enum": [
+                                            "miniAll",
+                                            "miniLM",
+                                            "mpnet"
+                                          ]
+                                        }
+                                      }
+                                    }
+                                  ]
+                                }
+                              },
+                              "properties": {
+                                "profile": {
+                                  "default": "miniLM",
+                                  "description": "Embedding model",
+                                  "enum": [
+                                    "custom",
+                                    "miniAll",
+                                    "miniLM",
+                                    "mpnet"
+                                  ],
+                                  "title": "Model",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "profile"
+                              ],
+                              "title": "",
+                              "type": "object"
+                            },
+                            "provider": {
+                              "const": "embedding_transformer"
+                            }
+                          },
+                          "type": "object"
+                        },
+                        {
+                          "properties": {
+                            "embedding_video": {
+                              "dependencies": {
+                                "profile": {
+                                  "oneOf": [
+                                    {
+                                      "properties": {
+                                        "custom": {
+                                          "object": "custom",
+                                          "properties": {
+                                            "model": {
+                                              "description": "Hugging Face model to use for frame embedding",
+                                              "maxLength": 256,
+                                              "minLength": 2,
+                                              "title": "Model name",
+                                              "type": "string"
+                                            }
+                                          },
+                                          "required": [
+                                            "model"
+                                          ],
+                                          "title": "",
+                                          "type": "object"
+                                        },
+                                        "profile": {
+                                          "enum": [
+                                            "custom"
+                                          ]
+                                        }
+                                      }
+                                    },
+                                    {
+                                      "properties": {
+                                        "profile": {
+                                          "enum": [
+                                            "google16x224",
+                                            "openai-patch16",
+                                            "openai-patch32"
+                                          ]
+                                        }
+                                      }
+                                    }
+                                  ]
+                                }
+                              },
+                              "properties": {
+                                "extraction": {
+                                  "object": "extraction",
+                                  "properties": {
+                                    "duration": {
+                                      "default": 0,
+                                      "title": "Duration (in seconds) for frame extraction (0=end of video)",
+                                      "type": "number"
+                                    },
+                                    "interval": {
+                                      "default": 5,
+                                      "description": "Time in seconds between extracted frames",
+                                      "title": "Interval (in seconds) between frames",
+                                      "type": "number"
+                                    },
+                                    "max_frames": {
+                                      "default": 50,
+                                      "description": "Limit the total number of frames extracted from the video. Set to 0 for unlimited.",
+                                      "title": "Maximum number of frames to extract (0=unlimited)",
+                                      "type": "number"
+                                    },
+                                    "maxVideoSizeMB": {
+                                      "default": 500,
+                                      "description": "Maximum allowed video file size in megabytes. Videos exceeding this limit will be rejected.",
+                                      "title": "Maximum video file size (MB)",
+                                      "type": "number"
+                                    },
+                                    "start_time": {
+                                      "default": 0,
+                                      "title": "Start time (in seconds) for frame extraction (0=beginning)",
+                                      "type": "number"
+                                    }
+                                  },
+                                  "required": [
+                                    "interval",
+                                    "max_frames",
+                                    "start_time",
+                                    "duration",
+                                    "maxVideoSizeMB"
+                                  ],
+                                  "title": "Frame Extraction",
+                                  "type": "object"
+                                },
+                                "profile": {
+                                  "default": "openai-patch16",
+                                  "description": "Embedding model for video frames",
+                                  "enum": [
+                                    "custom",
+                                    "google16x224",
+                                    "openai-patch16",
+                                    "openai-patch32"
+                                  ],
+                                  "title": "Model",
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "profile"
+                              ],
+                              "title": "",
+                              "type": "object"
+                            },
+                            "provider": {
+                              "const": "embedding_video"
+                            }
+                          },
+                          "type": "object"
+                        }
+                      ]
+                    }
+                  },
+                  "properties": {
+                    "provider": {
+                      "default": "embedding_image",
+                      "enum": [
+                        "embedding_image",
+                        "embedding_openai",
+                        "embedding_transformer",
+                        "embedding_video"
+                      ],
+                      "title": "Provider",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "provider"
+                  ],
+                  "title": "Embedding",
+                  "type": "object"
+                },
+                "remote": {
+                  "object": "remote",
+                  "properties": {
+                    "provider": {
+                      "const": "remote",
+                      "default": "remote",
+                      "type": "string"
+                    },
+                    "remote": {
+                      "dependencies": {
+                        "profile": {
+                          "oneOf": [
+                            {
+                              "properties": {
+                                "profile": {
+                                  "enum": [
+                                    "remote"
+                                  ]
+                                },
+                                "remote": {
+                                  "object": "remote",
+                                  "properties": {
+                                    "apikey": {
+                                      "description": "Enter your API key",
+                                      "title": "API key",
+                                      "type": "string"
+                                    },
+                                    "host": {
+                                      "default": "pipe.rocketride.ai",
+                                      "maxLength": 32,
+                                      "minLength": 2,
+                                      "title": "Host",
+                                      "type": "string"
+                                    },
+                                    "mode": {
+                                      "const": "remote",
+                                      "default": "remote",
+                                      "type": "string"
+                                    },
+                                    "port": {
+                                      "default": 5565,
+                                      "minimum": 0,
+                                      "title": "Port",
+                                      "type": "number"
+                                    }
+                                  },
+                                  "required": [
+                                    "mode",
+                                    "host",
+                                    "port",
+                                    "apikey"
+                                  ],
+                                  "type": "object"
+                                }
+                              }
+                            },
+                            {
+                              "properties": {
+                                "local": {
+                                  "object": "local",
+                                  "properties": {
+                                    "mode": {
+                                      "const": "local",
+                                      "default": "local",
+                                      "type": "string"
+                                    }
+                                  },
+                                  "required": [
+                                    "mode"
+                                  ],
+                                  "type": "object"
+                                },
+                                "profile": {
+                                  "enum": [
+                                    "local"
+                                  ]
+                                }
+                              }
+                            }
+                          ]
+                        }
+                      },
+                      "object": "remote",
+                      "properties": {
+                        "profile": {
+                          "default": "local",
+                          "enum": [
+                            "local",
+                            "remote"
+                          ],
+                          "title": "Processing Mode",
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "profile"
+                      ],
+                      "type": "object"
+                    }
+                  },
+                  "required": [
+                    "provider"
+                  ],
+                  "title": "Remote/Local Processing",
+                  "type": "object"
+                },
+                "store": {
+                  "object": "store",
+                  "properties": {
+                    "provider": {
+                      "const": "atlas",
+                      "default": "atlas",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "provider"
+                  ],
+                  "title": "Store",
+                  "type": "object"
+                }
+              },
+              "type": "object"
+            }
+          },
+          "type": "object"
+        },
+        "type": {
+          "default": "mongodb+srv",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "mode"
+      ],
+      "title": "MongoDB Atlas",
+      "type": "object"
+    },
+    "ui": {
+      "mode": {
+        "ui:options": {
+          "label": false
+        },
+        "ui:widget": "hidden"
+      },
+      "parameters": {
+        "autopipe": {
+          "embedding": {
+            "embedding_image": {
+              "custom": {
+                "model": {},
+                "ui:options": {
+                  "nonNestedDisplay": true
+                },
+                "ui:order": [
+                  "model"
+                ]
+              },
+              "profile": {
+                "ui:enumNames": [
+                  "Custom model",
+                  "Google - 16x16 - fast, accurate, general-purpose",
+                  "OpenAI - 16x16 - good performance, lower memory",
+                  "OpenAI - 32x32 - lower performance, better recognition"
+                ]
+              },
+              "ui:options": {
+                "nonNestedDisplay": true
+              },
+              "ui:order": [
+                "profile",
+                "custom"
+              ]
+            },
+            "embedding_openai": {
+              "profile": {
+                "ui:enumNames": [
+                  "Text Large   - A larger and more powerful model",
+                  "Text Small   - A highly efficient model",
+                  "Text Ada     - First OpenAI embeddings model"
+                ]
+              },
+              "text-embedding-3-large": {
+                "apikey": {
+                  "ui:secure": true,
+                  "ui:widget": "ApiKeyWidget"
+                },
+                "ui:options": {
+                  "label": false,
+                  "nonNestedDisplay": true
+                },
+                "ui:order": [
+                  "apikey"
+                ]
+              },
+              "text-embedding-3-small": {
+                "apikey": {
+                  "ui:secure": true,
+                  "ui:widget": "ApiKeyWidget"
+                },
+                "ui:options": {
+                  "label": false,
+                  "nonNestedDisplay": true
+                },
+                "ui:order": [
+                  "apikey"
+                ]
+              },
+              "text-embedding-ada-002": {
+                "apikey": {
+                  "ui:secure": true,
+                  "ui:widget": "ApiKeyWidget"
+                },
+                "ui:options": {
+                  "label": false,
+                  "nonNestedDisplay": true
+                },
+                "ui:order": [
+                  "apikey"
+                ]
+              },
+              "ui:options": {
+                "nonNestedDisplay": true
+              },
+              "ui:order": [
+                "profile",
+                "text-embedding-3-small",
+                "text-embedding-3-large",
+                "text-embedding-ada-002"
+              ]
+            },
+            "embedding_transformer": {
+              "custom": {
+                "document_prefix": {},
+                "model": {},
+                "query_prefix": {},
+                "truncate_dim": {},
+                "ui:options": {
+                  "nonNestedDisplay": true
+                },
+                "ui:order": [
+                  "model",
+                  "truncate_dim",
+                  "document_prefix",
+                  "query_prefix"
+                ]
+              },
+              "profile": {
+                "ui:enumNames": [
+                  "Custom model",
+                  "miniAll - Another good one",
+                  "miniLM  - General use embeddings, good performance",
+                  "mpnet   - Yet another good one"
+                ]
+              },
+              "ui:options": {
+                "nonNestedDisplay": true
+              },
+              "ui:order": [
+                "profile",
+                "custom"
+              ]
+            },
+            "embedding_video": {
+              "custom": {
+                "model": {},
+                "ui:options": {
+                  "nonNestedDisplay": true
+                },
+                "ui:order": [
+                  "model"
+                ]
+              },
+              "extraction": {
+                "duration": {},
+                "interval": {},
+                "max_frames": {},
+                "maxVideoSizeMB": {},
+                "start_time": {},
+                "ui:options": {
+                  "nonNestedDisplay": true
+                },
+                "ui:order": [
+                  "interval",
+                  "max_frames",
+                  "start_time",
+                  "duration",
+                  "maxVideoSizeMB"
+                ]
+              },
+              "profile": {
+                "ui:enumNames": [
+                  "Custom model",
+                  "Google ViT - 16x16 - fast, accurate, general-purpose",
+                  "OpenAI CLIP - 16x16 - good performance, lower memory",
+                  "OpenAI CLIP - 32x32 - lower performance, better recognition"
+                ]
+              },
+              "ui:options": {
+                "nonNestedDisplay": true
+              },
+              "ui:order": [
+                "profile",
+                "custom",
+                "extraction"
+              ]
+            },
+            "provider": {
+              "ui:enumNames": [
+                "Image",
+                "OpenAI",
+                "Sentence Transformer",
+                "Video Embedding"
+              ]
+            },
+            "ui:order": [
+              "provider",
+              "embedding_image",
+              "embedding_openai",
+              "embedding_transformer",
+              "embedding_video"
+            ]
+          },
+          "remote": {
+            "provider": {
+              "ui:options": {
+                "label": false
+              },
+              "ui:widget": "hidden"
+            },
+            "remote": {
+              "local": {
+                "mode": {
+                  "ui:options": {
+                    "label": false
+                  },
+                  "ui:widget": "hidden"
+                },
+                "ui:options": {
+                  "label": false,
+                  "nonNestedDisplay": true
+                },
+                "ui:order": [
+                  "mode"
+                ]
+              },
+              "profile": {
+                "ui:enumNames": [
+                  "Process everything locally",
+                  "Process CPU/GPU heavy tasks remotely"
+                ]
+              },
+              "remote": {
+                "apikey": {
+                  "ui:secure": true,
+                  "ui:widget": "ApiKeyWidget"
+                },
+                "host": {},
+                "mode": {
+                  "ui:options": {
+                    "label": false
+                  },
+                  "ui:widget": "hidden"
+                },
+                "port": {},
+                "ui:options": {
+                  "label": false,
+                  "nonNestedDisplay": true
+                },
+                "ui:order": [
+                  "mode",
+                  "host",
+                  "port",
+                  "apikey"
+                ]
+              },
+              "ui:options": {
+                "label": false,
+                "nonNestedDisplay": true
+              },
+              "ui:order": [
+                "profile",
+                "remote",
+                "local"
+              ]
+            },
+            "ui:options": {
+              "nonNestedDisplay": true
+            },
+            "ui:order": [
+              "provider",
+              "remote"
+            ]
+          },
+          "store": {
+            "provider": {
+              "ui:options": {
+                "label": false
+              },
+              "ui:widget": "hidden"
+            },
+            "ui:options": {
+              "nonNestedDisplay": true
+            },
+            "ui:order": [
+              "provider"
+            ]
+          },
+          "ui:options": {
+            "label": false,
+            "nonNestedDisplay": true
+          },
+          "ui:order": [
+            "remote",
+            "store",
+            "embedding"
+          ]
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "autopipe"
+        ]
+      },
+      "type": {
+        "ui:options": {
+          "label": false
+        },
+        "ui:widget": "hidden"
+      },
+      "ui:order": [
+        "type",
+        "parameters",
+        "mode"
+      ]
+    }
+  }
+}

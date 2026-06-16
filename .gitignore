@@ -1,0 +1,8 @@
+# local bench run artifacts (live in /tmp, but ignore any local copies)
+.bench/
+runs/
+*.pyc
+__pycache__/
+.DS_Store
+.env
+.context/GATE_STATE.md

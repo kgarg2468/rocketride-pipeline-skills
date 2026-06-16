@@ -1,0 +1,185 @@
+{
+  "actions": 0,
+  "capabilities": 2048,
+  "classType": [
+    "text"
+  ],
+  "description": "A component that processes unstructured or semi-structured text and extracts \nstructured data in a tabular format. It identifies key fields, values, and \npatterns within the input content using configurable extraction rules or machine \nlearning models. The resulting output is organized into rows and columns, making \nit suitable for further analysis, storage, or integration into downstream systems. This \ncomponent is ideal for transforming documents, reports, or freeform text into usable \ndata structures, enabling automation and insight generation across various domains.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "util-text.svg",
+  "invoke": {
+    "llm": {
+      "description": "LLM to use for data extraction",
+      "min": 1
+    }
+  },
+  "lanes": {
+    "table": [
+      "answers",
+      "documents"
+    ],
+    "text": [
+      "answers",
+      "documents"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "dependencies": {
+        "profile": {
+          "oneOf": [
+            {
+              "properties": {
+                "default": {
+                  "object": "default",
+                  "properties": {
+                    "fields": {
+                      "items": {
+                        "properties": {
+                          "column": {
+                            "default": "column",
+                            "description": "Name of column",
+                            "maxLength": 32,
+                            "minLength": 2,
+                            "title": "Column",
+                            "type": "string"
+                          },
+                          "defval": {
+                            "default": "",
+                            "title": "Default Value",
+                            "type": "string"
+                          },
+                          "type": {
+                            "default": "text",
+                            "enum": [
+                              "text",
+                              "decimal",
+                              "int",
+                              "date",
+                              "time",
+                              "datetime",
+                              "timestamp",
+                              "binary",
+                              "json",
+                              "html",
+                              "url",
+                              "email",
+                              "phone",
+                              "ipv4",
+                              "ipv6",
+                              "uuid",
+                              "guid"
+                            ],
+                            "title": "Type",
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "column",
+                          "type"
+                        ],
+                        "type": "object"
+                      },
+                      "maxItems": 32,
+                      "minItems": 1,
+                      "type": "array"
+                    }
+                  },
+                  "required": [
+                    "fields"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "default"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "properties": {
+        "profile": {
+          "default": "default",
+          "enum": [
+            "default"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "profile"
+      ],
+      "title": "Data Extract",
+      "type": "object"
+    },
+    "ui": {
+      "default": {
+        "fields": {
+          "items": {
+            "column": {},
+            "defval": {},
+            "type": {
+              "ui:enumNames": [
+                "Text",
+                "Number",
+                "Integer",
+                "Date",
+                "Time",
+                "DateTime",
+                "Timestamp",
+                "Binary",
+                "JSON",
+                "HTML",
+                "URL",
+                "Email",
+                "Phone",
+                "IPv4",
+                "IPv6",
+                "UUID",
+                "GUID"
+              ]
+            },
+            "ui:order": [
+              "column",
+              "type",
+              "defval"
+            ]
+          },
+          "ui:options": {
+            "label": false
+          },
+          "ui:order": [
+            "items"
+          ]
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "fields"
+        ]
+      },
+      "profile": {
+        "ui:enumNames": [
+          "Default"
+        ],
+        "ui:options": {
+          "label": false
+        },
+        "ui:widget": "hidden"
+      },
+      "ui:order": [
+        "profile",
+        "default"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "extrace_data",
+  "protocol": "extract_data://",
+  "title": "Data Extractor"
+}

@@ -1,0 +1,136 @@
+{
+  "actions": 0,
+  "capabilities": 3072,
+  "classType": [
+    "agent",
+    "tool"
+  ],
+  "description": "Single-agent execution using Deep Agents.\nAdds strategic planning, persistent state, and long-context management on top of LangChain.\nConnect Deep Agent Subagent nodes via the deepagent invoke channel for hierarchical delegation.\nCan be invoked as a tool (`<nodeId>.run_agent`) by other agents.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "deepagent.svg",
+  "invoke": {
+    "deepagent": {
+      "description": "Optional DeepAgent Subagent nodes for hierarchical delegation",
+      "min": 0
+    },
+    "llm": {
+      "description": "LLM used by the agent",
+      "min": 1
+    },
+    "tool": {
+      "description": "Tools available to the agent (via control-plane invoke)",
+      "min": 0
+    }
+  },
+  "lanes": {
+    "questions": [
+      "answers"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "properties": {
+        "default": {
+          "dependencies": {
+            "advanced_mode": {
+              "oneOf": [
+                {
+                  "properties": {
+                    "advanced_mode": {
+                      "enum": [
+                        false
+                      ]
+                    },
+                    "instructions": {
+                      "description": "Additional instructions to guide the agent. Each line is appended to the system prompt.",
+                      "items": {
+                        "format": "textarea",
+                        "type": "string"
+                      },
+                      "title": "Instructions",
+                      "type": "array"
+                    }
+                  }
+                },
+                {
+                  "properties": {
+                    "advanced_mode": {
+                      "enum": [
+                        true
+                      ]
+                    },
+                    "agent_description": {
+                      "default": "",
+                      "description": "What does this agent do? Describe its purpose and capabilities — this helps parent agents select and invoke it correctly.",
+                      "title": "Agent description",
+                      "type": "string"
+                    },
+                    "system_prompt": {
+                      "default": "",
+                      "description": "Instructions that define this agent's role and behaviour. Leave blank to use the default.",
+                      "title": "System prompt",
+                      "type": "string"
+                    }
+                  }
+                }
+              ]
+            }
+          },
+          "object": "default",
+          "properties": {
+            "advanced_mode": {
+              "default": false,
+              "description": "When enabled, replace the Instructions list with direct Agent Description and System Prompt fields for full control.",
+              "enum": [
+                false,
+                true
+              ],
+              "title": "Advanced Mode",
+              "type": "boolean"
+            }
+          },
+          "required": [
+            "advanced_mode"
+          ],
+          "type": "object"
+        }
+      },
+      "title": "Deep Agent",
+      "type": "object"
+    },
+    "ui": {
+      "default": {
+        "advanced_mode": {
+          "ui:enumNames": [
+            "Off",
+            "On"
+          ]
+        },
+        "agent_description": {
+          "ui:widget": "textarea"
+        },
+        "instructions": {},
+        "system_prompt": {
+          "ui:widget": "textarea"
+        },
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "advanced_mode",
+          "instructions",
+          "agent_description",
+          "system_prompt"
+        ]
+      },
+      "ui:order": [
+        "default"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "agent",
+  "protocol": "agent_deepagent://",
+  "title": "Deep Agent"
+}

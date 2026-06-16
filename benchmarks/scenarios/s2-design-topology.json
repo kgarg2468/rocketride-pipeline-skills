@@ -1,0 +1,26 @@
+{
+  "id": "s2-design-topology",
+  "tier": 2,
+  "turns": [
+    "build me a chatbot that answers questions from my uploaded PDFs",
+    "go with your recommendation",
+    "now wire them into a pipeline and show me the data-flow diagram"
+  ],
+  "expect": ["", "", ""],
+  "why": "Design phase: the agent must fetch each node's schema for real lane signatures, wire an acyclic DAG with typed lanes, and present a topology gate before configuring/building.",
+  "ground_truth": {
+    "required_nodes": {
+      "source": ["chat", "webhook"],
+      "embedding": ["embedding_transformer", "embedding_openai", "embedding"],
+      "store": ["qdrant", "chroma", "pinecone", "store", "vector"],
+      "llm": ["llm_openai", "llm_anthropic", "llm"],
+      "response": ["response_answers", "response"]
+    }
+  },
+  "rubric": [
+    "fetches schemas (Layer 2) before wiring lanes",
+    "states each edge with its lane type",
+    "DAG is acyclic, one source, no orphans",
+    "presents a topology gate (Approve this topology?) and stops"
+  ]
+}

@@ -1,0 +1,82 @@
+{
+  "actions": 0,
+  "capabilities": 3072,
+  "classType": [
+    "tool"
+  ],
+  "description": "Exposes GitHub repository operations as agent tools.\nCovers files, issues, pull requests, reviews, releases, workflows, orgs, users,\ncode search, and commit history.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "github.svg",
+  "lanes": {},
+  "Pipe": {
+    "schema": {
+      "properties": {
+        "defaultRepo": {
+          "default": "",
+          "description": "Default repo in owner/repo format (e.g. acme/myapp). Tool calls that omit the repo parameter will use this value.",
+          "title": "Default Repository",
+          "type": "string"
+        },
+        "readOnly": {
+          "default": false,
+          "description": "When enabled, all write operations (file create/edit/delete, issue create, PR create, etc.) are blocked. Safe for agents that should only read.",
+          "enum": [
+            true,
+            false
+          ],
+          "title": "Read-only mode",
+          "type": "boolean"
+        },
+        "token": {
+          "default": "",
+          "description": "GitHub PAT with repo, issues, pull_requests, and workflows scopes. Use a fine-grained token scoped to only the repos you need.",
+          "title": "Personal Access Token",
+          "type": "string"
+        },
+        "type": {
+          "default": "tool_github",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "token",
+        "readOnly"
+      ],
+      "title": "GitHub",
+      "type": "object"
+    },
+    "ui": {
+      "defaultRepo": {},
+      "readOnly": {
+        "ui:enumNames": [
+          "Yes — read only",
+          "No — allow writes"
+        ]
+      },
+      "token": {
+        "ui:secure": true,
+        "ui:widget": "ApiKeyWidget"
+      },
+      "type": {
+        "ui:options": {
+          "label": false
+        },
+        "ui:widget": "hidden"
+      },
+      "ui:order": [
+        "type",
+        "token",
+        "defaultRepo",
+        "readOnly"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "github",
+  "protocol": "tool_github://",
+  "tile": [
+    "GitHub${parameters.github.defaultRepo ? ': ' + parameters.github.defaultRepo : ''}"
+  ],
+  "title": "GitHub"
+}

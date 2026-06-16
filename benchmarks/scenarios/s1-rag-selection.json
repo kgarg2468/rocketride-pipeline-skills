@@ -1,0 +1,25 @@
+{
+  "id": "s1-rag-selection",
+  "tier": 1,
+  "prompt": "build me a chatbot that answers questions from my uploaded PDFs. what nodes will it need?",
+  "why": "Node-selection completeness for a RAG pipeline. The agent must explore archetypes, cite each node from the index, and produce a count line — not name a vague subset or fabricate a node.",
+  "ground_truth": {
+    "required_nodes": {
+      "source": ["chat", "webhook"],
+      "embedding": ["embedding_transformer", "embedding_openai", "embedding"],
+      "store": ["qdrant", "chroma", "pinecone", "weaviate", "milvus", "store", "vector"],
+      "llm": ["llm_openai", "llm_anthropic", "llm_gemini", "llm"],
+      "response": ["response_answers", "response"]
+    },
+    "bonus_nodes": {
+      "parse": ["parse"],
+      "preprocessor": ["preprocessor"]
+    }
+  },
+  "rubric": [
+    "names all 5 node roles (source, embedding, store, llm, response)",
+    "cites each from the index (Found in index: ... lanes=...)",
+    "count line present (Selected nodes (N): ...)",
+    "no fabricated nodes (everything cited from the catalog)"
+  ]
+}

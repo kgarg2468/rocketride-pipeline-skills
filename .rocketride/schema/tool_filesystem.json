@@ -1,0 +1,175 @@
+{
+  "actions": 0,
+  "capabilities": 3072,
+  "classType": [
+    "tool"
+  ],
+  "description": "File system tool for agents. Reads, writes, deletes, lists, and creates directories within the account-scoped RocketRide file store (the same store exposed via the client SDK's fs_* methods).\nAll operations are scoped to users/<client_id>/files/ — resolved from the ROCKETRIDE_CLIENT_ID env var injected by the task engine.\nPer-operation toggles (allowRead, allowWrite, allowDelete, allowList, allowMkdir, allowStat) gate which methods the agent can call.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "file-system.svg",
+  "lanes": {},
+  "Pipe": {
+    "schema": {
+      "properties": {
+        "allowDelete": {
+          "default": false,
+          "description": "Destructive — enable only when the agent is trusted to delete account files.",
+          "enum": [
+            true,
+            false
+          ],
+          "title": "Delete files",
+          "type": "boolean"
+        },
+        "allowList": {
+          "default": true,
+          "enum": [
+            true,
+            false
+          ],
+          "title": "List directories",
+          "type": "boolean"
+        },
+        "allowMkdir": {
+          "default": true,
+          "enum": [
+            true,
+            false
+          ],
+          "title": "Create directories",
+          "type": "boolean"
+        },
+        "allowRead": {
+          "default": true,
+          "enum": [
+            true,
+            false
+          ],
+          "title": "Read files",
+          "type": "boolean"
+        },
+        "allowStat": {
+          "default": true,
+          "enum": [
+            true,
+            false
+          ],
+          "title": "Stat (metadata)",
+          "type": "boolean"
+        },
+        "allowWrite": {
+          "default": true,
+          "enum": [
+            true,
+            false
+          ],
+          "title": "Write files",
+          "type": "boolean"
+        },
+        "pathWhitelist": {
+          "description": "Regex patterns applied to the relative path of every operation using re.search semantics — a partial match anywhere in the path is enough, so a pattern like 'secret' will also match 'notsecret/file.txt'. Anchor with ^ and $ if you need a full-path match (e.g. '^docs/.*$'). If non-empty, a path must match at least one pattern. If empty, all paths under users/<client_id>/files/ are allowed.",
+          "items": {
+            "properties": {
+              "whitelistPattern": {
+                "default": "",
+                "title": "Path Pattern (regex)",
+                "type": "string"
+              }
+            },
+            "required": [
+              "whitelistPattern"
+            ],
+            "type": "object"
+          },
+          "minItems": 0,
+          "title": "Path Whitelist",
+          "type": "array"
+        },
+        "type": {
+          "default": "tool_filesystem",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "allowRead",
+        "allowWrite",
+        "allowList",
+        "allowMkdir",
+        "allowStat",
+        "allowDelete"
+      ],
+      "title": "File System",
+      "type": "object"
+    },
+    "ui": {
+      "allowDelete": {
+        "ui:enumNames": [
+          "Yes",
+          "No"
+        ]
+      },
+      "allowList": {
+        "ui:enumNames": [
+          "Yes",
+          "No"
+        ]
+      },
+      "allowMkdir": {
+        "ui:enumNames": [
+          "Yes",
+          "No"
+        ]
+      },
+      "allowRead": {
+        "ui:enumNames": [
+          "Yes",
+          "No"
+        ]
+      },
+      "allowStat": {
+        "ui:enumNames": [
+          "Yes",
+          "No"
+        ]
+      },
+      "allowWrite": {
+        "ui:enumNames": [
+          "Yes",
+          "No"
+        ]
+      },
+      "pathWhitelist": {
+        "items": {
+          "ui:order": [
+            "whitelistPattern"
+          ],
+          "whitelistPattern": {}
+        },
+        "ui:order": [
+          "items"
+        ]
+      },
+      "type": {
+        "ui:options": {
+          "label": false
+        },
+        "ui:widget": "hidden"
+      },
+      "ui:order": [
+        "type",
+        "allowRead",
+        "allowWrite",
+        "allowList",
+        "allowMkdir",
+        "allowStat",
+        "allowDelete",
+        "pathWhitelist"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "fs",
+  "protocol": "tool_filesystem://",
+  "title": "File System"
+}

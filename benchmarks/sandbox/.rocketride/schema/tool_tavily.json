@@ -1,0 +1,102 @@
+{
+  "actions": 0,
+  "capabilities": 68608,
+  "classType": [
+    "tool"
+  ],
+  "description": "Exposes Tavily real-time web search as an agent tool.\nPerforms live web searches via the Tavily API and returns structured results with titles, URLs, content snippets, and relevance scores.",
+  "icon": "tavily.svg",
+  "lanes": {},
+  "Pipe": {
+    "schema": {
+      "properties": {
+        "apikey": {
+          "default": "",
+          "description": "Tavily API key (from https://tavily.com)",
+          "title": "API Key",
+          "type": "string"
+        },
+        "maxResults": {
+          "default": 5,
+          "description": "Maximum number of search results to return (1-20)",
+          "maximum": 20,
+          "minimum": 1,
+          "title": "Max Results",
+          "type": "integer"
+        },
+        "searchDepth": {
+          "default": "advanced",
+          "description": "Tavily search depth",
+          "enum": [
+            "basic",
+            "advanced"
+          ],
+          "title": "Search Depth",
+          "type": "string"
+        },
+        "topic": {
+          "default": "general",
+          "description": "Search topic category",
+          "enum": [
+            "general",
+            "news",
+            "finance"
+          ],
+          "title": "Topic",
+          "type": "string"
+        },
+        "type": {
+          "default": "tool_tavily",
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "apikey",
+        "maxResults",
+        "searchDepth",
+        "topic"
+      ],
+      "title": "Tavily",
+      "type": "object"
+    },
+    "ui": {
+      "apikey": {
+        "ui:secure": true,
+        "ui:widget": "ApiKeyWidget"
+      },
+      "maxResults": {},
+      "searchDepth": {
+        "ui:enumNames": [
+          "Basic",
+          "Advanced"
+        ]
+      },
+      "topic": {
+        "ui:enumNames": [
+          "General",
+          "News",
+          "Finance"
+        ]
+      },
+      "type": {
+        "ui:options": {
+          "label": false
+        },
+        "ui:widget": "hidden"
+      },
+      "ui:order": [
+        "type",
+        "apikey",
+        "maxResults",
+        "searchDepth",
+        "topic"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "tavily",
+  "protocol": "tool_tavily://",
+  "tile": [],
+  "title": "Tavily"
+}

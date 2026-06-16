@@ -1,0 +1,765 @@
+{
+  "actions": 0,
+  "capabilities": 6144,
+  "classType": [
+    "text"
+  ],
+  "description": "A filter component that \nidentifies and masks sensitive information in text data. It can be configured \nto detect and redact personally identifiable information (PII), maintaining \ndata privacy while preserving document context.</br>\n</br>\n<b>Note</b>: This component uses AI so 100% accuracy is not guaranteed. It is recommended to review the results.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "util-text.svg",
+  "lanes": {
+    "text": [
+      "text"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "dependencies": {
+        "profile": {
+          "oneOf": [
+            {
+              "properties": {
+                "custom": {
+                  "object": "custom",
+                  "properties": {
+                    "anonymizeChar": {
+                      "default": "█",
+                      "description": "Character",
+                      "maxLength": 1,
+                      "minLength": 1,
+                      "title": "Character to use for anonymization",
+                      "type": "string"
+                    },
+                    "model": {
+                      "description": "Gliner model to use for anonymization",
+                      "maxLength": 128,
+                      "minLength": 2,
+                      "title": "Model name",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "model",
+                    "anonymizeChar"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "custom"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "glinerMergedLarge": {
+                  "object": "glinerMergedLarge",
+                  "properties": {
+                    "anonymizeChar": {
+                      "default": "█",
+                      "description": "Character",
+                      "maxLength": 1,
+                      "minLength": 1,
+                      "title": "Character to use for anonymization",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "anonymizeChar"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "glinerMergedLarge"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "glinerMultiPII": {
+                  "object": "glinerMultiPII",
+                  "properties": {
+                    "anonymizeChar": {
+                      "default": "█",
+                      "description": "Character",
+                      "maxLength": 1,
+                      "minLength": 1,
+                      "title": "Character to use for anonymization",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "anonymizeChar"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "glinerMultiPII"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "glinerPIILarge": {
+                  "object": "glinerPIILarge",
+                  "properties": {
+                    "anonymizeChar": {
+                      "default": "█",
+                      "description": "Character",
+                      "maxLength": 1,
+                      "minLength": 1,
+                      "title": "Character to use for anonymization",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "anonymizeChar"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "glinerPIILarge"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "glinerSmall": {
+                  "object": "glinerSmall",
+                  "properties": {
+                    "anonymizeChar": {
+                      "default": "█",
+                      "description": "Character",
+                      "maxLength": 1,
+                      "minLength": 1,
+                      "title": "Character to use for anonymization",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "anonymizeChar"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "glinerSmall"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "glinerMedium": {
+                  "object": "glinerMedium",
+                  "properties": {
+                    "anonymizeChar": {
+                      "default": "█",
+                      "description": "Character",
+                      "maxLength": 1,
+                      "minLength": 1,
+                      "title": "Character to use for anonymization",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "anonymizeChar"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "glinerMedium"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "glinerLarge": {
+                  "object": "glinerLarge",
+                  "properties": {
+                    "anonymizeChar": {
+                      "default": "█",
+                      "description": "Character",
+                      "maxLength": 1,
+                      "minLength": 1,
+                      "title": "Character to use for anonymization",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "anonymizeChar"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "glinerLarge"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "glinerMulti": {
+                  "object": "glinerMulti",
+                  "properties": {
+                    "anonymizeChar": {
+                      "default": "█",
+                      "description": "Character",
+                      "maxLength": 1,
+                      "minLength": 1,
+                      "title": "Character to use for anonymization",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "anonymizeChar"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "glinerMulti"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "gretelSmall": {
+                  "object": "gretelSmall",
+                  "properties": {
+                    "anonymizeChar": {
+                      "default": "█",
+                      "description": "Character",
+                      "maxLength": 1,
+                      "minLength": 1,
+                      "title": "Character to use for anonymization",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "anonymizeChar"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "gretelSmall"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "gretelLarge": {
+                  "object": "gretelLarge",
+                  "properties": {
+                    "anonymizeChar": {
+                      "default": "█",
+                      "description": "Character",
+                      "maxLength": 1,
+                      "minLength": 1,
+                      "title": "Character to use for anonymization",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "anonymizeChar"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "gretelLarge"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "glinerKo": {
+                  "object": "glinerKo",
+                  "properties": {
+                    "anonymizeChar": {
+                      "default": "█",
+                      "description": "Character",
+                      "maxLength": 1,
+                      "minLength": 1,
+                      "title": "Character to use for anonymization",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "anonymizeChar"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "glinerKo"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "glinerIt": {
+                  "object": "glinerIt",
+                  "properties": {
+                    "anonymizeChar": {
+                      "default": "█",
+                      "description": "Character",
+                      "maxLength": 1,
+                      "minLength": 1,
+                      "title": "Character to use for anonymization",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "anonymizeChar"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "glinerIt"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "glinerAr": {
+                  "object": "glinerAr",
+                  "properties": {
+                    "anonymizeChar": {
+                      "default": "█",
+                      "description": "Character",
+                      "maxLength": 1,
+                      "minLength": 1,
+                      "title": "Character to use for anonymization",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "anonymizeChar"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "glinerAr"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "glinerCommunitySmall": {
+                  "object": "glinerCommunitySmall",
+                  "properties": {
+                    "anonymizeChar": {
+                      "default": "█",
+                      "description": "Character",
+                      "maxLength": 1,
+                      "minLength": 1,
+                      "title": "Character to use for anonymization",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "anonymizeChar"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "glinerCommunitySmall"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "glinerCommunityMedium": {
+                  "object": "glinerCommunityMedium",
+                  "properties": {
+                    "anonymizeChar": {
+                      "default": "█",
+                      "description": "Character",
+                      "maxLength": 1,
+                      "minLength": 1,
+                      "title": "Character to use for anonymization",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "anonymizeChar"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "glinerCommunityMedium"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "glinerCommunityLarge": {
+                  "object": "glinerCommunityLarge",
+                  "properties": {
+                    "anonymizeChar": {
+                      "default": "█",
+                      "description": "Character",
+                      "maxLength": 1,
+                      "minLength": 1,
+                      "title": "Character to use for anonymization",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "anonymizeChar"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "glinerCommunityLarge"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "glinerBiomedSmall": {
+                  "object": "glinerBiomedSmall",
+                  "properties": {
+                    "anonymizeChar": {
+                      "default": "█",
+                      "description": "Character",
+                      "maxLength": 1,
+                      "minLength": 1,
+                      "title": "Character to use for anonymization",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "anonymizeChar"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "glinerBiomedSmall"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "glinerBiomedLarge": {
+                  "object": "glinerBiomedLarge",
+                  "properties": {
+                    "anonymizeChar": {
+                      "default": "█",
+                      "description": "Character",
+                      "maxLength": 1,
+                      "minLength": 1,
+                      "title": "Character to use for anonymization",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "anonymizeChar"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "glinerBiomedLarge"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "properties": {
+        "profile": {
+          "default": "glinerMergedLarge",
+          "description": "Anonymize model",
+          "enum": [
+            "custom",
+            "glinerAr",
+            "glinerBiomedLarge",
+            "glinerBiomedSmall",
+            "glinerCommunityLarge",
+            "glinerCommunityMedium",
+            "glinerCommunitySmall",
+            "glinerIt",
+            "glinerKo",
+            "glinerLarge",
+            "glinerMedium",
+            "glinerMergedLarge",
+            "glinerMulti",
+            "glinerMultiPII",
+            "glinerPIILarge",
+            "glinerSmall",
+            "gretelLarge",
+            "gretelSmall"
+          ],
+          "title": "Model",
+          "type": "string"
+        }
+      },
+      "required": [
+        "profile"
+      ],
+      "title": "Anonymize",
+      "type": "object"
+    },
+    "ui": {
+      "custom": {
+        "anonymizeChar": {},
+        "model": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "model",
+          "anonymizeChar"
+        ]
+      },
+      "glinerAr": {
+        "anonymizeChar": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "anonymizeChar"
+        ]
+      },
+      "glinerBiomedLarge": {
+        "anonymizeChar": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "anonymizeChar"
+        ]
+      },
+      "glinerBiomedSmall": {
+        "anonymizeChar": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "anonymizeChar"
+        ]
+      },
+      "glinerCommunityLarge": {
+        "anonymizeChar": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "anonymizeChar"
+        ]
+      },
+      "glinerCommunityMedium": {
+        "anonymizeChar": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "anonymizeChar"
+        ]
+      },
+      "glinerCommunitySmall": {
+        "anonymizeChar": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "anonymizeChar"
+        ]
+      },
+      "glinerIt": {
+        "anonymizeChar": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "anonymizeChar"
+        ]
+      },
+      "glinerKo": {
+        "anonymizeChar": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "anonymizeChar"
+        ]
+      },
+      "glinerLarge": {
+        "anonymizeChar": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "anonymizeChar"
+        ]
+      },
+      "glinerMedium": {
+        "anonymizeChar": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "anonymizeChar"
+        ]
+      },
+      "glinerMergedLarge": {
+        "anonymizeChar": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "anonymizeChar"
+        ]
+      },
+      "glinerMulti": {
+        "anonymizeChar": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "anonymizeChar"
+        ]
+      },
+      "glinerMultiPII": {
+        "anonymizeChar": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "anonymizeChar"
+        ]
+      },
+      "glinerPIILarge": {
+        "anonymizeChar": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "anonymizeChar"
+        ]
+      },
+      "glinerSmall": {
+        "anonymizeChar": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "anonymizeChar"
+        ]
+      },
+      "gretelLarge": {
+        "anonymizeChar": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "anonymizeChar"
+        ]
+      },
+      "gretelSmall": {
+        "anonymizeChar": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "anonymizeChar"
+        ]
+      },
+      "profile": {
+        "ui:enumNames": [
+          "Custom model",
+          "GLiNER Arabic - Arabic language support",
+          "GLiNER Biomed Large - High accuracy biomedical model",
+          "GLiNER Biomed Small - Compact biomedical model",
+          "GLiNER Large v2.5 - Community edition",
+          "GLiNER Medium v2.5 - Community edition",
+          "GLiNER Small v2.5 - Community edition",
+          "GLiNER Italian - For Italian entity extraction",
+          "GLiNER Korean - Korean language support",
+          "GLiNER Large - Best accuracy, more resources",
+          "GLiNER Medium - Balanced performance",
+          "GLiNER Merged Large - Combined model from multiple datasets",
+          "GLiNER Multi - Multilingual support",
+          "GLiNER Multi PII - Multilingual PII model",
+          "GLiNER PII Large - High-accuracy English PII",
+          "GLiNER Small - Lightweight general-purpose model",
+          "Gretel GLiNER Bi-Large - For large-scale anonymization",
+          "Gretel GLiNER Bi-Small - Business-oriented NER"
+        ]
+      },
+      "ui:order": [
+        "profile",
+        "custom",
+        "glinerMergedLarge",
+        "glinerMultiPII",
+        "glinerPIILarge",
+        "glinerSmall",
+        "glinerMedium",
+        "glinerLarge",
+        "glinerMulti",
+        "gretelSmall",
+        "gretelLarge",
+        "glinerKo",
+        "glinerIt",
+        "glinerAr",
+        "glinerCommunitySmall",
+        "glinerCommunityMedium",
+        "glinerCommunityLarge",
+        "glinerBiomedSmall",
+        "glinerBiomedLarge"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "anonymize_text",
+  "protocol": "anonymize_text://",
+  "title": "Anonymize"
+}

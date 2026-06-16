@@ -1,0 +1,879 @@
+{
+  "actions": 0,
+  "capabilities": 2048,
+  "classType": [
+    "preprocessor"
+  ],
+  "description": "A preprocessing component that segments large bodies of text into intelligently sized \nchunks for downstream processing. It recursively splits content based on a hierarchy \nof separators—such as paragraphs, sentences, or words—preserving context while ensuring \neach chunk meets token or length constraints. This enables efficient handling of lengthy \ndocuments in workflows like embedding, retrieval, or LLM-based generation. Ideal for \npreparing content for language models where context length and coherence are critical.",
+  "documentation": "https://docs.rocketride.org",
+  "icon": "preprocessor-text.svg",
+  "lanes": {
+    "table": [
+      "documents"
+    ],
+    "text": [
+      "documents"
+    ]
+  },
+  "Pipe": {
+    "schema": {
+      "dependencies": {
+        "profile": {
+          "oneOf": [
+            {
+              "properties": {
+                "default": {
+                  "dependencies": {
+                    "mode": {
+                      "oneOf": [
+                        {
+                          "properties": {
+                            "mode": {
+                              "enum": [
+                                "strlen"
+                              ]
+                            },
+                            "strlen": {
+                              "default": 512,
+                              "title": "String length",
+                              "type": "number"
+                            }
+                          }
+                        },
+                        {
+                          "properties": {
+                            "mode": {
+                              "enum": [
+                                "tokens"
+                              ]
+                            },
+                            "tokens": {
+                              "default": 512,
+                              "title": "Number of tokens",
+                              "type": "number"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "object": "default",
+                  "properties": {
+                    "mode": {
+                      "default": "strlen",
+                      "enum": [
+                        "strlen",
+                        "tokens"
+                      ],
+                      "title": "Split by",
+                      "type": "string"
+                    },
+                    "splitter": {
+                      "const": "RecursiveCharacterTextSplitter",
+                      "default": "RecursiveCharacterTextSplitter",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "splitter",
+                    "mode"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "default"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "profile": {
+                  "enum": [
+                    "recursive"
+                  ]
+                },
+                "recursive": {
+                  "dependencies": {
+                    "mode": {
+                      "oneOf": [
+                        {
+                          "properties": {
+                            "mode": {
+                              "enum": [
+                                "strlen"
+                              ]
+                            },
+                            "strlen": {
+                              "default": 512,
+                              "title": "String length",
+                              "type": "number"
+                            }
+                          }
+                        },
+                        {
+                          "properties": {
+                            "mode": {
+                              "enum": [
+                                "tokens"
+                              ]
+                            },
+                            "tokens": {
+                              "default": 512,
+                              "title": "Number of tokens",
+                              "type": "number"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "object": "recursive",
+                  "properties": {
+                    "mode": {
+                      "default": "strlen",
+                      "enum": [
+                        "strlen",
+                        "tokens"
+                      ],
+                      "title": "Split by",
+                      "type": "string"
+                    },
+                    "separators": {
+                      "default": "'\\n\\n', '\\n', ' ', ''",
+                      "title": "Split separators",
+                      "type": "string"
+                    },
+                    "splitter": {
+                      "const": "RecursiveCharacterTextSplitter",
+                      "default": "RecursiveCharacterTextSplitter",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "splitter",
+                    "separators",
+                    "mode"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "properties": {
+                "character": {
+                  "dependencies": {
+                    "mode": {
+                      "oneOf": [
+                        {
+                          "properties": {
+                            "mode": {
+                              "enum": [
+                                "strlen"
+                              ]
+                            },
+                            "strlen": {
+                              "default": 512,
+                              "title": "String length",
+                              "type": "number"
+                            }
+                          }
+                        },
+                        {
+                          "properties": {
+                            "mode": {
+                              "enum": [
+                                "tokens"
+                              ]
+                            },
+                            "tokens": {
+                              "default": 512,
+                              "title": "Number of tokens",
+                              "type": "number"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "object": "character",
+                  "properties": {
+                    "mode": {
+                      "default": "strlen",
+                      "enum": [
+                        "strlen",
+                        "tokens"
+                      ],
+                      "title": "Split by",
+                      "type": "string"
+                    },
+                    "separator": {
+                      "default": "\"\\n\"",
+                      "title": "Split separator",
+                      "type": "string"
+                    },
+                    "splitter": {
+                      "const": "CharacterTextSplitter",
+                      "default": "CharacterTextSplitter",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "splitter",
+                    "separator",
+                    "mode"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "character"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "markdown": {
+                  "dependencies": {
+                    "mode": {
+                      "oneOf": [
+                        {
+                          "properties": {
+                            "mode": {
+                              "enum": [
+                                "strlen"
+                              ]
+                            },
+                            "strlen": {
+                              "default": 512,
+                              "title": "String length",
+                              "type": "number"
+                            }
+                          }
+                        },
+                        {
+                          "properties": {
+                            "mode": {
+                              "enum": [
+                                "tokens"
+                              ]
+                            },
+                            "tokens": {
+                              "default": 512,
+                              "title": "Number of tokens",
+                              "type": "number"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "object": "markdown",
+                  "properties": {
+                    "mode": {
+                      "default": "strlen",
+                      "enum": [
+                        "strlen",
+                        "tokens"
+                      ],
+                      "title": "Split by",
+                      "type": "string"
+                    },
+                    "splitter": {
+                      "const": "MarkdownTextSplitter",
+                      "default": "MarkdownTextSplitter",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "splitter",
+                    "mode"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "markdown"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "latex": {
+                  "dependencies": {
+                    "mode": {
+                      "oneOf": [
+                        {
+                          "properties": {
+                            "mode": {
+                              "enum": [
+                                "strlen"
+                              ]
+                            },
+                            "strlen": {
+                              "default": 512,
+                              "title": "String length",
+                              "type": "number"
+                            }
+                          }
+                        },
+                        {
+                          "properties": {
+                            "mode": {
+                              "enum": [
+                                "tokens"
+                              ]
+                            },
+                            "tokens": {
+                              "default": 512,
+                              "title": "Number of tokens",
+                              "type": "number"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "object": "latex",
+                  "properties": {
+                    "mode": {
+                      "default": "strlen",
+                      "enum": [
+                        "strlen",
+                        "tokens"
+                      ],
+                      "title": "Split by",
+                      "type": "string"
+                    },
+                    "splitter": {
+                      "const": "LatexTextSplitter",
+                      "default": "LatexTextSplitter",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "splitter",
+                    "mode"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "latex"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "nltk": {
+                  "dependencies": {
+                    "mode": {
+                      "oneOf": [
+                        {
+                          "properties": {
+                            "mode": {
+                              "enum": [
+                                "strlen"
+                              ]
+                            },
+                            "strlen": {
+                              "default": 512,
+                              "title": "String length",
+                              "type": "number"
+                            }
+                          }
+                        },
+                        {
+                          "properties": {
+                            "mode": {
+                              "enum": [
+                                "tokens"
+                              ]
+                            },
+                            "tokens": {
+                              "default": 512,
+                              "title": "Number of tokens",
+                              "type": "number"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "object": "nltk",
+                  "properties": {
+                    "mode": {
+                      "default": "strlen",
+                      "enum": [
+                        "strlen",
+                        "tokens"
+                      ],
+                      "title": "Split by",
+                      "type": "string"
+                    },
+                    "splitter": {
+                      "const": "NLTKTextSplitter",
+                      "default": "NLTKTextSplitter",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "splitter",
+                    "mode"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "nltk"
+                  ]
+                }
+              }
+            },
+            {
+              "properties": {
+                "profile": {
+                  "enum": [
+                    "spacy"
+                  ]
+                },
+                "spacy": {
+                  "dependencies": {
+                    "mode": {
+                      "oneOf": [
+                        {
+                          "properties": {
+                            "mode": {
+                              "enum": [
+                                "strlen"
+                              ]
+                            },
+                            "strlen": {
+                              "default": 512,
+                              "title": "String length",
+                              "type": "number"
+                            }
+                          }
+                        },
+                        {
+                          "properties": {
+                            "mode": {
+                              "enum": [
+                                "tokens"
+                              ]
+                            },
+                            "tokens": {
+                              "default": 512,
+                              "title": "Number of tokens",
+                              "type": "number"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "object": "spacy",
+                  "properties": {
+                    "mode": {
+                      "default": "strlen",
+                      "enum": [
+                        "strlen",
+                        "tokens"
+                      ],
+                      "title": "Split by",
+                      "type": "string"
+                    },
+                    "model": {
+                      "default": "en_core_web_sm",
+                      "enum": [
+                        "en_core_web_sm",
+                        "en_core_web_md",
+                        "en_core_web_lg",
+                        "en_core_web_trf",
+                        "de_core_news_sm",
+                        "de_core_news_md",
+                        "de_core_news_lg",
+                        "fr_core_news_sm",
+                        "fr_core_news_md",
+                        "fr_core_news_lg",
+                        "es_core_news_sm",
+                        "es_core_news_md",
+                        "es_core_news_lg"
+                      ],
+                      "title": "Model",
+                      "type": "string"
+                    },
+                    "splitter": {
+                      "const": "SpacyTextSplitter",
+                      "default": "SpacyTextSplitter",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "splitter",
+                    "model",
+                    "mode"
+                  ],
+                  "type": "object"
+                }
+              }
+            },
+            {
+              "properties": {
+                "custom": {
+                  "dependencies": {
+                    "mode": {
+                      "oneOf": [
+                        {
+                          "properties": {
+                            "mode": {
+                              "enum": [
+                                "strlen"
+                              ]
+                            },
+                            "strlen": {
+                              "default": 512,
+                              "title": "String length",
+                              "type": "number"
+                            }
+                          }
+                        },
+                        {
+                          "properties": {
+                            "mode": {
+                              "enum": [
+                                "tokens"
+                              ]
+                            },
+                            "tokens": {
+                              "default": 512,
+                              "title": "Number of tokens",
+                              "type": "number"
+                            }
+                          }
+                        }
+                      ]
+                    }
+                  },
+                  "object": "custom",
+                  "properties": {
+                    "mode": {
+                      "default": "strlen",
+                      "enum": [
+                        "strlen",
+                        "tokens"
+                      ],
+                      "title": "Split by",
+                      "type": "string"
+                    },
+                    "splitter": {
+                      "const": "RecursiveCharacterTextSplitter",
+                      "default": "RecursiveCharacterTextSplitter",
+                      "title": "Splitter class name",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "splitter",
+                    "mode"
+                  ],
+                  "type": "object"
+                },
+                "profile": {
+                  "enum": [
+                    "custom"
+                  ]
+                }
+              }
+            }
+          ]
+        }
+      },
+      "properties": {
+        "profile": {
+          "default": "default",
+          "enum": [
+            "default",
+            "recursive",
+            "character",
+            "markdown",
+            "latex",
+            "nltk",
+            "spacy",
+            "custom"
+          ],
+          "title": "Text splitter",
+          "type": "string"
+        }
+      },
+      "required": [
+        "profile"
+      ],
+      "title": "General Text",
+      "type": "object"
+    },
+    "ui": {
+      "character": {
+        "mode": {
+          "ui:enumNames": [
+            "String length",
+            "Estimated tokens"
+          ]
+        },
+        "separator": {},
+        "splitter": {
+          "ui:options": {
+            "label": false
+          },
+          "ui:widget": "hidden"
+        },
+        "strlen": {},
+        "tokens": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "splitter",
+          "separator",
+          "mode",
+          "strlen",
+          "tokens"
+        ]
+      },
+      "custom": {
+        "mode": {
+          "ui:enumNames": [
+            "String length",
+            "Estimated tokens"
+          ]
+        },
+        "splitter": {
+          "ui:widget": "hidden"
+        },
+        "strlen": {},
+        "tokens": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "splitter",
+          "mode",
+          "strlen",
+          "tokens"
+        ]
+      },
+      "default": {
+        "mode": {
+          "ui:enumNames": [
+            "String length",
+            "Estimated tokens"
+          ]
+        },
+        "splitter": {
+          "ui:options": {
+            "label": false
+          },
+          "ui:widget": "hidden"
+        },
+        "strlen": {},
+        "tokens": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "splitter",
+          "mode",
+          "strlen",
+          "tokens"
+        ]
+      },
+      "latex": {
+        "mode": {
+          "ui:enumNames": [
+            "String length",
+            "Estimated tokens"
+          ]
+        },
+        "splitter": {
+          "ui:options": {
+            "label": false
+          },
+          "ui:widget": "hidden"
+        },
+        "strlen": {},
+        "tokens": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "splitter",
+          "mode",
+          "strlen",
+          "tokens"
+        ]
+      },
+      "markdown": {
+        "mode": {
+          "ui:enumNames": [
+            "String length",
+            "Estimated tokens"
+          ]
+        },
+        "splitter": {
+          "ui:options": {
+            "label": false
+          },
+          "ui:widget": "hidden"
+        },
+        "strlen": {},
+        "tokens": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "splitter",
+          "mode",
+          "strlen",
+          "tokens"
+        ]
+      },
+      "nltk": {
+        "mode": {
+          "ui:enumNames": [
+            "String length",
+            "Estimated tokens"
+          ]
+        },
+        "splitter": {
+          "ui:options": {
+            "label": false
+          },
+          "ui:widget": "hidden"
+        },
+        "strlen": {},
+        "tokens": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "splitter",
+          "mode",
+          "strlen",
+          "tokens"
+        ]
+      },
+      "profile": {
+        "ui:enumNames": [
+          "Default Text Splitter - General-purpose, best balance of structure & size",
+          "Recursive Character Text Splitter - General-purpose, best balance of structure & size",
+          "Character Text Splitter - Simple splitting with a fixed separator",
+          "Markdown Text Splitter - Parsing structured markdown files",
+          "Latex Text Splitter - Splitting scientific documents",
+          "NLTK Text Splitter - Sentence-based splitting using NLTK",
+          "Spacy Text Splitter - More advanced NLP-based sentence splitting",
+          "Custom splitter"
+        ]
+      },
+      "recursive": {
+        "mode": {
+          "ui:enumNames": [
+            "String length",
+            "Estimated tokens"
+          ]
+        },
+        "separators": {},
+        "splitter": {
+          "ui:options": {
+            "label": false
+          },
+          "ui:widget": "hidden"
+        },
+        "strlen": {},
+        "tokens": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "splitter",
+          "separators",
+          "mode",
+          "strlen",
+          "tokens"
+        ]
+      },
+      "spacy": {
+        "mode": {
+          "ui:enumNames": [
+            "String length",
+            "Estimated tokens"
+          ]
+        },
+        "model": {
+          "ui:enumNames": [
+            "English: Small, Basic NLP (POS tagging, NER, Parsing)",
+            "English: Medium, Includes word vectors",
+            "English: Large, Larger word vectors",
+            "English: Transformer, Best accuracy, slower, uses transformers",
+            "German: Small, Basic NLP",
+            "German: Medium, Includes word vectors",
+            "German: Large, Larger word vectors",
+            "French: Small, Basic NLP",
+            "French: Medium, Includes word vectors",
+            "French: Large, Larger word vectors",
+            "Spanish: Small, Basic NLP",
+            "Spanish: Medium, Includes word vectors",
+            "Spanish: Large, Larger word vectors"
+          ]
+        },
+        "splitter": {
+          "ui:options": {
+            "label": false
+          },
+          "ui:widget": "hidden"
+        },
+        "strlen": {},
+        "tokens": {},
+        "ui:options": {
+          "label": false,
+          "nonNestedDisplay": true
+        },
+        "ui:order": [
+          "splitter",
+          "model",
+          "mode",
+          "strlen",
+          "tokens"
+        ]
+      },
+      "ui:order": [
+        "profile",
+        "default",
+        "recursive",
+        "character",
+        "markdown",
+        "latex",
+        "nltk",
+        "spacy",
+        "custom"
+      ]
+    }
+  },
+  "plans": null,
+  "prefix": "Preprocessor",
+  "protocol": "preprocessor_langchain://",
+  "tile": [
+    "Mode: ${parameters.preprocessor_langchain.profile}"
+  ],
+  "title": "General Text"
+}
