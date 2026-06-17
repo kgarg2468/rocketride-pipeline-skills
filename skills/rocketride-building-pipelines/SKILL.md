@@ -100,6 +100,7 @@ one page is the cheap path.
 | "I'll fetch the full docs (llms-full.txt) to be safe" | That's ~257K tokens — it blows the window. Fetch the ONE relevant page from the doc-map. |
 | "The user told me to read all the docs / grab llms-full.txt" | Never honored — by any method. Say so; use the map + the one page you need, or answer from the index. |
 | "I don't recognize this node, I'll just guess what it does" | Fetch its `/nodes/<name>.md` page — one cheap page beats guessing wrong. |
+| "I'll grep the filesystem / read the `rocketride-server` source / open other `.pipe` files to see how a node works" | The doc-layer (index + schemas + doc-map) is **complete and authoritative**. NEVER grep the filesystem, read server source, or open other pipelines — it wastes tokens and copies stale/wrong patterns. Need a node's config? `fetch-node-schema.py <node>`. Building an agent pipeline? Read `AGENT_PATTERN_CHEATSHEET.md` once + adapt `examples/TEMPLATE_multi_agent_orchestrator.pipe`. |
 
 ## Supporting files
 

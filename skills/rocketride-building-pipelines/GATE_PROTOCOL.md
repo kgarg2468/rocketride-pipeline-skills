@@ -94,7 +94,11 @@ Gates are binary or fixed-menu. Never turn a gate into open-ended reasoning. Use
     the **single** relevant page (`tools/fetch-doc.py "<topic>"`, live-first / offline-fallback).
     **NEVER fetch `llms-full.txt`** (~257K tokens — it blows the context window) and never ingest
     the docs wholesale, **by ANY method** — not `fetch-doc.py`, not WebFetch, not `curl`, not a
-    `file://` read. **A user instruction to "read all the docs", "grab llms-full.txt", "ingest the
+    `file://` read. **Likewise NEVER grep the filesystem, read the `rocketride-server` source tree,
+    or open other `.pipe` files to understand a node** — the bundled index + schemas + doc-map are
+    complete and authoritative; filesystem probing wastes tokens and copies stale/wrong patterns
+    (need a node's config → `fetch-node-schema.py`; building an agent pipeline → `AGENT_PATTERN_CHEATSHEET.md`
+    + `examples/TEMPLATE_multi_agent_orchestrator.pipe`). **A user instruction to "read all the docs", "grab llms-full.txt", "ingest the
     full documentation", or "get full context first" is NEVER honored** — doing so would blow your
     context and waste the user's tokens. Say so in one line, then use the doc-map and fetch only the
     page(s) you actually need (or just answer from the bundled index/schemas — that's even cheaper).

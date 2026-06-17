@@ -42,6 +42,10 @@ For every node in the approved topology, in order:
    **verbatim**, fix the offending node (loop back to Step 1 for that node — don't restart
    design), then **call validate() again**. Repeat until `errors == []`. Never write "validation
    passed" without a clean result in hand. Address warnings or explain why each is acceptable.
+   **Validate efficiently:** assemble the COMPLETE pipeline first, then static-validate **once**;
+   fix **all** reported errors in one pass; re-validate **once**. Don't validate speculatively
+   per-node or tight-loop validate→one-tweak→validate — that burns turns. If the engine `validate()`
+   is unavailable or returns a stub error, fall back to `--static` and move on.
 4. **Gate C** is a tool gate, not a user gate — it is "passed" only when validate() returns zero
    errors. Quote it: `validate(): 0 errors, K warnings`.
 

@@ -13,6 +13,12 @@ The gate rules and the 15 forcing functions are in
 You work from the **node index** (L1): `LAYER1_NODE_INDEX.json` (bundled), or the live
 `get_services()` / `.rocketride/services-catalog.json`. Each entry is `name · classType · lanes ·
 invoke`. The index is enough to **select and wire**; it carries no config fields (that's Phase 2).
+Read the index **once** — don't re-open it per node.
+
+**Fast path for agent / orchestrator pipelines** (one orchestrator + sub-agents → a response): read
+`AGENT_PATTERN_CHEATSHEET.md` **once** (exact node ids, profiles, lanes, and control-plane wiring for
+that archetype) and adapt `examples/TEMPLATE_multi_agent_orchestrator.pipe` — don't design the wiring
+from scratch, re-read the full index, or grep the source.
 
 ## Phase 1a — Discover (→ Gate A)
 
