@@ -103,7 +103,7 @@ one page is the cheap path.
 
 ## Supporting files
 
-- `GATE_PROTOCOL.md` — Waiting=STOP, multi-turn gate state, gate wording, the 16 forcing functions
+- `GATE_PROTOCOL.md` — Waiting=STOP, multi-turn gate state, gate wording, the 17 forcing functions
 - `pipeline-patterns.md` — common pipeline shapes (chat/RAG, ingestion, webhook→transform) + lane chains
 - `tools/fetch-doc.py` — fetch ONE doc page on demand (resolves from the doc-map; refuses the monolith)
 - `../../.rocketride/docs/ROCKETRIDE_DOC_MAP.md` — the bundled docs map (llms.txt); the deep-knowledge index

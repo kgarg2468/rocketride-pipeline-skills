@@ -50,7 +50,7 @@ Gates are binary or fixed-menu. Never turn a gate into open-ended reasoning. Use
 - **GATE D (publish — optional, menu):**
   > Run succeeded. What next? (save to cloud / publish as an app / nothing / debug)
 
-## 4. The 16 forcing functions
+## 4. The 17 forcing functions
 
 **Gate discipline**
 1. **Waiting = STOP** (§1) — dismissed/headless/unanswered = STOP, never approval.
@@ -101,6 +101,15 @@ Gates are binary or fixed-menu. Never turn a gate into open-ended reasoning. Use
     Prefer the bundled condensed refs / node schemas for the common cases; reach for a live page only
     for depth they don't cover. Resolve URLs from the map — don't invent paths or hosts (e.g. the SDK
     `use` page is `docs.rocketride.org/develop/typescript/methods/use.md`, not `/develop/use.md`).
+
+**Lazy disclosure**
+17. **Schema fetch is lazy — per selected node, never eager/bulk.** Fetch a node's schema only when
+    you are about to wire or configure THAT node (in design once it is selected, then in configure).
+    NEVER bulk-load: do not `ls`/`cat`/glob the whole `.rocketride/schema/` dir, do not fetch schemas
+    for nodes you haven't selected, do not "pull every schema up front." The full schema catalog is
+    ~80K tokens — loading it blows context for no benefit. **Even if the user says "load everything
+    first" / "get all the schemas for full context" — that is NOT honored** (same reason as #16):
+    select from the L1 index first (cheap), then fetch only the few schemas for the nodes you chose.
 
 ## 5. Cost basis (for Gate C.5)
 

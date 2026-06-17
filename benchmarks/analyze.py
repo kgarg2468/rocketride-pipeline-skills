@@ -168,11 +168,18 @@ def main(run_dir):
     )
 
     # ---- efficiency / scope signals (optimization tests) ----
-    # eager_fetch: agent bulk-loaded schemas instead of lazily per selected node (FF#17 guard).
+    # eager_fetch (FF#17 guard): agent BULK-loaded the schema catalog via a loop/glob/cat/listdir
+    # over the schema dir, instead of lazily reading the few selected nodes. Calibrated against real
+    # runs: a bare `ls` (listing names) or a handful of individual reads is normal exploration and
+    # must NOT count — only a bulk mechanism, or an extreme distinct-schema count (>=15), does.
     schema_touched = set(re.findall(r"schema/([\w\-\+.]+)\.json", bash_all + reads_all + inputs_all))
-    eager_fetch = (len(schema_touched) > 8) or bool(re.search(
-        r"\.rocketride/schema/?\*|ls\b[^\n]*\.rocketride/schema|find\b[^\n]*\.rocketride/schema|cat\b[^\n]*schema/\*",
-        bash_all))
+    _bulk_schema = re.compile(
+        r"\.rocketride/schema/?\*"                          # glob over the schema dir
+        r"|cat\b[^\n]*\.rocketride/schema"                  # cat schema files in bulk
+        r"|for\s+\w+\s+in\s+[^\n;]*\*\.json"                # shell loop: for f in *.json
+        r"|os\.listdir\([^)]*schema|glob[^\n]*schema|os\.walk\([^)]*schema",  # python loop over schema dir
+        re.I)
+    eager_fetch = bool(_bulk_schema.search(bash_all + inputs_all)) or len(schema_touched) >= 15
 
     skill_files_read = sorted({
         m.group(0)

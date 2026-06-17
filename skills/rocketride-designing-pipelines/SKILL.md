@@ -42,7 +42,9 @@ Only after Gate A is approved.
 1. **Fetch each selected node's schema** (L2 — `fetch_node_schema` / `tools/` shim in
    `../rocketride-configuring-pipelines/tools/fetch-node-schema.py` / `.rocketride/schema/<n>.json`).
    You need the real **lane signatures** here, not the index summary — wiring from the summary is
-   the most common silent bug. (Forcing function 8.)
+   the most common silent bug. (Forcing function 8.) **Lazily — only for the nodes you selected at
+   Gate A; never `ls`/`cat`/glob the whole `.rocketride/schema/` dir or "pull every schema up front"
+   (FF#17). Select from the index first; fetch only the few schemas you need.**
 2. **Wire the lanes.** Each non-source node gets `input: [{lane, from}]`. State **every edge** with
    its lane type: `chat_1 → embedding_1 (lane: questions)`. The output lane of `from` must be a
    real output of that node and a valid input of the target. If types don't match, insert a
