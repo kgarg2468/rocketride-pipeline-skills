@@ -208,6 +208,10 @@ async def engine_validate(path):
     try:
         from rocketride import RocketRideClient  # type: ignore
     except Exception:
+        sys.stderr.write("[validate] RocketRide SDK not importable; falling back to --static\n")
+        sys.stderr.write("ERROR_JSON: " + json.dumps({
+            "code": "ENGINE_UNAVAILABLE", "retriable": False,
+            "fallback": "ran --static lint (no SDK/engine). Install the SDK + .env to validate against an engine."}) + "\n")
         return None
     try:
         pipeline = json.load(open(path))
@@ -215,6 +219,9 @@ async def engine_validate(path):
             return await client.validate(pipeline)
     except Exception as e:
         sys.stderr.write(f"[validate] engine unavailable ({e}); falling back to --static\n")
+        sys.stderr.write("ERROR_JSON: " + json.dumps({
+            "code": "ENGINE_UNAVAILABLE", "retriable": False,
+            "fallback": "ran --static lint (no engine). To validate against a live engine, configure .env."}) + "\n")
         return None
 
 
@@ -225,6 +232,10 @@ def report(errors, warnings, mode):
     for e in errors:
         print(f"ERROR: {e}")
     print(f"\nvalidate(): {len(errors)} errors, {len(warnings)} warnings")
+    if errors:
+        sys.stderr.write("ERROR_JSON: " + json.dumps({
+            "code": "VALIDATION_FAILED", "retriable": True,
+            "fallback": "fix the listed errors and re-validate; never run an invalid pipeline"}) + "\n")
     sys.exit(1 if errors else 0)
 
 

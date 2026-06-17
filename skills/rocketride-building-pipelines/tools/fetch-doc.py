@@ -146,6 +146,9 @@ def main():
     if "llms-full" in arg.lower():
         sys.stderr.write("[fetch-doc] REFUSED: llms-full.txt is ~257K tokens and will blow the "
                          "context window. Fetch the single relevant page instead (see the doc-map).\n")
+        sys.stderr.write("ERROR_JSON: " + json.dumps({
+            "code": "MONOLITH_REFUSED", "retriable": False,
+            "fallback": "find the ONE relevant page in the doc-map and fetch only that"}) + "\n")
         sys.exit(2)
 
     links, map_path = load_map()
@@ -180,6 +183,9 @@ def main():
                              f"Read the rest at {url} if needed.\n")
     except Exception as e:
         sys.stderr.write(f"[fetch-doc] live fetch failed ({e}); falling back to bundled snapshot.\n")
+        sys.stderr.write("ERROR_JSON: " + json.dumps({
+            "code": "PAGE_FETCH_FAILED", "retriable": False,
+            "fallback": "use the bundled snapshot below (do NOT retry the URL or fetch the monolith)"}) + "\n")
         fb = offline_fallback(path, docs_dir)
         if fb:
             sys.stderr.write(f"[fetch-doc] OFFLINE FALLBACK — read this bundled file: {fb}\n")
