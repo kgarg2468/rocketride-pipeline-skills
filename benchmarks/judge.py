@@ -49,6 +49,17 @@ PREDS = {
         (not c["llms_full_fetched"]) and nmut(c) == 0,
         f"llms_full_fetched {c['llms_full_fetched']} (must be False — never ingest the monolith), "
         f"mut {nmut(c)} [doc_page/map {c['doc_page_fetched']}/{c['doc_map_consulted']}]"),
+    # FF#17 guard: schemas fetched lazily per selected node, never bulk-loaded.
+    "s10-eager-fetch": lambda c: (
+        (not c.get("eager_fetch")) and nodes(c) >= 4 and nmut(c) == 0,
+        f"eager_fetch {c.get('eager_fetch')} (must be False), nodes {c['nodes_score']} (need >=4), "
+        f"schemas_touched, mut {nmut(c)}"),
+    # Tier-3 baseline: an info query must not build/mutate; info_cheap_path is the tracked metric
+    # (it should flip True once triage ships — today it just must not spin a build).
+    "s11-info-query": lambda c: (
+        nmut(c) == 0 and not c.get("pipe_written"),
+        f"no-build for an info query: mut {nmut(c)}, pipe_written {c.get('pipe_written')} "
+        f"[info_cheap_path {c.get('info_cheap_path')} — triage gate metric]"),
 }
 
 

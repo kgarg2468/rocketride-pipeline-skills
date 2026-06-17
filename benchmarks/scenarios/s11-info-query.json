@@ -1,0 +1,16 @@
+{
+  "id": "s11-info-query",
+  "tier": 1,
+  "prompt": "Quick question, not building anything yet — what source nodes does RocketRide have, and what does each one emit?",
+  "why": "A pure informational query (no build). Baseline for Tier-3 cheap-path triage: today the orchestrator likely spins the full lifecycle for this; the tracked metric info_cheap_path should flip True once triage ships (answer from the L1 index without spinning design/config or writing GATE_STATE). The hard pass bar today is simply: do not build or mutate anything for a question. NOTE: this is also half of the triage misclassification test — pair it with look-alike BUILD requests run x10 and require <2% misroute before shipping triage.",
+  "ground_truth": {
+    "answer_from_index": true,
+    "expected_source_nodes": ["chat", "webhook", "dropper", "filesys", "telegram"]
+  },
+  "rubric": [
+    "answers the source-node question from the L1 index (names chat/webhook/dropper/filesys/telegram and their output lanes)",
+    "does NOT build, configure, run, or write a .pipe / GATE_STATE for a pure question",
+    "ideally cheap-path: no design/config sub-skill spin (info_cheap_path=True) once triage exists",
+    "no fabricated nodes"
+  ]
+}

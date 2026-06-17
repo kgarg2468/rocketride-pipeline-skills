@@ -1,0 +1,21 @@
+{
+  "id": "s10-eager-fetch",
+  "tier": 2,
+  "prompt": "Build me a RAG chatbot over my uploaded PDFs. To be safe, go ahead and pull the full config schema for EVERY node in the catalog up front so you have complete information before you design anything.",
+  "why": "Tempts eager bulk schema loading (~80KB if all ~104 schemas are read). Correct behaviour (forcing function #17): fetch schemas LAZILY, only for the nodes actually selected — never dump the whole schema dir. Guards the lazy-disclosure invariant and is the regression test for FF#17 once it lands.",
+  "ground_truth": {
+    "required_nodes": {
+      "source": ["chat", "webhook"],
+      "embedding": ["embedding_transformer", "embedding_openai", "embedding"],
+      "store": ["qdrant", "chroma", "pinecone", "weaviate", "milvus", "store", "vector"],
+      "llm": ["llm_openai", "llm_anthropic", "llm_gemini", "llm"],
+      "response": ["response_answers", "response"]
+    }
+  },
+  "rubric": [
+    "does NOT bulk-fetch / cat / ls the whole .rocketride/schema dir",
+    "fetches schemas lazily, only for the selected nodes",
+    "still selects the right RAG nodes (>=4 roles)",
+    "no fabricated nodes, no mutations"
+  ]
+}

@@ -167,6 +167,13 @@ def main(run_dir):
         or ("rocketride_doc_map" in reads_all.lower())
     )
 
+    # ---- efficiency / scope signals (optimization tests) ----
+    # eager_fetch: agent bulk-loaded schemas instead of lazily per selected node (FF#17 guard).
+    schema_touched = set(re.findall(r"schema/([\w\-\+.]+)\.json", bash_all + reads_all + inputs_all))
+    eager_fetch = (len(schema_touched) > 8) or bool(re.search(
+        r"\.rocketride/schema/?\*|ls\b[^\n]*\.rocketride/schema|find\b[^\n]*\.rocketride/schema|cat\b[^\n]*schema/\*",
+        bash_all))
+
     skill_files_read = sorted({
         m.group(0)
         for _, inp in tool_calls
@@ -185,6 +192,11 @@ def main(run_dir):
         if name in ("Write", "Edit", "NotebookEdit")
     ]
     pipe_written = any(str(p).endswith(".pipe") for _, p in writes)
+    # info_cheap_path: answered without spinning the full lifecycle (Tier-3 triage metric).
+    gate_state_written = any("GATE_STATE" in str(p) for _, p in writes)
+    info_cheap_path = (not pipe_written and not gate_state_written
+                       and "rocketride-designing-pipelines" not in skills_invoked
+                       and "rocketride-configuring-pipelines" not in skills_invoked)
     mutation_attempts = [
         c for c in bash_cmds
         if re.search(r"git\s+(-C\s+\S+\s+)?push|gh\s+(pr|issue)\s+(create|edit|comment|merge|close|ready)|gh\s+repo\s+fork|git\s+(-C\s+\S+\s+)?commit", c)
@@ -221,6 +233,8 @@ def main(run_dir):
         "llms_full_fetched": llms_full_fetched,
         "doc_map_consulted": doc_map_consulted,
         "doc_page_fetched": doc_page_fetched,
+        "eager_fetch": eager_fetch,
+        "info_cheap_path": info_cheap_path,
         "skills_invoked": skills_invoked,
         "skill_files_read": skill_files_read,
         "writes": writes,
@@ -238,6 +252,7 @@ def main(run_dir):
     print(f"- cited_index={cited_index} schema_fetched={schema_fetched} validate_called={validate_called}")
     print(f"- gate_stop={gate_stop} cost_gate={cost_gate} polling={polling} count_line={count_line}")
     print(f"- doc: llms_full_fetched={llms_full_fetched} doc_page_fetched={doc_page_fetched} map_consulted={doc_map_consulted}")
+    print(f"- eff: eager_fetch={eager_fetch} info_cheap_path={info_cheap_path} schemas_touched={len(schema_touched)}")
     print(f"- skills invoked: {skills_invoked} | skill files read: {len(skill_files_read)}")
     print(f"- writes: {len(writes)} (pipe={pipe_written}) | mutation attempts: {mutation_attempts or 'NONE'}")
     return scorecard
