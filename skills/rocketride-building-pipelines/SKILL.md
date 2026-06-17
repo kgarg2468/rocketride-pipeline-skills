@@ -49,6 +49,11 @@ Each step has the same fallback ladder — use the **first** option your environ
 > `--static` mode validates with no engine connection (a fast pre-flight lint). The
 > `rrext_get_nodes` resource is dead — never use it; discovery is `get_services`/`rrext_services`.
 
+**Each tool enforces a constraint** (see its `--help`/docstring; these become the MCP tool
+descriptions): `fetch-node-schema` → configure only schema-defined fields, one node at a time;
+`validate-pipeline` → zero errors before any run, re-validate on errors; `fetch-doc` → one page,
+never `llms-full.txt`.
+
 **Deep docs (when you need to learn, not just select/configure).** The full RocketRide docs map
 is bundled at `.rocketride/docs/ROCKETRIDE_DOC_MAP.md` (a ~2K-token index of ~156 pages). When you
 hit something the bundled refs don't cover — an unfamiliar node, an exact SDK signature, a concept

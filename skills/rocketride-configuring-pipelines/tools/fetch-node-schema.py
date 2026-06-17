@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 """Fetch one node's config schema (Layer 2).
 
+CONSTRAINT (agent contract / future MCP tool description): configure a node using ONLY the fields
+this schema defines — never invent field names (e.g. it is `modelTotalTokens`, not `max_tokens`).
+Fetch ONE node at a time; never bulk-load the schema catalog (FF#17).
+
 Order of preference:
   1. Live engine via the RocketRide SDK:  client.get_service(<name>)
   2. The cached catalog file:             .rocketride/schema/<name>.json

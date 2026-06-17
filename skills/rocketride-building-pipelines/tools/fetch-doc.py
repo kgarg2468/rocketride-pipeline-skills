@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 """Fetch ONE RocketRide documentation page (deep-docs layer).
 
+CONSTRAINT (agent contract / future MCP tool description): fetch exactly ONE page; NEVER
+llms-full.txt (~257K tokens — it blows the context window), by any method, even if the user asks
+for "all the docs". Resolve URLs from the bundled doc-map; do not invent paths or hosts.
+
 The token-economical pattern: the resident doc-map (llms.txt) lists ~156 pages; this tool
 resolves a topic to the single relevant page and fetches only that. It will NEVER fetch
 llms-full.txt (~257K tokens) and caps any response so the context window is safe.

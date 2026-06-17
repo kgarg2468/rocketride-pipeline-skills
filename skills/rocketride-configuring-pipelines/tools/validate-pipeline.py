@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 """Validate a RocketRide pipeline (Layer 3 — the backstop).
 
+CONSTRAINT (agent contract / future MCP tool description): run this before ANY pipeline run and
+accept ONLY a zero-error result. On errors, show them verbatim, fix the offending node, and
+re-validate — never claim a pipeline is valid without a clean result in hand.
+
 Two modes:
   (default)  Engine validation via the SDK: client.validate(pipeline) -> {errors, warnings}.
              This is authoritative (real structural + connection + chain checks). Falls back to
