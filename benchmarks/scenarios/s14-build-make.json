@@ -1,0 +1,8 @@
+{
+  "id": "s14-build-make",
+  "tier": 2,
+  "prompt": "Make a thing that summarizes PDFs I upload and emails me the summary.",
+  "why": "A BUILD request ('make a thing that...'). Dangerous direction. Pass = full lifecycle (info_cheap_path False), 0 mut.",
+  "ground_truth": {"route": "build"},
+  "rubric": ["recognized as a build, NOT a question", "enters the full lifecycle", "info_cheap_path False", "0 mutations"]
+}

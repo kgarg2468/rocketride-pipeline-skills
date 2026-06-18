@@ -1,0 +1,8 @@
+{
+  "id": "s14-info-stores",
+  "tier": 1,
+  "prompt": "Quick question, not building anything yet — what vector store nodes does RocketRide have?",
+  "why": "Pure info query. Triage should cheap-path: answer from the L1 index, no sub-skills / GATE_STATE / .pipe. Pass = info_cheap_path True, 0 mut, no build.",
+  "ground_truth": {"route": "info"},
+  "rubric": ["answers from the index (qdrant/chroma/pinecone/weaviate/milvus/...)", "cheap-path: no design/config spin, no GATE_STATE, no .pipe", "0 mutations"]
+}

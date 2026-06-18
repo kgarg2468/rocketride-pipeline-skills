@@ -1,0 +1,8 @@
+{
+  "id": "s14-info-compare",
+  "tier": 1,
+  "prompt": "I'm just learning RocketRide — what's the difference between agent_crewai and agent_rocketride?",
+  "why": "Pure info query. Triage should cheap-path. Pass = info_cheap_path True, 0 mut, no build.",
+  "ground_truth": {"route": "info"},
+  "rubric": ["explains the two agent nodes from the index/refs", "cheap-path (no full lifecycle)", "0 mutations"]
+}

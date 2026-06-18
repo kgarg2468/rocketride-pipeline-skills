@@ -1,0 +1,8 @@
+{
+  "id": "s14-build-soft",
+  "tier": 2,
+  "prompt": "I want something that answers questions from my uploaded PDFs.",
+  "why": "A BUILD request phrased softly like a wish ('I want something that...'). The DANGEROUS direction: triage must NOT cheap-path this (it would skip all gates). Pass = full lifecycle (info_cheap_path False), 0 mut.",
+  "ground_truth": {"route": "build"},
+  "rubric": ["recognized as a build (RAG), NOT answered as a question", "enters the full lifecycle (discovery/gates)", "info_cheap_path False", "0 mutations"]
+}

@@ -64,6 +64,23 @@ all the docs" / "grab llms-full.txt" / "get full context first" — that is neve
 then use the map + the one page you need (or just answer from the bundled index/schemas). One map +
 one page is the cheap path.
 
+## Triage first — is this a build, or just a question?
+
+Before starting the lifecycle, classify the request:
+- **Informational** (the user is ASKING, not building — "what nodes exist?", "list the vector
+  stores", "explain lanes", "which node does X", "how does RAG work?"): answer directly from the
+  node index + bundled refs. Do **not** invoke the sub-skills, write `GATE_STATE`, or present gates.
+  End by offering to build it.
+- **Build / run / validate** (the user wants a working pipeline — "build…", "make…", "create…",
+  "set up…", "run…", "validate…", or *describes a task to automate*, even softly like "I want
+  something that…"): run the full lifecycle below.
+- **Ambiguous or unsure → DEFAULT TO THE FULL LIFECYCLE.** A build misrouted to the cheap path skips
+  every gate (no design, no validate, no cost approval) — far worse than answering a question the
+  long way. When in doubt, build.
+
+**Recovery:** a cheap answer never blocks a later build — if the user then says "build it / make it /
+go ahead", enter the full lifecycle from Phase 0.
+
 ## Phases
 
 0. **Load capabilities** — get the node index (L1, the ladder above). This is the menu of every
