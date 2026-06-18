@@ -53,16 +53,15 @@ The real, observed mistakes when building RocketRide pipelines (condensed from t
   `answers`→`answers`, `text`→`text`, `documents`→`documents`, `questions`→`questions`. When in
   doubt, don't customize — use the lane-specific node (`response_answers`, `response_text`, …).
 
-## Common error messages → cause → fix
+## Common build-time errors (TL;DR — full catalog elsewhere)
+The complete error catalog (build-time **and** runtime, with owning phase) is the **single source of
+truth** in `../rocketride-debugging-pipelines/ERROR_TABLE.md`. The three you'll most likely hit while
+configuring:
 | Error | Likely cause | Fix |
 |---|---|---|
-| `project_id must be a GUID` | variable in `project_id` | use a literal GUID |
-| `Component not found` | bad/misspelled `provider` | check the node index |
+| `Component not found` | bad/misspelled `provider` | check the node index (cite it) |
 | `Lane not supported` | wrong lane type on an edge | match lanes / add a converter |
-| `KeyError: 'answers'` | response key mismatch | match the `laneName` / use defaults |
-| `Pipeline already running` | `use()` called twice | `use_existing=True` or `terminate()` first |
-| `Invalid API key` | wrong/missing key | check the `${ROCKETRIDE_*}` env var |
-| `Connection closed` / `timeout` | **event loop blocked by sync I/O** | never block the async loop (use async input/read) |
+| `project_id must be a GUID` | variable in `project_id` | use a literal GUID |
 
 > Note: the "Common Mistakes" doc also numbers SDK/runtime mistakes (event-loop blocking,
 > `use_existing`, resource cleanup, `ROCKETRIDE_` prefix). Those belong to running the pipeline —

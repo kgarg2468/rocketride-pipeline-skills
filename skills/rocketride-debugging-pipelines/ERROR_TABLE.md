@@ -1,5 +1,9 @@
 # Error → Cause → Fix
 
+**Single source of truth for RocketRide errors** (build-time + runtime). The configuring skill's
+`PIPELINE_ANTIPATTERNS.md` keeps only a 3-row TL;DR of the commonest build-time errors and points
+here for the full list.
+
 The exact error message maps to an exact cause and an owning phase. Quote the real message, find
 the row, route the fix.
 
