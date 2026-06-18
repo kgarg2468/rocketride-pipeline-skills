@@ -1,6 +1,5 @@
 [
  {
-  "name": "accessibility_describe",
   "classType": [
    "image"
   ],
@@ -8,19 +7,14 @@
    "image": [
     "text"
    ]
-  }
+  },
+  "name": "accessibility_describe"
  },
  {
-  "name": "agent_crewai",
   "classType": [
    "agent",
    "tool"
   ],
-  "lanes": {
-   "questions": [
-    "answers"
-   ]
-  },
   "invoke": {
    "llm": {
     "min": 1
@@ -28,19 +22,19 @@
    "tool": {
     "min": 0
    }
-  }
- },
- {
-  "name": "agent_crewai_manager",
-  "classType": [
-   "agent",
-   "tool"
-  ],
+  },
   "lanes": {
    "questions": [
     "answers"
    ]
   },
+  "name": "agent_crewai"
+ },
+ {
+  "classType": [
+   "agent",
+   "tool"
+  ],
   "invoke": {
    "crewai": {
     "min": 1
@@ -48,14 +42,18 @@
    "llm": {
     "min": 1
    }
-  }
+  },
+  "lanes": {
+   "questions": [
+    "answers"
+   ]
+  },
+  "name": "agent_crewai_manager"
  },
  {
-  "name": "agent_crewai_subagent",
   "classType": [
    "crewai"
   ],
-  "lanes": {},
   "invoke": {
    "llm": {
     "min": 1
@@ -63,19 +61,15 @@
    "tool": {
     "min": 0
    }
-  }
+  },
+  "lanes": {},
+  "name": "agent_crewai_subagent"
  },
  {
-  "name": "agent_deepagent",
   "classType": [
    "agent",
    "tool"
   ],
-  "lanes": {
-   "questions": [
-    "answers"
-   ]
-  },
   "invoke": {
    "deepagent": {
     "min": 0
@@ -86,14 +80,34 @@
    "tool": {
     "min": 0
    }
-  }
+  },
+  "lanes": {
+   "questions": [
+    "answers"
+   ]
+  },
+  "name": "agent_deepagent"
  },
  {
-  "name": "agent_deepagent_subagent",
   "classType": [
    "deepagent"
   ],
+  "invoke": {
+   "llm": {
+    "min": 1
+   },
+   "tool": {
+    "min": 0
+   }
+  },
   "lanes": {},
+  "name": "agent_deepagent_subagent"
+ },
+ {
+  "classType": [
+   "agent",
+   "tool"
+  ],
   "invoke": {
    "llm": {
     "min": 1
@@ -101,39 +115,19 @@
    "tool": {
     "min": 0
    }
-  }
- },
- {
-  "name": "agent_langchain",
-  "classType": [
-   "agent",
-   "tool"
-  ],
+  },
   "lanes": {
    "questions": [
     "answers"
    ]
   },
-  "invoke": {
-   "llm": {
-    "min": 1
-   },
-   "tool": {
-    "min": 0
-   }
-  }
+  "name": "agent_langchain"
  },
  {
-  "name": "agent_rocketride",
   "classType": [
    "agent",
    "tool"
   ],
-  "lanes": {
-   "questions": [
-    "answers"
-   ]
-  },
   "invoke": {
    "llm": {
     "max": 1,
@@ -146,10 +140,15 @@
    "tool": {
     "min": 0
    }
-  }
+  },
+  "lanes": {
+   "questions": [
+    "answers"
+   ]
+  },
+  "name": "agent_rocketride"
  },
  {
-  "name": "anonymize_text",
   "classType": [
    "text"
   ],
@@ -157,10 +156,10 @@
    "text": [
     "text"
    ]
-  }
+  },
+  "name": "anonymize_text"
  },
  {
-  "name": "astra_db",
   "classType": [
    "store"
   ],
@@ -171,20 +170,20 @@
     "answers",
     "questions"
    ]
-  }
+  },
+  "name": "astra_db"
  },
  {
-  "name": "audio_player",
   "classType": [
    "audio"
   ],
   "lanes": {
    "audio": [],
    "video": []
-  }
+  },
+  "name": "audio_player"
  },
  {
-  "name": "audio_transcribe",
   "classType": [
    "audio"
   ],
@@ -195,10 +194,10 @@
    "video": [
     "text"
    ]
-  }
+  },
+  "name": "audio_transcribe"
  },
  {
-  "name": "audio_tts",
   "classType": [
    "audio"
   ],
@@ -215,10 +214,10 @@
    "text": [
     "audio"
    ]
-  }
+  },
+  "name": "audio_tts"
  },
  {
-  "name": "chat",
   "classType": [
    "source"
   ],
@@ -226,10 +225,10 @@
    "_source": [
     "questions"
    ]
-  }
+  },
+  "name": "chat"
  },
  {
-  "name": "chroma",
   "classType": [
    "store"
   ],
@@ -240,14 +239,19 @@
     "answers",
     "questions"
    ]
-  }
+  },
+  "name": "chroma"
  },
  {
-  "name": "db_arango",
   "classType": [
    "database",
    "tool"
   ],
+  "invoke": {
+   "llm": {
+    "min": 1
+   }
+  },
   "lanes": {
    "questions": [
     "table",
@@ -255,18 +259,18 @@
     "answers"
    ]
   },
-  "invoke": {
-   "llm": {
-    "min": 1
-   }
-  }
+  "name": "db_arango"
  },
  {
-  "name": "db_clickhouse",
   "classType": [
    "database",
    "tool"
   ],
+  "invoke": {
+   "llm": {
+    "min": 1
+   }
+  },
   "lanes": {
    "questions": [
     "table",
@@ -274,57 +278,18 @@
     "answers"
    ]
   },
-  "invoke": {
-   "llm": {
-    "min": 1
-   }
-  }
+  "name": "db_clickhouse"
  },
  {
-  "name": "db_mysql",
   "classType": [
    "database",
    "tool"
   ],
-  "lanes": {
-   "answers": [],
-   "questions": [
-    "table",
-    "text",
-    "answers"
-   ]
+  "invoke": {
+   "llm": {
+    "min": 1
+   }
   },
-  "invoke": {
-   "llm": {
-    "min": 1
-   }
-  }
- },
- {
-  "name": "db_neo4j",
-  "classType": [
-   "database",
-   "tool"
-  ],
-  "lanes": {
-   "questions": [
-    "table",
-    "text",
-    "answers"
-   ]
-  },
-  "invoke": {
-   "llm": {
-    "min": 1
-   }
-  }
- },
- {
-  "name": "db_postgres",
-  "classType": [
-   "database",
-   "tool"
-  ],
   "lanes": {
    "answers": [],
    "questions": [
@@ -333,18 +298,37 @@
     "answers"
    ]
   },
-  "invoke": {
-   "llm": {
-    "min": 1
-   }
-  }
+  "name": "db_mysql"
  },
  {
-  "name": "db_supabase",
   "classType": [
    "database",
    "tool"
   ],
+  "invoke": {
+   "llm": {
+    "min": 1
+   }
+  },
+  "lanes": {
+   "questions": [
+    "table",
+    "text",
+    "answers"
+   ]
+  },
+  "name": "db_neo4j"
+ },
+ {
+  "classType": [
+   "database",
+   "tool"
+  ],
+  "invoke": {
+   "llm": {
+    "min": 1
+   }
+  },
   "lanes": {
    "answers": [],
    "questions": [
@@ -353,30 +337,45 @@
     "answers"
    ]
   },
+  "name": "db_postgres"
+ },
+ {
+  "classType": [
+   "database",
+   "tool"
+  ],
   "invoke": {
    "llm": {
     "min": 1
    }
-  }
+  },
+  "lanes": {
+   "answers": [],
+   "questions": [
+    "table",
+    "text",
+    "answers"
+   ]
+  },
+  "name": "db_supabase"
  },
  {
-  "name": "dictionary",
   "classType": [
    "text"
   ],
+  "invoke": {
+   "llm": {
+    "min": 1
+   }
+  },
   "lanes": {
    "text": [
     "documents"
    ]
   },
-  "invoke": {
-   "llm": {
-    "min": 1
-   }
-  }
+  "name": "dictionary"
  },
  {
-  "name": "dropper",
   "classType": [
    "source"
   ],
@@ -384,10 +383,10 @@
    "_source": [
     "tags"
    ]
-  }
+  },
+  "name": "dropper"
  },
  {
-  "name": "elasticsearch",
   "classType": [
    "store"
   ],
@@ -400,10 +399,10 @@
     "questions"
    ],
    "text": []
-  }
+  },
+  "name": "elasticsearch"
  },
  {
-  "name": "embedding_image",
   "classType": [
    "embedding"
   ],
@@ -414,10 +413,10 @@
    "image": [
     "documents"
    ]
-  }
+  },
+  "name": "embedding_image"
  },
  {
-  "name": "embedding_openai",
   "classType": [
    "embedding"
   ],
@@ -428,10 +427,10 @@
    "questions": [
     "questions"
    ]
-  }
+  },
+  "name": "embedding_openai"
  },
  {
-  "name": "embedding_transformer",
   "classType": [
    "embedding"
   ],
@@ -442,10 +441,10 @@
    "questions": [
     "questions"
    ]
-  }
+  },
+  "name": "embedding_transformer"
  },
  {
-  "name": "embedding_video",
   "classType": [
    "embedding"
   ],
@@ -453,13 +452,18 @@
    "video": [
     "documents"
    ]
-  }
+  },
+  "name": "embedding_video"
  },
  {
-  "name": "extract_data",
   "classType": [
    "text"
   ],
+  "invoke": {
+   "llm": {
+    "min": 1
+   }
+  },
   "lanes": {
    "table": [
     "answers",
@@ -470,14 +474,9 @@
     "documents"
    ]
   },
-  "invoke": {
-   "llm": {
-    "min": 1
-   }
-  }
+  "name": "extract_data"
  },
  {
-  "name": "filesys",
   "classType": [
    "source"
   ],
@@ -485,10 +484,10 @@
    "_source": [
     "tags"
    ]
-  }
+  },
+  "name": "filesys"
  },
  {
-  "name": "frame_grabber",
   "classType": [
    "video"
   ],
@@ -498,10 +497,10 @@
     "table",
     "documents"
    ]
-  }
+  },
+  "name": "frame_grabber"
  },
  {
-  "name": "guardrails",
   "classType": [
    "guard"
   ],
@@ -515,10 +514,10 @@
    "questions": [
     "questions"
    ]
-  }
+  },
+  "name": "guardrails"
  },
  {
-  "name": "hash",
   "classType": [
    "data"
   ],
@@ -526,10 +525,10 @@
    "tags": [
     "tags"
    ]
-  }
+  },
+  "name": "hash"
  },
  {
-  "name": "image_cleanup",
   "classType": [
    "image"
   ],
@@ -537,10 +536,10 @@
    "image": [
     "image"
    ]
-  }
+  },
+  "name": "image_cleanup"
  },
  {
-  "name": "image_vision_gemini",
   "classType": [
    "image"
   ],
@@ -551,10 +550,10 @@
    "image": [
     "text"
    ]
-  }
+  },
+  "name": "image_vision_gemini"
  },
  {
-  "name": "image_vision_mistral",
   "classType": [
    "image"
   ],
@@ -565,10 +564,10 @@
    "image": [
     "text"
    ]
-  }
+  },
+  "name": "image_vision_mistral"
  },
  {
-  "name": "image_vision_ollama",
   "classType": [
    "image"
   ],
@@ -579,10 +578,10 @@
    "image": [
     "text"
    ]
-  }
+  },
+  "name": "image_vision_ollama"
  },
  {
-  "name": "image_vision_openai",
   "classType": [
    "image"
   ],
@@ -593,10 +592,10 @@
    "image": [
     "text"
    ]
-  }
+  },
+  "name": "image_vision_openai"
  },
  {
-  "name": "landingai_ade",
   "classType": [
    "data"
   ],
@@ -605,10 +604,10 @@
     "text",
     "table"
    ]
-  }
+  },
+  "name": "landingai_ade"
  },
  {
-  "name": "llamaparse",
   "classType": [
    "data"
   ],
@@ -617,10 +616,10 @@
     "text",
     "table"
    ]
-  }
+  },
+  "name": "llamaparse"
  },
  {
-  "name": "llm_anthropic",
   "classType": [
    "llm"
   ],
@@ -628,10 +627,10 @@
    "questions": [
     "answers"
    ]
-  }
+  },
+  "name": "llm_anthropic"
  },
  {
-  "name": "llm_bedrock",
   "classType": [
    "llm"
   ],
@@ -639,10 +638,10 @@
    "questions": [
     "answers"
    ]
-  }
+  },
+  "name": "llm_bedrock"
  },
  {
-  "name": "llm_deepseek",
   "classType": [
    "llm"
   ],
@@ -650,10 +649,10 @@
    "questions": [
     "answers"
    ]
-  }
+  },
+  "name": "llm_deepseek"
  },
  {
-  "name": "llm_gemini",
   "classType": [
    "llm"
   ],
@@ -661,10 +660,10 @@
    "questions": [
     "answers"
    ]
-  }
+  },
+  "name": "llm_gemini"
  },
  {
-  "name": "llm_gmi_cloud",
   "classType": [
    "llm"
   ],
@@ -672,10 +671,10 @@
    "questions": [
     "answers"
    ]
-  }
+  },
+  "name": "llm_gmi_cloud"
  },
  {
-  "name": "llm_minimax",
   "classType": [
    "llm"
   ],
@@ -683,10 +682,10 @@
    "questions": [
     "answers"
    ]
-  }
+  },
+  "name": "llm_minimax"
  },
  {
-  "name": "llm_mistral",
   "classType": [
    "llm"
   ],
@@ -694,10 +693,10 @@
    "questions": [
     "answers"
    ]
-  }
+  },
+  "name": "llm_mistral"
  },
  {
-  "name": "llm_nebius",
   "classType": [
    "llm"
   ],
@@ -705,10 +704,10 @@
    "questions": [
     "answers"
    ]
-  }
+  },
+  "name": "llm_nebius"
  },
  {
-  "name": "llm_ollama",
   "classType": [
    "llm"
   ],
@@ -716,10 +715,10 @@
    "questions": [
     "answers"
    ]
-  }
+  },
+  "name": "llm_ollama"
  },
  {
-  "name": "llm_openai",
   "classType": [
    "llm"
   ],
@@ -727,10 +726,10 @@
    "questions": [
     "answers"
    ]
-  }
+  },
+  "name": "llm_openai"
  },
  {
-  "name": "llm_openai_api",
   "classType": [
    "llm"
   ],
@@ -738,10 +737,10 @@
    "questions": [
     "answers"
    ]
-  }
+  },
+  "name": "llm_openai_api"
  },
  {
-  "name": "llm_perplexity",
   "classType": [
    "llm"
   ],
@@ -749,10 +748,10 @@
    "questions": [
     "answers"
    ]
-  }
+  },
+  "name": "llm_perplexity"
  },
  {
-  "name": "llm_qwen",
   "classType": [
    "llm"
   ],
@@ -760,10 +759,10 @@
    "questions": [
     "answers"
    ]
-  }
+  },
+  "name": "llm_qwen"
  },
  {
-  "name": "llm_xai",
   "classType": [
    "llm"
   ],
@@ -771,33 +770,33 @@
    "questions": [
     "answers"
    ]
-  }
+  },
+  "name": "llm_xai"
  },
  {
-  "name": "local-text-output",
   "classType": [
    "target"
   ],
   "lanes": {
    "text": []
-  }
+  },
+  "name": "local-text-output"
  },
  {
-  "name": "mcp_client",
   "classType": [
    "tool"
   ],
-  "lanes": {}
+  "lanes": {},
+  "name": "mcp_client"
  },
  {
-  "name": "memory_internal",
   "classType": [
    "memory"
   ],
-  "lanes": {}
+  "lanes": {},
+  "name": "memory_internal"
  },
  {
-  "name": "memory_persistent",
   "classType": [
    "memory"
   ],
@@ -808,10 +807,10 @@
    "questions": [
     "questions"
    ]
-  }
+  },
+  "name": "memory_persistent"
  },
  {
-  "name": "milvus",
   "classType": [
    "store"
   ],
@@ -822,10 +821,10 @@
     "answers",
     "questions"
    ]
-  }
+  },
+  "name": "milvus"
  },
  {
-  "name": "mongodb+srv",
   "classType": [
    "store"
   ],
@@ -836,10 +835,10 @@
     "answers",
     "questions"
    ]
-  }
+  },
+  "name": "mongodb+srv"
  },
  {
-  "name": "ner",
   "classType": [
    "text"
   ],
@@ -850,10 +849,10 @@
    "text": [
     "text"
    ]
-  }
+  },
+  "name": "ner"
  },
  {
-  "name": "ocr",
   "classType": [
    "image"
   ],
@@ -865,10 +864,10 @@
     "text",
     "table"
    ]
-  }
+  },
+  "name": "ocr"
  },
  {
-  "name": "opensearch",
   "classType": [
    "store"
   ],
@@ -880,10 +879,10 @@
     "documents"
    ],
    "text": []
-  }
+  },
+  "name": "opensearch"
  },
  {
-  "name": "parse",
   "classType": [
    "data"
   ],
@@ -895,10 +894,10 @@
     "video",
     "audio"
    ]
-  }
+  },
+  "name": "parse"
  },
  {
-  "name": "pinecone",
   "classType": [
    "store"
   ],
@@ -909,10 +908,10 @@
     "answers",
     "questions"
    ]
-  }
+  },
+  "name": "pinecone"
  },
  {
-  "name": "postgres",
   "classType": [
    "store"
   ],
@@ -923,10 +922,10 @@
     "answers",
     "questions"
    ]
-  }
+  },
+  "name": "postgres"
  },
  {
-  "name": "preprocessor_code",
   "classType": [
    "preprocessor"
   ],
@@ -934,24 +933,10 @@
    "text": [
     "documents"
    ]
-  }
+  },
+  "name": "preprocessor_code"
  },
  {
-  "name": "preprocessor_langchain",
-  "classType": [
-   "preprocessor"
-  ],
-  "lanes": {
-   "table": [
-    "documents"
-   ],
-   "text": [
-    "documents"
-   ]
-  }
- },
- {
-  "name": "preprocessor_llm",
   "classType": [
    "preprocessor"
   ],
@@ -963,14 +948,28 @@
     "documents"
    ]
   },
+  "name": "preprocessor_langchain"
+ },
+ {
+  "classType": [
+   "preprocessor"
+  ],
   "invoke": {
    "llm": {
     "min": 1
    }
-  }
+  },
+  "lanes": {
+   "table": [
+    "documents"
+   ],
+   "text": [
+    "documents"
+   ]
+  },
+  "name": "preprocessor_llm"
  },
  {
-  "name": "prompt",
   "classType": [
    "text"
   ],
@@ -981,10 +980,10 @@
    ],
    "table": [],
    "text": []
-  }
+  },
+  "name": "prompt"
  },
  {
-  "name": "qdrant",
   "classType": [
    "store"
   ],
@@ -995,10 +994,10 @@
     "answers",
     "questions"
    ]
-  }
+  },
+  "name": "qdrant"
  },
  {
-  "name": "question",
   "classType": [
    "text"
   ],
@@ -1006,10 +1005,10 @@
    "text": [
     "questions"
    ]
-  }
+  },
+  "name": "question"
  },
  {
-  "name": "reducto",
   "classType": [
    "data"
   ],
@@ -1018,17 +1017,17 @@
     "text",
     "table"
    ]
-  }
+  },
+  "name": "reducto"
  },
  {
-  "name": "remote",
   "classType": [
    "infrastructure"
   ],
-  "lanes": {}
+  "lanes": {},
+  "name": "remote"
  },
  {
-  "name": "rerank_cohere",
   "classType": [
    "rerank"
   ],
@@ -1037,82 +1036,82 @@
     "documents",
     "answers"
    ]
-  }
+  },
+  "name": "rerank_cohere"
  },
  {
-  "name": "response_answers",
   "classType": [
    "infrastructure"
   ],
   "lanes": {
    "answers": []
-  }
+  },
+  "name": "response_answers"
  },
  {
-  "name": "response_audio",
   "classType": [
    "infrastructure"
   ],
   "lanes": {
    "audio": []
-  }
+  },
+  "name": "response_audio"
  },
  {
-  "name": "response_documents",
   "classType": [
    "infrastructure"
   ],
   "lanes": {
    "documents": []
-  }
+  },
+  "name": "response_documents"
  },
  {
-  "name": "response_image",
   "classType": [
    "infrastructure"
   ],
   "lanes": {
    "image": []
-  }
+  },
+  "name": "response_image"
  },
  {
-  "name": "response_questions",
   "classType": [
    "infrastructure"
   ],
   "lanes": {
    "questions": []
-  }
+  },
+  "name": "response_questions"
  },
  {
-  "name": "response_table",
   "classType": [
    "infrastructure"
   ],
   "lanes": {
    "table": []
-  }
+  },
+  "name": "response_table"
  },
  {
-  "name": "response_text",
   "classType": [
    "infrastructure"
   ],
   "lanes": {
    "text": []
-  }
+  },
+  "name": "response_text"
  },
  {
-  "name": "response_video",
   "classType": [
    "infrastructure"
   ],
   "lanes": {
    "video": []
-  }
+  },
+  "name": "response_video"
  },
  {
-  "name": "search_exa",
   "classType": [
    "search"
   ],
@@ -1121,27 +1120,27 @@
     "answers",
     "text"
    ]
-  }
+  },
+  "name": "search_exa"
  },
  {
-  "name": "summarization",
   "classType": [
    "text"
   ],
+  "invoke": {
+   "llm": {
+    "min": 1
+   }
+  },
   "lanes": {
    "text": [
     "text",
     "documents"
    ]
   },
-  "invoke": {
-   "llm": {
-    "min": 1
-   }
-  }
+  "name": "summarization"
  },
  {
-  "name": "telegram",
   "classType": [
    "source"
   ],
@@ -1153,19 +1152,19 @@
     "video",
     "tags"
    ]
-  }
+  },
+  "name": "telegram"
  },
  {
-  "name": "text-output",
   "classType": [
    "target"
   ],
   "lanes": {
    "text": []
-  }
+  },
+  "name": "text-output"
  },
  {
-  "name": "thumbnail",
   "classType": [
    "image"
   ],
@@ -1177,78 +1176,78 @@
     "documents",
     "image"
    ]
-  }
+  },
+  "name": "thumbnail"
  },
  {
-  "name": "tool_bland_ai",
-  "classType": [
-   "tool"
-  ],
-  "lanes": {}
- },
- {
-  "name": "tool_butterbase",
-  "classType": [
-   "tool"
-  ],
-  "lanes": {}
- },
- {
-  "name": "tool_chartjs",
   "classType": [
    "tool"
   ],
   "lanes": {},
+  "name": "tool_bland_ai"
+ },
+ {
+  "classType": [
+   "tool"
+  ],
+  "lanes": {},
+  "name": "tool_butterbase"
+ },
+ {
+  "classType": [
+   "tool"
+  ],
   "invoke": {
    "llm": {
     "min": 1
    }
-  }
+  },
+  "lanes": {},
+  "name": "tool_chartjs"
  },
  {
-  "name": "tool_exa_search",
   "classType": [
    "tool"
   ],
-  "lanes": {}
+  "lanes": {},
+  "name": "tool_exa_search"
  },
  {
-  "name": "tool_filesystem",
   "classType": [
    "tool"
   ],
-  "lanes": {}
+  "lanes": {},
+  "name": "tool_filesystem"
  },
  {
-  "name": "tool_firecrawl",
   "classType": [
    "tool"
   ],
-  "lanes": {}
+  "lanes": {},
+  "name": "tool_firecrawl"
  },
  {
-  "name": "tool_git",
   "classType": [
    "tool"
   ],
-  "lanes": {}
+  "lanes": {},
+  "name": "tool_git"
  },
  {
-  "name": "tool_github",
   "classType": [
    "tool"
   ],
-  "lanes": {}
+  "lanes": {},
+  "name": "tool_github"
  },
  {
-  "name": "tool_http_request",
   "classType": [
    "tool"
   ],
-  "lanes": {}
+  "lanes": {},
+  "name": "tool_http_request"
  },
  {
-  "name": "tool_pipe",
   "classType": [
    "tool"
   ],
@@ -1260,31 +1259,31 @@
     "table",
     "answers"
    ]
-  }
+  },
+  "name": "tool_pipe"
  },
  {
-  "name": "tool_python",
   "classType": [
    "tool"
   ],
-  "lanes": {}
+  "lanes": {},
+  "name": "tool_python"
  },
  {
-  "name": "tool_tavily",
   "classType": [
    "tool"
   ],
-  "lanes": {}
+  "lanes": {},
+  "name": "tool_tavily"
  },
  {
-  "name": "tool_xtrace_memory",
   "classType": [
    "tool"
   ],
-  "lanes": {}
+  "lanes": {},
+  "name": "tool_xtrace_memory"
  },
  {
-  "name": "twelvelabs",
   "classType": [
    "video"
   ],
@@ -1292,10 +1291,10 @@
    "video": [
     "text"
    ]
-  }
+  },
+  "name": "twelvelabs"
  },
  {
-  "name": "weaviate",
   "classType": [
    "store"
   ],
@@ -1306,10 +1305,10 @@
     "answers",
     "questions"
    ]
-  }
+  },
+  "name": "weaviate"
  },
  {
-  "name": "webhook",
   "classType": [
    "source"
   ],
@@ -1322,6 +1321,7 @@
     "image",
     "questions"
    ]
-  }
+  },
+  "name": "webhook"
  }
 ]

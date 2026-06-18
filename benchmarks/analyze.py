@@ -48,6 +48,20 @@ def main(run_dir):
         total_cost = sum((json.load(open(p)).get("total_cost_usd") or 0) for p in turn_results)
         total_turns = sum((json.load(open(p)).get("num_turns") or 0) for p in turn_results)
 
+    # prompt-cache observability (host-side caching; we only measure it). Sum usage across turns.
+    _usage_files = turn_results or [os.path.join(bench, "result.json")]
+    cache_read = cache_creation = fresh_input = 0
+    for p in _usage_files:
+        try:
+            u = (json.load(open(p)).get("usage") or {})
+        except Exception:
+            continue
+        cache_read += u.get("cache_read_input_tokens") or 0
+        cache_creation += u.get("cache_creation_input_tokens") or 0
+        fresh_input += u.get("input_tokens") or 0
+    _ctot = cache_read + cache_creation + fresh_input
+    cache_hit_ratio = round(cache_read / _ctot, 3) if _ctot else 0.0
+
     session_id = result.get("session_id", "")
     final_text = result.get("result") or ""
 
@@ -226,6 +240,9 @@ def main(run_dir):
         "subtype": result.get("subtype"),
         "num_turns": total_turns,
         "cost_usd": round(total_cost, 4),
+        "cache_read": cache_read,
+        "cache_creation": cache_creation,
+        "cache_hit_ratio": cache_hit_ratio,
         "duration_s": round((result.get("duration_ms") or 0) / 1000),
         "transcript_found": transcript_found,
         "tool_call_count": len(tool_calls),
@@ -264,6 +281,7 @@ def main(run_dir):
     print(f"- gate_stop={gate_stop} cost_gate={cost_gate} polling={polling} count_line={count_line}")
     print(f"- doc: llms_full_fetched={llms_full_fetched} doc_page_fetched={doc_page_fetched} map_consulted={doc_map_consulted}")
     print(f"- eff: eager_fetch={eager_fetch} info_cheap_path={info_cheap_path} schemas_touched={len(schema_touched)} staleness_noted={staleness_noted}")
+    print(f"- cache: read={cache_read} creation={cache_creation} hit_ratio={cache_hit_ratio}")
     print(f"- skills invoked: {skills_invoked} | skill files read: {len(skill_files_read)}")
     print(f"- writes: {len(writes)} (pipe={pipe_written}) | mutation attempts: {mutation_attempts or 'NONE'}")
     return scorecard

@@ -84,14 +84,16 @@ def main():
         sys.stderr.write("[generate-index] no engine and no .rocketride/services-catalog.json found\n")
         sys.exit(1)
     index = [thin(e) for e in cat]
-    json.dump(index, open(out, "w"), indent=1)
+    # sort_keys=True → byte-deterministic across regenerations, so a host's prompt cache of the
+    # resident index stays valid and re-runs don't churn the file (cache-friendliness guard).
+    json.dump(index, open(out, "w"), indent=1, sort_keys=True)
     sz = os.path.getsize(out)
     sys.stderr.write(f"[generate-index] {len(index)} nodes from {src} -> {out} ({sz} bytes, ~{sz//4} tokens)\n")
     # Freshness stamp (sibling, keeps the index array shape clean): the staleness backstop (T2).
     meta_path = (out[:-5] if out.endswith(".json") else out) + ".meta.json"
     meta = {"generated_at": datetime.now(timezone.utc).isoformat(),
             "node_count": len(index), "source": src}
-    json.dump(meta, open(meta_path, "w"), indent=1)
+    json.dump(meta, open(meta_path, "w"), indent=1, sort_keys=True)
     sys.stderr.write(f"[generate-index] freshness meta -> {meta_path} ({meta['generated_at']}, {meta['node_count']} nodes)\n")
 
 
