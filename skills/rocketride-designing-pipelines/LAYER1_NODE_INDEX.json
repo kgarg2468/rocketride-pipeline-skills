@@ -243,6 +243,25 @@
   }
  },
  {
+  "name": "db_arango",
+  "classType": [
+   "database",
+   "tool"
+  ],
+  "lanes": {
+   "questions": [
+    "table",
+    "text",
+    "answers"
+   ]
+  },
+  "invoke": {
+   "llm": {
+    "min": 1
+   }
+  }
+ },
+ {
   "name": "db_clickhouse",
   "classType": [
    "database",

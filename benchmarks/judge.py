@@ -60,6 +60,11 @@ PREDS = {
         nmut(c) == 0 and not c.get("pipe_written"),
         f"no-build for an info query: mut {nmut(c)}, pipe_written {c.get('pipe_written')} "
         f"[info_cheap_path {c.get('info_cheap_path')} — triage gate metric]"),
+    # T2: a stale index must be NON-blocking — the agent proceeds (gates/builds), never hard-stops on it.
+    "s12-freshness-warning": lambda c: (
+        nmut(c) == 0 and (c.get("gate_stop") or c.get("pipe_written") or nodes(c) >= 1),
+        f"proceeded despite stale index: gate/built {bool(c.get('gate_stop') or c.get('pipe_written') or nodes(c) >= 1)}, "
+        f"mut {nmut(c)} [staleness_noted {c.get('staleness_noted')} — should surface the note, non-blocking]"),
 }
 
 

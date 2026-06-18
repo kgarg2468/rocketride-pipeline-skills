@@ -42,8 +42,14 @@ if RED passes too, the skill isn't load-bearing for that behavior.
 - **s11-info-query** — pure question; pass today = no build/mutation; tracked metric `info_cheap_path`
   becomes the Tier-3 triage gate (and pair with build look-alikes for the `<2%` misclassification test).
 
+## Scenarios added with their feature
+- **s12-freshness-warning** — IMPLEMENTED (T2 shipped). The runner backdates the bundled
+  `LAYER1_NODE_INDEX.meta.json` (>14d), runs the scenario, and restores a fresh stamp via
+  `tools/generate-index.py` (the driver has no per-scenario hook). Verifies the stale-index note is
+  **non-blocking** — the agent proceeds (gates/builds) with 0 mutations. The note itself (fires +
+  non-blocking) is also covered by a free tool-unit on `validate-pipeline.py`.
+
 ## Pending scenarios (add with their feature)
-- **s12-freshness-warning** — needs `_meta` on the index (T2) + a backdate step in the driver.
 - **s13-cache-freshness** — needs the write-through cache (T1): design at T0, "engine changes a
   field", configure later; cached path must catch the drift (TTL) or re-fetch, never silently wire stale.
 

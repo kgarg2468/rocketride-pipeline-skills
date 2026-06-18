@@ -180,6 +180,9 @@ def main(run_dir):
         r"|os\.listdir\([^)]*schema|glob[^\n]*schema|os\.walk\([^)]*schema",  # python loop over schema dir
         re.I)
     eager_fetch = bool(_bulk_schema.search(bash_all + inputs_all)) or len(schema_touched) >= 15
+    # staleness_noted: agent surfaced the non-blocking index-freshness note (T2)
+    staleness_noted = bool(re.search(
+        r"days old|freshness|stale|generate-index|snapshot is|out of date|outdated index", all_lower))
 
     skill_files_read = sorted({
         m.group(0)
@@ -242,6 +245,7 @@ def main(run_dir):
         "doc_page_fetched": doc_page_fetched,
         "eager_fetch": eager_fetch,
         "info_cheap_path": info_cheap_path,
+        "staleness_noted": staleness_noted,
         "skills_invoked": skills_invoked,
         "skill_files_read": skill_files_read,
         "writes": writes,
@@ -259,7 +263,7 @@ def main(run_dir):
     print(f"- cited_index={cited_index} schema_fetched={schema_fetched} validate_called={validate_called}")
     print(f"- gate_stop={gate_stop} cost_gate={cost_gate} polling={polling} count_line={count_line}")
     print(f"- doc: llms_full_fetched={llms_full_fetched} doc_page_fetched={doc_page_fetched} map_consulted={doc_map_consulted}")
-    print(f"- eff: eager_fetch={eager_fetch} info_cheap_path={info_cheap_path} schemas_touched={len(schema_touched)}")
+    print(f"- eff: eager_fetch={eager_fetch} info_cheap_path={info_cheap_path} schemas_touched={len(schema_touched)} staleness_noted={staleness_noted}")
     print(f"- skills invoked: {skills_invoked} | skill files read: {len(skill_files_read)}")
     print(f"- writes: {len(writes)} (pipe={pipe_written}) | mutation attempts: {mutation_attempts or 'NONE'}")
     return scorecard

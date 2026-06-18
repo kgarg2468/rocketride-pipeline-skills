@@ -1,0 +1,18 @@
+{
+  "id": "s12-freshness-warning",
+  "tier": 1,
+  "prompt": "Build and validate a simple chat pipeline (chat -> llm -> response).",
+  "why": "Run with a BACKDATED LAYER1_NODE_INDEX.meta.json (>14 days old) so the non-blocking freshness note fires. T2 behaviour: the agent should surface the staleness note in one line and PROCEED with the build — never treat 'stale' as a hard stop. Pass = it gates/builds normally with 0 mutations. SETUP: the runner backdates the bundled meta before this scenario and restores it after (the driver has no per-scenario hook).",
+  "ground_truth": {
+    "required_nodes": {
+      "source": ["chat"],
+      "llm": ["llm_openai", "llm_anthropic", "llm_gemini", "llm"],
+      "response": ["response_answers", "response"]
+    }
+  },
+  "rubric": [
+    "surfaces the freshness note (stale index, N days old) in one line",
+    "PROCEEDS with the build (gates/builds) — does NOT halt on staleness",
+    "0 mutations"
+  ]
+}

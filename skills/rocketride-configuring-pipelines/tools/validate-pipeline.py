@@ -20,8 +20,46 @@ Usage:
 Exit code 0 = no errors; 1 = errors found; 2 = usage/load error.
 """
 import sys, os, json, re, asyncio
+from datetime import datetime, timezone
 
 GUID_RE = re.compile(r"^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
+STALE_DAYS = 14
+
+
+def staleness_note():
+    """NON-BLOCKING freshness check (T2): warn if the bundled L1 node index has no freshness stamp
+    or is older than STALE_DAYS. Returns a note string or None. Never affects the exit code."""
+    here = os.path.dirname(os.path.abspath(__file__))
+    cand = os.path.normpath(os.path.join(here, "..", "..", "rocketride-designing-pipelines",
+                                          "LAYER1_NODE_INDEX.meta.json"))
+    if not os.path.isfile(cand):  # also accept a workspace-local stamp
+        d = os.getcwd()
+        for _ in range(8):
+            c = os.path.join(d, ".rocketride", "LAYER1_NODE_INDEX.meta.json")
+            if os.path.isfile(c):
+                cand = c
+                break
+            p = os.path.dirname(d)
+            if p == d:
+                break
+            d = p
+    if not os.path.isfile(cand):
+        return ("node index has no freshness stamp — run tools/generate-index.py against a live "
+                "engine to stamp + refresh it. Proceeding with the bundled snapshot.")
+    try:
+        meta = json.load(open(cand))
+        gen = datetime.fromisoformat(meta.get("generated_at"))
+        if gen.tzinfo is None:
+            gen = gen.replace(tzinfo=timezone.utc)
+        age = (datetime.now(timezone.utc) - gen).days
+        if age > STALE_DAYS:
+            return (f"node index snapshot is {age} days old ({meta.get('node_count')} nodes) — "
+                    f"run tools/generate-index.py against a live engine before trusting node "
+                    f"selection. Proceeding with the bundled snapshot.")
+    except Exception:
+        return ("node index freshness stamp unreadable — consider re-running "
+                "tools/generate-index.py. Proceeding with the bundled snapshot.")
+    return None
 
 
 # ---------- catalog loading (for --static) ----------
@@ -249,6 +287,9 @@ def main():
     if not os.path.isfile(path):
         sys.stderr.write(f"[validate] file not found: {path}\n")
         sys.exit(2)
+    note = staleness_note()
+    if note:
+        print(f"WARNING (freshness): {note}")
     if not static:
         res = asyncio.run(engine_validate(path))
         if res is not None:

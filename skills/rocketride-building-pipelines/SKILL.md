@@ -69,6 +69,10 @@ one page is the cheap path.
 0. **Load capabilities** — get the node index (L1, the ladder above). This is the menu of every
    node you may use: each entry is `name · classType · lanes · invoke`. Keep it open; you select
    and wire from it. It carries **no config schema** — that's L2, fetched per node in Phase 2.
+   If a **freshness warning** fires (the index stamp is stale/missing — `LAYER1_NODE_INDEX.meta.json`
+   older than 14 days, surfaced by `validate-pipeline.py`), say so in one line and **proceed** — it
+   is **non-blocking**, never a hard stop. `validate()` against the live engine is the drift backstop;
+   if a node seems missing, regenerate with `tools/generate-index.py`.
 1. **Discover + design** — REQUIRED SUB-SKILL: `rocketride-designing-pipelines`.
    Explore archetypes → select nodes (**GATE A**) → wire the acyclic DAG with typed lanes
    (**GATE B**). Fetch each chosen node's schema here too, so lane signatures are exact before
