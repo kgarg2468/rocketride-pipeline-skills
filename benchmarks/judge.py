@@ -65,6 +65,11 @@ PREDS = {
         nmut(c) == 0 and (c.get("gate_stop") or c.get("pipe_written") or nodes(c) >= 1),
         f"proceeded despite stale index: gate/built {bool(c.get('gate_stop') or c.get('pipe_written') or nodes(c) >= 1)}, "
         f"mut {nmut(c)} [staleness_noted {c.get('staleness_noted')} — should surface the note, non-blocking]"),
+    # T1: design->configure build stays schema-grounded + validates; schema_cache_used is the metric.
+    "s13-schema-cache": lambda c: (
+        c.get("schema_fetched") and c.get("validate_called") and nmut(c) == 0,
+        f"schema_fetched {c.get('schema_fetched')}, validate_called {c.get('validate_called')}, "
+        f"mut {nmut(c)} [schema_cache_used {c.get('schema_cache_used')} — T1 reuse metric]"),
 }
 
 

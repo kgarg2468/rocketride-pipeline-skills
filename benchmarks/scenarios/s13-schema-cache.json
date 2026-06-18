@@ -1,0 +1,25 @@
+{
+  "id": "s13-schema-cache",
+  "tier": 3,
+  "turns": [
+    "Build a RAG chatbot over my PDFs. Use exactly these nodes: chat (source), embedding_transformer, qdrant (vector store), llm_openai, response_answers. You have everything you need — design the DAG now, don't ask clarifying questions.",
+    "Approved — go with that selection and topology. Now fetch each node's schema, configure all five nodes, and run validate on the pipeline."
+  ],
+  "expect": ["[Gg]ate|approve|node|lane", "validate|configur|schema"],
+  "why": "Two-turn design->configure so schemas fetched while designing (Phase 1b) can be reused in configure (Phase 2) via --cache-ok (T1). Pass = the build proceeds with schema grounding + a validate attempt, 0 mutations. schema_cache_used is the T1 metric (did the agent reuse the cached schema rather than re-fetch).",
+  "ground_truth": {
+    "required_nodes": {
+      "source": ["chat", "webhook"],
+      "embedding": ["embedding_transformer", "embedding_openai", "embedding"],
+      "store": ["qdrant", "chroma", "pinecone", "weaviate", "milvus", "store", "vector"],
+      "llm": ["llm_openai", "llm_anthropic", "llm_gemini", "llm"],
+      "response": ["response_answers", "response"]
+    }
+  },
+  "rubric": [
+    "designs the 5-node RAG pipeline",
+    "configures each node from its schema (not memory)",
+    "reuses cached schemas in configure via --cache-ok (T1 metric: schema_cache_used)",
+    "validate attempted; 0 mutations"
+  ]
+}

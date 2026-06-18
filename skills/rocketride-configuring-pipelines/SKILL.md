@@ -16,7 +16,9 @@ For every node in the approved topology, in order:
 
 1. **Fetch the schema** (L2): `fetch_node_schema` / `tools/fetch-node-schema.py <node>` /
    `.rocketride/schema/<node>.json`. Never configure from memory. (Forcing function 5.) Fetch **one
-   node at a time** — never bulk-load every schema (FF#17).
+   node at a time** — never bulk-load every schema (FF#17). If you already fetched this node's schema
+   while designing (Phase 1b) this session, reuse it with `--cache-ok` (serves the cached copy with
+   no reconnect — still schema-grounded, just not re-fetched); a full re-fetch only on a cache miss.
 2. **State what the schema says** before filling: the **required** fields, any **conditional**
    rules in prose ("if `batch_size` set, `max_batch_wait_ms` is required"), and the profile shape
    for LLM/embedding/store nodes. (Forcing function 10.)

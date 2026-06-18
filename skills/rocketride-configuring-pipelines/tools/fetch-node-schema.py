@@ -6,12 +6,13 @@ this schema defines — never invent field names (e.g. it is `modelTotalTokens`,
 Fetch ONE node at a time; never bulk-load the schema catalog (FF#17).
 
 Order of preference:
-  1. Live engine via the RocketRide SDK:  client.get_service(<name>)
-  2. The cached catalog file:             .rocketride/schema/<name>.json
+  1. --cache-ok + a warm cache → serve .rocketride/schema/<name>.json with NO reconnect (fast path)
+  2. Live engine via the RocketRide SDK:  client.get_service(<name>) → write-through to the cache
+  3. The cached catalog file:             .rocketride/schema/<name>.json
 
 Usage:
-  python3 fetch-node-schema.py <node_name>
-  python3 fetch-node-schema.py llm_openai
+  python3 fetch-node-schema.py <node_name>              # engine-first (freshest); caches the result
+  python3 fetch-node-schema.py --cache-ok <node_name>   # reuse a warm cache, skip the reconnect (T1)
 
 Prints the service/schema definition as JSON. The agent reads `required` fields, the
 `Pipe.schema` (incl. dependencies.profile.oneOf for LLM/embedding/store profiles), and any
@@ -32,6 +33,36 @@ def from_files(name):
             break
         here = parent
     return None
+
+
+def _schema_dir():
+    """Walk up from cwd for an existing .rocketride/schema dir (where the cache lives)."""
+    here = os.getcwd()
+    for _ in range(8):
+        d = os.path.join(here, ".rocketride", "schema")
+        if os.path.isdir(d):
+            return d
+        parent = os.path.dirname(here)
+        if parent == here:
+            break
+        here = parent
+    return None
+
+
+def write_through(name, result):
+    """Atomically cache a live schema so a later --cache-ok serves it with no reconnect (T1)."""
+    d = _schema_dir()
+    if not d:
+        return False
+    try:
+        import tempfile
+        fd, tmp = tempfile.mkstemp(dir=d, suffix=".tmp")
+        with os.fdopen(fd, "w") as f:
+            json.dump(result, f, indent=2)
+        os.replace(tmp, os.path.join(d, f"{name}.json"))
+        return True
+    except Exception:
+        return False
 
 
 async def from_engine(name):
@@ -55,13 +86,25 @@ async def from_engine(name):
 
 
 def main():
-    if len(sys.argv) < 2:
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    cache_ok = "--cache-ok" in sys.argv
+    if not args:
         sys.stderr.write(__doc__)
         sys.exit(2)
-    name = sys.argv[1]
+    name = args[0]
+    # T1 fast path: --cache-ok serves a warm cached schema with NO reconnect (e.g. Phase 2 reusing
+    # the schema design already fetched this session — still schema-grounded, just not re-fetched).
+    if cache_ok:
+        cached = from_files(name)
+        if cached is not None:
+            sys.stderr.write("[fetch-node-schema] source: cache (--cache-ok, no reconnect)\n")
+            print(json.dumps(cached, indent=2))
+            return
     result = asyncio.run(from_engine(name))
     source = "engine (get_service)"
-    if result is None:
+    if result is not None:
+        source = "engine (get_service) [cached]" if write_through(name, result) else source
+    else:
         result = from_files(name)
         source = ".rocketride/schema file"
     if result is None:
