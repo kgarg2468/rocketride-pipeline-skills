@@ -7,9 +7,11 @@ an MCP server has no cache field in its wire format — neither can set or force
 job is to make caching **easy and safe** for the host, and to **measure** it.
 
 ## What this repo guarantees (cache-friendliness)
-- **Byte-deterministic resident context.** The node index is generated with `sort_keys=True`
-  (`tools/generate-index.py`), so re-runs produce identical bytes — a host's cached prefix isn't
-  silently invalidated, and version-control diffs stay clean.
+- **Byte-deterministic resident context.** The node index is generated in a FIXED key order
+  (`tools/generate-index.py` — name, classType, lanes, invoke), so re-runs produce identical bytes:
+  a host's cached prefix isn't silently invalidated and diffs stay clean. We deliberately keep
+  `name` first (not alphabetized) — the bench showed alphabetizing the keys degraded weak-model use
+  of the index, so readability wins over a redundant determinism trick.
 - **No timestamps inside the resident index.** The freshness stamp lives in a *separate* sibling
   (`LAYER1_NODE_INDEX.meta.json`), so it never changes the index bytes that get cached.
 - **Static skill text.** SKILL.md, GATE_PROTOCOL.md, the doc-map, and reference files don't change
