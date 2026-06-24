@@ -3,7 +3,12 @@
 The real, observed mistakes when building RocketRide pipelines (condensed from the RocketRide
 "Common Mistakes" reference). Treat the checklist at the bottom as a **gate**, not a reading.
 
-## The 9-point Pipeline Checklist (run per node / per pipeline, state yes/no)
+## The 9-point Pipeline Checklist (state yes/no)
+
+**Split — don't re-state the whole-pipe items per node.** Items **6, 7, 9** are **node-level** (state
+per node). Items **1–5, 8** are **pipeline-level** — they don't change between nodes, so state them
+**once** for the whole `.pipe` (at assembly). Each node's line is just `6 ✓ 7 ✓ 9 ✓`.
+
 1. **`.pipe` extension** — the pipeline file ends in `.pipe`, not `.json`. (RocketRide only loads
    `.pipe`.)
 2. **`components` first; meta last** *(editor convention)* — keep `components` as the first key;

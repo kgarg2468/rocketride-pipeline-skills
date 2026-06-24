@@ -29,10 +29,12 @@ For every node in the approved topology, in order:
    ```
    Source nodes need the full source config, not `{}`:
    `{ "hideForm": true, "mode": "Source", "parameters": {}, "type": "<provider>" }`.
-4. **Run the 9-point checklist as a gate** (full list in `PIPELINE_ANTIPATTERNS.md`). State each
-   item yes/no for this node before moving on — do not skip and claim "applied":
-   > Node `<id>`: 1 ext✓ 2 components-order✓ 3 literal-guid✓ 4 source-match✓ 5 unique-id✓
-   > 6 input-array✓ 7 lane-types✓ 8 acyclic/no-orphan✓ 9 ROCKETRIDE_ env✓
+4. **Run the anti-pattern checklist as a gate** (full list in `PIPELINE_ANTIPATTERNS.md`). It splits —
+   don't re-state the whole-pipe items per node:
+   - **Per node** — the 3 node-level items, yes/no, before moving on:
+     > Node `<id>`: 6 input-array✓ 7 lane-types✓ 9 ROCKETRIDE_ env✓
+   - **Once for the whole pipe** — the 6 pipeline-level items, stated when you assemble (Step 2):
+     > Pipeline: 1 .pipe-ext✓ 2 components-first✓ 3 literal-guid✓ 4 source-match✓ 5 unique-ids✓ 8 acyclic/no-orphans✓
 
 ## Step 2 — Assemble & validate (→ Gate C)
 

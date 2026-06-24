@@ -76,8 +76,9 @@ Gates are binary or fixed-menu. Never turn a gate into open-ended reasoning. Use
 **Verification by tool (the model is not the judge)**
 8. **Schema-fetch in the design phase too** — fetch each chosen node's schema before wiring lanes,
    so the lane signatures you wire are the real ones, not the index summary.
-9. **Sequential anti-pattern checklist as a gate** — per node, state each checklist item yes/no
-   ("Node X: 1 ✓ 2 ✓ … 9 ✓") before moving to the next node. Not a reference skimmed once.
+9. **Sequential anti-pattern checklist as a gate** — per node, state the **node-level** items
+   ("Node X: 6 ✓ 7 ✓ 9 ✓") before the next node; state the **pipeline-level** items (1–5, 8) **once**
+   for the whole pipe. A gate, not a reference skimmed once — but don't re-state the pipe-level items per node.
 10. **Semantic/conditional constraints** — after fetching a schema, state required fields **and**
     any conditional rules in prose (e.g. "if `batch_size` set, `max_batch_wait_ms` required").
 11. **validate() is mandatory + the re-validation loop** — call `validate()` before any run. On
