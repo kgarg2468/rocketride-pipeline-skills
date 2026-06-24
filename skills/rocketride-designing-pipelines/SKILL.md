@@ -7,7 +7,7 @@ description: Use when choosing which RocketRide nodes a task needs and wiring th
 
 Turns a plain-language request into an approved, lane-correct DAG — **before** any node is
 configured. Two outputs, two gates: a node selection (Gate A) and a wired topology (Gate B).
-The gate rules and the 15 forcing functions are in
+The gate rules and the 16 forcing functions are in
 `../rocketride-building-pipelines/GATE_PROTOCOL.md` — they apply here.
 
 You work from the **node index** (L1): `LAYER1_NODE_INDEX.json` (bundled), or the live
@@ -19,6 +19,11 @@ Read the index **once** — don't re-open it per node.
 `AGENT_PATTERN_CHEATSHEET.md` **once** (exact node ids, profiles, lanes, and control-plane wiring for
 that archetype) and adapt `examples/TEMPLATE_multi_agent_orchestrator.pipe` — don't design the wiring
 from scratch, re-read the full index, or grep the source.
+
+**Choosing among options** (vector store · LLM · embedding · agent): consult `NODE_DECISION_GUIDE.md`
+**once** — default-first "which node for which use case" tables. Take the default (row 1) unless a
+listed constraint fires or the request pins a choice; then **state the default you took as an
+assumption** ("assumed `chroma` — request didn't specify"). Never name a node not in the index.
 
 ## Phase 1a — Discover (→ Gate A)
 

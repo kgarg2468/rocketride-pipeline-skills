@@ -17,7 +17,7 @@ non-interactive/headless session is a STOP, never an approval. No exceptions:
 If nobody can answer, deliver the gate brief as your final message and stop — an unbuilt
 pipeline costs nothing; an unapproved run wastes the user's money and compute.
 
-Full gate rules, the deterministic gate wording, and the 15 forcing functions live in
+Full gate rules, the deterministic gate wording, and the 16 forcing functions live in
 `GATE_PROTOCOL.md`. **Read it before your first gate.** Multi-turn gate state lives in
 `../../.context/GATE_STATE.md` — a dismissed gate is re-presented unchanged, never auto-approved.
 

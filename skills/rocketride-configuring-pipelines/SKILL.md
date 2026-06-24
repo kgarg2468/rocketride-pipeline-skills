@@ -8,7 +8,7 @@ description: Use when filling in a RocketRide pipeline's node configuration and 
 Takes an approved topology (from `rocketride-designing-pipelines`) to a **validated**
 `pipeline.pipe` ready to run. Reliability comes from tools and a checklist, not cleverness:
 fetch schema → fill only real fields → checklist gate → `validate()` → re-validate until clean.
-Gate rules + the 15 forcing functions: `../rocketride-building-pipelines/GATE_PROTOCOL.md`.
+Gate rules + the 16 forcing functions: `../rocketride-building-pipelines/GATE_PROTOCOL.md`.
 
 ## Step 1 — Configure each node (schema-driven, one at a time)
 
