@@ -4,6 +4,13 @@ A quick map of the shapes most requests reduce to. Match the request to a patter
 matching worked example in `rocketride-designing-pipelines/examples/`. These are starting points —
 always verify node names + lanes against the live index and schemas.
 
+**Build from a blanket request.** When a pattern fits, adapt its template — cheaper *and* more
+accurate than wiring from scratch. Where a pattern leaves a node **open** (which store / llm /
+embedding / agent), take the `../rocketride-designing-pipelines/NODE_DECISION_GUIDE.md` default and
+**state the assumption** ("assumed `chroma` — request didn't specify"). Default *silently* on
+everything mechanical (collection name, chunker profile, embedding dims, response terminal, memory
+type). The exhaustive archetype walk (FF#7) still applies when no pattern fits.
+
 A pipeline is a directed **acyclic** graph of nodes joined by **typed lanes**. Exactly one
 **source** node; data flows source → … → a terminal (`response_*` for replies, a store/`db_*`
 for ingestion). Lanes are typed channels — the output lane of one node must match an input lane
@@ -27,6 +34,7 @@ of the next, or you insert a converter.
 `chat → embedding_transformer → <store>(search) → llm_openai → response_answers`. The store node
 (qdrant/chroma/pinecone/…) runs in **search mode** on the `questions` lane and returns context.
 Use the **same embedding model** for ingestion and query. See `simple-chat-rag`.
+*Defaults to state (if unspecified): store ◀`chroma`, embed ◀`embedding_openai`, llm ◀`llm_anthropic` — see `NODE_DECISION_GUIDE.md`.*
 
 ## Pattern 3 — Document ingestion (webhook → parse → preprocess → embed → store)
 `webhook → parse → preprocessor_langchain → embedding_transformer → <store>(ingest)`. Terminal is
@@ -48,8 +56,17 @@ shape — design it slowly, cite every invoke requirement. See the `agentic-chat
 
 ## Pattern 6 — NL→database query (chat/webhook → db_* → response)
 `db_postgres`/`db_mysql`/`db_neo4j`/etc. take `questions` and an attached `llm` (via control plane)
-to craft SQL/Cypher. They appear in both `database` and `tool` classTypes — confirm with the user
-which they want (a data-flow node in a pipeline vs a tool an agent calls).
+to craft SQL/Cypher. They appear in both `database` and `tool` classTypes — **default to the
+data-flow `db_*` node** (a pipeline that queries the DB) and state the assumption; use the agent-tool
+form only if the request describes an *agent/assistant that can query*.
+
+## Pattern 7 — Summarize (source → parse → summarization → response)
+
+`webhook → parse → summarization → response_text` (or `chat → summarization → response_text` for
+pasted text). Single-shot "summarize / TL;DR these docs" — **no** retrieval, **no** store. The
+`summarization` processor is LLM-backed: attach its `llm_*` via the control plane (the `llm` carries
+`control: [{classType:"llm", from:"summarization_1"}]`). Feed files with `client.send_files()`.
+*Defaults to state: llm ◀`llm_anthropic`. Don't grow this into RAG — summarize ≠ answer-from-docs.*
 
 When a request doesn't fit cleanly, compose from the lane cheat-sheet: list the data you start
 with, the data you want, and find the converter chain between them.
