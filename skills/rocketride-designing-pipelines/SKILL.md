@@ -7,7 +7,7 @@ description: Use when choosing which RocketRide nodes a task needs and wiring th
 
 Turns a plain-language request into an approved, lane-correct DAG — **before** any node is
 configured. Two outputs, two gates: a node selection (Gate A) and a wired topology (Gate B).
-The gate rules and the 16 forcing functions are in
+The gate rules and the 17 forcing functions are in
 `../rocketride-building-pipelines/GATE_PROTOCOL.md` — they apply here.
 
 You work from the **node index** (L1): `LAYER1_NODE_INDEX.json` (bundled), or the live
@@ -41,6 +41,14 @@ assumption** ("assumed `chroma` — request didn't specify"). Never name a node 
    exactly one **source** and a **terminal** (`response_*` for a reply; a store / `db_*` for
    ingestion). Pull the right converters from the lane cheat-sheet in
    `../rocketride-building-pipelines/pipeline-patterns.md`.
+3.5. **Scan for a material fork → GATE A0 (only if one is open).** Did the request leave open a choice
+   among **store / llm / embedding / agent** (≥2 catalog candidates fit, the request named none)?
+   **No** (the usual case): take the `NODE_DECISION_GUIDE.md` default for each open node and **state the
+   assumption** ("assumed `chroma` — request didn't specify"); go to Gate A. **Yes** (K ≥ 1): present
+   **one** GATE A0 — ≤3 forks, each with options + a one-line tradeoff + the ◀ default + a `defaults`
+   escape (GATE_PROTOCOL §3/§6, FF#17) — then go to Gate A. Headless / no answer → take the ◀ defaults,
+   emit `ASSUMED <node> — <why>`, and proceed (build-only; the *run* still gates at C.5). **Mechanical**
+   choices (collection name, chunker, profile, dims, memory type) are never A0 — default them silently.
 4. **Gate A** — end with the count line and the gate:
    > Archetypes explored (N). Selected nodes (M): <name · role>, … — all cited from the index.
    > Approve these M nodes? (yes / adjust / cancel)

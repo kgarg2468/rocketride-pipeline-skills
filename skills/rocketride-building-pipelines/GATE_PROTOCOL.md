@@ -36,6 +36,11 @@ Gates must survive across turns and context resets.
 
 Gates are binary or fixed-menu. Never turn a gate into open-ended reasoning. Use these forms:
 
+- **GATE A0 (elicitation — optional; only when a *material* fork is open, see §6 + FF#17):**
+  > A couple of choices are open — recommended defaults marked ◀:
+  > 1. Vector store: ◀ `chroma` (local/dev) · `pinecone` (managed) · `qdrant` (self-host scale) — which?
+  > 2. <next material fork, if any> …
+  > Pick each, or reply `defaults` to take all ◀. (≤3 forks, one message.)
 - **GATE A (node selection):**
   > Selected nodes (N): <name · classType · role>, … — all verified against the index.
   > Approve these N nodes? (yes / adjust / cancel)
@@ -50,7 +55,7 @@ Gates are binary or fixed-menu. Never turn a gate into open-ended reasoning. Use
 - **GATE D (publish — optional, menu):**
   > Run succeeded. What next? (save to cloud / publish as an app / nothing / debug)
 
-## 4. The 16 forcing functions
+## 4. The 17 forcing functions
 
 **Gate discipline**
 1. **Waiting = STOP** (§1) — dismissed/headless/unanswered = STOP, never approval.
@@ -107,6 +112,16 @@ Gates are binary or fixed-menu. Never turn a gate into open-ended reasoning. Use
     for depth they don't cover. Resolve URLs from the map — don't invent paths or hosts (e.g. the SDK
     `use` page is `docs.rocketride.org/develop/typescript/methods/use.md`, not `/develop/use.md`).
 
+**Conditional clarification (elicitation)**
+17. **GATE A0 — ask only on a MATERIAL fork, batched, default-carrying.** After selecting nodes,
+    scan for material forks: a choice among **`store` / `llm` / `embedding` / `agent`** nodes where
+    (a) ≥2 catalog candidates fit AND (b) the request named none. Count them (K). **K = 0 (the common
+    case) ⇒ no A0** — build with the `NODE_DECISION_GUIDE.md` defaults, stating each assumption. K ≥ 1
+    ⇒ present **one** batched GATE A0 (≤3 highest-value forks, each with options + a one-line tradeoff
+    + the ◀ default + a `defaults` escape). **Mechanical** choices (collection name, chunker, profile,
+    embedding dims, memory type, response terminal) are **never** A0 — default them silently. Never a
+    per-question loop, never always-on. Headless / no human ⇒ §6 (defaults-forward, `ASSUMED`, build-not-run).
+
 ## 5. Cost basis (for Gate C.5)
 
 - **Local run, user's own dev keys:** cost is the user's own LLM/API spend. Still confirm before a
@@ -114,3 +129,22 @@ Gates are binary or fixed-menu. Never turn a gate into open-ended reasoning. Use
 - **Cloud / RocketRide compute:** metered and billed to the user's wallet — Gate C.5 is mandatory.
 - Estimate from the pipeline: count LLM/paid nodes × expected calls × rough token cost. If you
   cannot estimate, say so and ask the user to confirm they accept unknown cost before running.
+
+## 6. Two kinds of gate — confirmation vs elicitation
+
+The keystone (§1, *Waiting = STOP*) governs **confirmation** gates. There is exactly one **elicitation**
+gate, and it behaves differently in one specific, bounded way.
+
+- **Confirmation gates — GATE A, B, C.5, D.** Ratify a decision already made. §1 applies in full:
+  headless / dismissed / no human = **STOP**, never "proceed with defaults." **GATE C.5 especially:
+  an unapproved *run* spends the user's money — it ALWAYS stops headless.**
+- **Elicitation gate — GATE A0 (optional, conditional; FF#17).** Asks the user to *make* an open
+  choice the request genuinely left undecided (e.g. which vector store). It is the ONE gate that
+  **defaults-forward when there is no human**: take each fork's ◀ recommended default, emit a
+  stated-assumption block (`ASSUMED <node> — <why>`), and **proceed to BUILD — but never to run**.
+  A0 is **never** recorded as "the user approved"; the `ASSUMED` block is an auditable provenance note,
+  not consent.
+
+**Why this is safe (and does not weaken §1):** A0 only gates the *build*, and an unbuilt pipeline costs
+nothing. It never gates the *run* — that is GATE C.5, a confirmation gate that always stops headless.
+So the keystone's money invariant ("an unapproved run wastes the user's money") is fully preserved.

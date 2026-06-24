@@ -17,7 +17,7 @@ non-interactive/headless session is a STOP, never an approval. No exceptions:
 If nobody can answer, deliver the gate brief as your final message and stop — an unbuilt
 pipeline costs nothing; an unapproved run wastes the user's money and compute.
 
-Full gate rules, the deterministic gate wording, and the 16 forcing functions live in
+Full gate rules, the deterministic gate wording, and the 17 forcing functions live in
 `GATE_PROTOCOL.md`. **Read it before your first gate.** Multi-turn gate state lives in
 `../../.context/GATE_STATE.md` — a dismissed gate is re-presented unchanged, never auto-approved.
 
@@ -104,7 +104,7 @@ one page is the cheap path.
 
 ## Supporting files
 
-- `GATE_PROTOCOL.md` — Waiting=STOP, multi-turn gate state, gate wording, the 16 forcing functions
+- `GATE_PROTOCOL.md` — Waiting=STOP, multi-turn gate state, gate wording, the 17 forcing functions
 - `pipeline-patterns.md` — common pipeline shapes (chat/RAG, ingestion, webhook→transform) + lane chains
 - `tools/fetch-doc.py` — fetch ONE doc page on demand (resolves from the doc-map; refuses the monolith)
 - `../../.rocketride/docs/ROCKETRIDE_DOC_MAP.md` — the bundled docs map (llms.txt); the deep-knowledge index
