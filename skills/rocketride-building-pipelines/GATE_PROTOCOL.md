@@ -60,8 +60,9 @@ Gates are binary or fixed-menu. Never turn a gate into open-ended reasoning. Use
 **Anti-hallucination**
 4. **Cite-your-source from the index** — for every node: "Found in index: `<name>` · classType=
    `[…]` · lanes=`{…}`." If not found, STOP. Never name a node you didn't cite.
-5. **Mandatory L2 schema fetch before configuring** — never fill config from memory; fetch the
-   node's schema first and configure only fields it defines.
+5. **Mandatory L2 schema before configuring** — never fill config from memory. **Reuse the schema you
+   already fetched in design (FF#8); fetch here only for a node you don't have one for** (e.g. added/
+   swapped at Gate A). Configure only fields it defines.
 6. **Count lines on every list** — "Selected nodes (5): …", "Archetypes explored (9): …". The
    count makes an omission a visible lie, not a silent gap.
 7. **Exhaustive archetype exploration** — in discovery, walk every relevant archetype/classType

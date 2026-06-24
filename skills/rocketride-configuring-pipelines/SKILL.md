@@ -10,12 +10,15 @@ Takes an approved topology (from `rocketride-designing-pipelines`) to a **valida
 fetch schema → fill only real fields → checklist gate → `validate()` → re-validate until clean.
 Gate rules + the 16 forcing functions: `../rocketride-building-pipelines/GATE_PROTOCOL.md`.
 
-## Step 1 — Configure each node (schema-driven, one at a time)
+## Step 1 — Configure each node (schema-driven)
 
 For every node in the approved topology, in order:
 
-1. **Fetch the schema** (L2): `fetch_node_schema` / `tools/fetch-node-schema.py <node>` /
-   `.rocketride/schema/<node>.json`. Never configure from memory. (Forcing function 5.)
+1. **Reuse the schema you already fetched in design (Phase 1b)** — don't re-fetch; it carries the
+   fields you need. Never configure from memory. (Forcing function 5.) *Only* fetch here if you don't
+   already have it — a node added or swapped at Gate A after design, or you came straight to Phase 2;
+   then fetch just those nodes (`fetch_node_schema` / `tools/fetch-node-schema.py <node>` /
+   `.rocketride/schema/<node>.json`).
 2. **State what the schema says** before filling: the **required** fields, any **conditional**
    rules in prose ("if `batch_size` set, `max_batch_wait_ms` is required"), and the profile shape
    for LLM/embedding/store nodes. (Forcing function 10.)

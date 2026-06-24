@@ -50,10 +50,11 @@ assumption** ("assumed `chroma` — request didn't specify"). Never name a node 
 
 Only after Gate A is approved.
 
-1. **Fetch each selected node's schema** (L2 — `fetch_node_schema` / `tools/` shim in
-   `../rocketride-configuring-pipelines/tools/fetch-node-schema.py` / `.rocketride/schema/<n>.json`).
-   You need the real **lane signatures** here, not the index summary — wiring from the summary is
-   the most common silent bug. (Forcing function 8.)
+1. **Fetch each selected node's schema — once, in one batch** (L2 — `fetch_node_schema` / `tools/`
+   shim in `../rocketride-configuring-pipelines/tools/fetch-node-schema.py` / `.rocketride/schema/<n>.json`).
+   You need the real **lane signatures** here, not the index summary — wiring from the summary is the
+   most common silent bug. (Forcing function 8.) **This is the only schema fetch in the build — keep
+   these schemas; Phase 2 (configure) reuses them and must not re-fetch.**
 2. **Wire the lanes.** Each non-source node gets `input: [{lane, from}]`. State **every edge** with
    its lane type: `chat_1 → embedding_1 (lane: questions)`. The output lane of `from` must be a
    real output of that node and a valid input of the target. If types don't match, insert a
