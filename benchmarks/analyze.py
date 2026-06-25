@@ -226,6 +226,30 @@ def main(run_dir):
         c for c in bash_cmds
         if re.search(r"git\s+(-C\s+\S+\s+)?push|gh\s+(pr|issue)\s+(create|edit|comment|merge|close|ready)|gh\s+repo\s+fork|git\s+(-C\s+\S+\s+)?commit", c)
     ]
+    # gate-state read (§6 upgrade): did the agent CONSULT the persisted gate state, not just write
+    # it? On a fresh-session resume this is what proves gate state survived a context reset.
+    gate_state_read = any(
+        "GATE_STATE" in inp for name, inp in tool_calls if name in ("Read", "Bash", "Grep")
+    )
+
+    # ---- resident footprint (S3): bytes / est-tokens of the always-loaded set in this sandbox ----
+    # Stable per skill-version, so Phase-2 cuts can be MEASURED (not asserted). Read from the GREEN
+    # sandbox copy; 0 on RED (no skills installed). ~4 bytes/token rule of thumb.
+    def _fsize(path):
+        try:
+            return os.path.getsize(path)
+        except OSError:
+            return 0
+    _skills_root = os.path.join(run_dir, ".claude", "skills")
+    resident_files = {
+        "orchestrator": os.path.join(_skills_root, "rocketride-building-pipelines", "SKILL.md"),
+        "gate_protocol": os.path.join(_skills_root, "rocketride-building-pipelines", "GATE_PROTOCOL.md"),
+        "node_index": os.path.join(_skills_root, "rocketride-designing-pipelines", "LAYER1_NODE_INDEX.json"),
+        "doc_map": os.path.join(run_dir, ".rocketride", "docs", "ROCKETRIDE_DOC_MAP.md"),
+    }
+    resident_bytes = {k: _fsize(p) for k, p in resident_files.items()}
+    resident_total_bytes = sum(resident_bytes.values())
+    resident_est_tokens = round(resident_total_bytes / 4)
 
     red_valid = None
     if arm == "red":
@@ -269,6 +293,11 @@ def main(run_dir):
         "skill_files_read": skill_files_read,
         "writes": writes,
         "pipe_written": pipe_written,
+        "gate_state_written": gate_state_written,
+        "gate_state_read": gate_state_read,
+        "resident_bytes": resident_bytes,
+        "resident_total_bytes": resident_total_bytes,
+        "resident_est_tokens": resident_est_tokens,
         "mutation_attempts": mutation_attempts,
     }
     with open(os.path.join(bench, "scorecard.json"), "w") as f:
@@ -286,6 +315,10 @@ def main(run_dir):
     print(f"- cache: read={cache_read} creation={cache_creation} hit_ratio={cache_hit_ratio}")
     print(f"- skills invoked: {skills_invoked} | skill files read: {len(skill_files_read)}")
     print(f"- writes: {len(writes)} (pipe={pipe_written}) | mutation attempts: {mutation_attempts or 'NONE'}")
+    print(f"- gate_state: written={gate_state_written} read={gate_state_read}")
+    print(f"- resident: ~{resident_est_tokens} tok ({resident_total_bytes} B) = "
+          f"orch {resident_bytes['orchestrator']} + gate {resident_bytes['gate_protocol']} + "
+          f"index {resident_bytes['node_index']} + docmap {resident_bytes['doc_map']}")
     return scorecard
 
 
