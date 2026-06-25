@@ -1,6 +1,6 @@
 ---
 name: rocketride-designing-pipelines
-description: Use when choosing which RocketRide nodes a task needs and wiring them into a pipeline graph — exploring the node catalog, selecting nodes by archetype, and connecting them with typed lanes into a valid acyclic DAG. Phase 1 of building a pipeline (Gates A and B). Invoked by rocketride-building-pipelines.
+description: Use when choosing which RocketRide nodes a task needs and wiring them into a pipeline graph — exploring the node catalog, selecting nodes by archetype, and connecting them with typed lanes into a valid acyclic DAG.
 ---
 
 # Designing RocketRide Pipelines

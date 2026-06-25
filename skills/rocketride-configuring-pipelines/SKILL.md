@@ -1,6 +1,6 @@
 ---
 name: rocketride-configuring-pipelines
-description: Use when filling in a RocketRide pipeline's node configuration and validating it — fetching each node's schema, setting required fields, running the anti-pattern checklist, and validating against the engine before a run. Phase 2 of building a pipeline (Gates C and C.5). Invoked by rocketride-building-pipelines.
+description: Use when filling in a RocketRide pipeline's node configuration and validating it — fetching each node's schema, setting required fields, running the anti-pattern checklist, and validating against the engine before a run.
 ---
 
 # Configuring & Validating RocketRide Pipelines

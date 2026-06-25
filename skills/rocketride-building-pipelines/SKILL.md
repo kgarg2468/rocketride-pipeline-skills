@@ -115,17 +115,15 @@ go ahead", enter the full lifecycle from Phase 0.
 4. **If a run fails or output is wrong** — REQUIRED SUB-SKILL: `rocketride-debugging-pipelines`.
    Read the trace, diagnose the failing node, route back to Phase 1 or 2.
 
-## The gates (all binary or menu — see GATE_PROTOCOL.md for exact wording)
+## The gates (binary or menu — exact wording in GATE_PROTOCOL §3)
 
 **The instant you present any gate below, use the Write tool to write `.context/GATE_STATE.md`
 (`status: AWAITING`) before ending the turn (GATE_PROTOCOL §2) — and on any re-engagement, read it
 FIRST. That on-disk line is what makes a gate survive a context reset.**
 
-- **GATE A** — "Approve these N nodes? (yes / adjust / cancel)" — after node selection.
-- **GATE B** — "Approve this topology? (yes / adjust / cancel)" — after the DAG diagram.
-- **GATE C** — internal: validation must return clean. Not a user gate; a tool gate.
-- **GATE C.5** — "This run will cost ≈ $X. Approve? (yes / no)" — before any paid/cloud run.
-- **GATE D** — "Save to cloud / publish as an app? (menu)" — after a successful local run, optional.
+- **GATE A** — node selection (after Phase 1 discovery) · **GATE B** — topology (after the DAG).
+- **GATE C** — validation clean (a tool gate, not a user gate) · **GATE C.5** — cost, before any paid/cloud run.
+- **GATE D** — save to cloud / publish (optional, after a successful run).
 
 ## Red flags
 

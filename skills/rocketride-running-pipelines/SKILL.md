@@ -1,6 +1,6 @@
 ---
 name: rocketride-running-pipelines
-description: Use when running a validated RocketRide pipeline and reporting its result — submitting the run, pushing input, polling status to completion, and returning the real output. Phase 3 of building a pipeline (Gate D). Invoked by rocketride-building-pipelines, and directly when asked to run an existing pipeline.
+description: Use when running a validated RocketRide pipeline and reporting its result — submitting the run, pushing input, polling status to completion, and returning the real output. Also use directly when asked to run an existing pipeline.
 ---
 
 # Running & Observing RocketRide Pipelines

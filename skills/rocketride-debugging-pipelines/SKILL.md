@@ -1,6 +1,6 @@
 ---
 name: rocketride-debugging-pipelines
-description: Use when a RocketRide pipeline run failed, errored, or produced wrong/empty output, and you need to find the failing node and fix it. Reads run status and execution traces, diagnoses the cause, and routes back to design or configuration. Invoked by rocketride-running-pipelines on failure, or directly when asked to debug a run.
+description: Use when a RocketRide pipeline run failed, errored, or produced wrong/empty output, and you need to find the failing node and fix it. Reads run status and execution traces, diagnoses the cause, and routes back to design or configuration. Also use directly when asked to debug a run.
 ---
 
 # Debugging RocketRide Pipelines
