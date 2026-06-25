@@ -94,9 +94,12 @@ go ahead", enter the full lifecycle from Phase 0.
 
 ## Phases
 
-0. **Load capabilities** — get the node index (L1, the ladder above). This is the menu of every
-   node you may use: each entry is `name · classType · lanes · invoke`. Keep it open; you select
-   and wire from it. It carries **no config schema** — that's L2, fetched per node in Phase 2.
+0. **Load capabilities** — read the node index (L1) **directly** from its bundled path
+   (`rocketride-designing-pipelines/LAYER1_NODE_INDEX.json`, or `.rocketride/services-catalog.json`
+   in a project). **Do NOT `find`/`ls`/search for it, and do NOT run `generate-index.py`** — you
+   already know the path; discovery just burns turns. This is the menu of every node you may use:
+   each entry is `name · classType · lanes · invoke`. Keep it open; you select and wire from it.
+   It carries **no config schema** — that's L2, fetched per node in Phase 2.
    If a **freshness warning** fires (the index stamp is stale/missing — `LAYER1_NODE_INDEX.meta.json`
    older than 14 days, surfaced by `validate-pipeline.py`), say so in one line and **proceed** — it
    is **non-blocking**, never a hard stop. `validate()` against the live engine is the drift backstop;
