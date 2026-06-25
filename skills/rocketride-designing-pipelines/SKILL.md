@@ -33,7 +33,8 @@ invoke`. The index is enough to **select and wire**; it carries no config fields
 4. **Gate A** — end with the count line and the gate:
    > Archetypes explored (N). Selected nodes (M): <name · role>, … — all cited from the index.
    > Approve these M nodes? (yes / adjust / cancel)
-   STOP. (See GATE_PROTOCOL §1.)
+   Then **use the Write tool to write `.context/GATE_STATE.md`** = `GATE A | presented | status:
+   AWAITING` (GATE_PROTOCOL §2 — so the gate survives a context reset), and **STOP**. (See §1.)
 
 ## Phase 1b — Design the DAG (→ Gate B)
 
@@ -60,7 +61,7 @@ Only after Gate A is approved.
 4. **Draw it** (Mermaid or ASCII) and **Gate B**:
    > <diagram>. Edges (K): <node → node (lane: type)>, … — all lane-checked against schemas.
    > Approve this topology? (yes / adjust / cancel)
-   STOP.
+   Then **Write `.context/GATE_STATE.md`** = `GATE B | presented | status: AWAITING` (§2), and STOP.
 
 Hand the approved selection + topology to `rocketride-configuring-pipelines`.
 

@@ -95,11 +95,13 @@ PREDS = {
     # NOTE: currently RED on Haiku (the mechanism is inert: written 0/3, read 0/3) — this scenario is
     # a diagnostic for that gap, NOT part of the standing regression gate until the skill is hardened.
     "s15-gatestate-resume": lambda c: (
-        c.get("gate_state_written") and c.get("gate_state_read")
-        and not c.get("pipe_written") and nmut(c) == 0,
-        f"gate_state_written {c.get('gate_state_written')} (turn 1 must persist the gate), "
-        f"gate_state_read {c.get('gate_state_read')} (fresh turn must consult it), "
-        f"pipe_written {c.get('pipe_written')} (must be False), mut {nmut(c)}"),
+        c.get("gate_state_written") and c.get("resume_read_gatestate")
+        and not c.get("pipe_written") and not c.get("schema_fetched") and nmut(c) == 0,
+        f"gate_state_written {c.get('gate_state_written')} (turn 1 must persist), "
+        f"resume_read_gatestate {c.get('resume_read_gatestate')} (the FRESH turn must consult it — "
+        f"combined gate_state_read {c.get('gate_state_read')} is a turn-1 artifact), "
+        f"schema_fetched {c.get('schema_fetched')} (must be False — must NOT advance past the gate), "
+        f"pipe {c.get('pipe_written')}, mut {nmut(c)}"),
 }
 
 

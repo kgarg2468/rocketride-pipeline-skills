@@ -28,7 +28,9 @@ pipeline costs nothing; an unapproved run wastes the user's money and compute.
 
 Full gate rules, the deterministic gate wording, and the forcing functions live in
 `GATE_PROTOCOL.md`. **Read it before your first gate.** Multi-turn gate state lives in
-`../../.context/GATE_STATE.md` — a dismissed gate is re-presented unchanged, never auto-approved.
+`.context/GATE_STATE.md` (in the current project): **write it (Write tool) whenever you present a
+gate, and read it FIRST on every re-engagement** — a fresh session or a vague "continue" must
+re-present an `AWAITING` gate, never auto-approve. See GATE_PROTOCOL §2.
 
 ## How reliability works here (read this once)
 
@@ -114,6 +116,10 @@ go ahead", enter the full lifecycle from Phase 0.
    Read the trace, diagnose the failing node, route back to Phase 1 or 2.
 
 ## The gates (all binary or menu — see GATE_PROTOCOL.md for exact wording)
+
+**The instant you present any gate below, use the Write tool to write `.context/GATE_STATE.md`
+(`status: AWAITING`) before ending the turn (GATE_PROTOCOL §2) — and on any re-engagement, read it
+FIRST. That on-disk line is what makes a gate survive a context reset.**
 
 - **GATE A** — "Approve these N nodes? (yes / adjust / cancel)" — after node selection.
 - **GATE B** — "Approve this topology? (yes / adjust / cancel)" — after the DAG diagram.

@@ -29,19 +29,27 @@ A gate is a question to a human. **Waiting for the answer means ENDING YOUR TURN
 This single rule is the highest-leverage thing in this skill set. It is not advice; it is a hard
 protocol. Holding it is what makes a cheap model behave like an expensive one.
 
-## 2. Multi-turn gate state
+## 2. Multi-turn gate state (survives context resets)
 
-Gates must survive across turns and context resets.
+A later turn — or a whole new session after a context reset / compaction — can arrive with NO memory
+of the gate you presented. The on-disk gate state is the ONLY thing that survives. It is mandatory,
+not best-effort.
 
-- When you present a gate, record it in `../../.context/GATE_STATE.md`:
-  `GATE <X> | presented turn <n> | status: AWAITING` (write the file if your environment allows).
-- A gate is **APPROVED** only when a human answers it explicitly in a later turn. Then update the
-  line to `status: APPROVED "<their words>"`.
-- If, on re-engagement, the user says something vague ("go ahead", "ok", "continue") and the most
-  recent gate is still `AWAITING`, **re-present that gate unchanged** and wait. Vague follow-ups
-  do not approve a specific gate.
-- If you cannot write the state file, restate the open gate at the top of every turn until it is
-  answered. Never advance a phase past an `AWAITING` gate.
+- **WRITE — every time you present a gate.** Before you end the turn, use the **Write tool** to write
+  `.context/GATE_STATE.md` in the current project (create the `.context/` directory if missing):
+  `GATE <X> | presented turn <n> | status: AWAITING`. This is NOT optional and NOT conditional — a
+  gate you present but don't persist is lost on the next turn. Write it in the project you're working
+  in (relative to your working directory), never under `~/.claude`.
+- **READ FIRST — every re-engagement.** The FIRST action of any turn after the first — and ALWAYS on
+  a fresh session or a vague follow-up ("go ahead", "ok", "continue", "yes", "finish it", "where are
+  we") — is to read `.context/GATE_STATE.md`. If a gate is `AWAITING`, **re-present that exact gate
+  (the same items, the same options) and STOP — do NOT fetch schemas, design, wire, or build past
+  it.** A reply that merely *sounds* affirmative ("continue", "go ahead", "keep building") is NOT
+  explicit approval of the specific items in that gate; only a direct yes / adjust / cancel to THOSE
+  items advances. Never start building because you "lost context" — the state file is your memory.
+- **APPROVE — only on an explicit human answer.** A gate is APPROVED only when a human answers it
+  explicitly; then update the line to `status: APPROVED "<their words>"` and proceed. Never advance a
+  phase past an `AWAITING` gate.
 
 ## 3. Deterministic gate wording
 
@@ -66,7 +74,8 @@ Gates are binary or fixed-menu. Never turn a gate into open-ended reasoning. Use
 **Gate discipline**
 1. **Waiting = STOP** (§1) — dismissed/headless/unanswered = STOP, never approval.
 2. **Deterministic gate wording** (§3) — binary or fixed menu; never reworded into open reasoning.
-3. **Multi-turn gate-state persistence** (§2) — dismissed gate re-presented unchanged.
+3. **Multi-turn gate-state persistence** (§2) — WRITE `.context/GATE_STATE.md` (Write tool) on every
+   gate; READ it FIRST on every re-engagement; an `AWAITING` gate is re-presented unchanged.
 
 **Anti-hallucination**
 4. **Cite-your-source from the index** — for every node: "Found in index: `<name>` · classType=

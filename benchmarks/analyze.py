@@ -218,7 +218,8 @@ def main(run_dir):
     ]
     pipe_written = any(str(p).endswith(".pipe") for _, p in writes)
     # info_cheap_path: answered without spinning the full lifecycle (Tier-3 triage metric).
-    gate_state_written = any("GATE_STATE" in str(p) for _, p in writes)
+    _gs_write_bash = bool(re.search(r"(>>?|tee\b)[^\n|;&]*GATE_STATE", bash_all))
+    gate_state_written = any("GATE_STATE" in str(p) for _, p in writes) or _gs_write_bash
     info_cheap_path = (not pipe_written and not gate_state_written
                        and "rocketride-designing-pipelines" not in skills_invoked
                        and "rocketride-configuring-pipelines" not in skills_invoked)
@@ -227,10 +228,33 @@ def main(run_dir):
         if re.search(r"git\s+(-C\s+\S+\s+)?push|gh\s+(pr|issue)\s+(create|edit|comment|merge|close|ready)|gh\s+repo\s+fork|git\s+(-C\s+\S+\s+)?commit", c)
     ]
     # gate-state read (§6 upgrade): did the agent CONSULT the persisted gate state, not just write
-    # it? On a fresh-session resume this is what proves gate state survived a context reset.
-    gate_state_read = any(
-        "GATE_STATE" in inp for name, inp in tool_calls if name in ("Read", "Bash", "Grep")
+    # it? On a fresh-session resume this is what proves gate state survived a context reset. Catch a
+    # Read/Grep tool OR a bash read verb on GATE_STATE — but NOT a write-redirect (cat > GATE_STATE).
+    _gs_read_bash = bool(re.search(
+        r"\b(cat|grep|rg|head|tail|sed|less|more)\b[^\n]*GATE_STATE(?![^\n]*>)", bash_all))
+    gate_state_read = (
+        any(name in ("Read", "Grep") and "GATE_STATE" in inp for name, inp in tool_calls)
+        or _gs_read_bash
     )
+    # resume-turn-only honest signal: did the LAST transcript snapshot (a fresh/reset turn) actually
+    # CONSULT GATE_STATE? The combined gate_state_read conflates turn-1's read-first with the resume
+    # turn — useless for the compaction test. This scores ONLY the final snapshot.
+    resume_read_gatestate = False
+    if len(snaps) > 1:
+        for _e in load_jsonl(snaps[-1]):
+            if _e.get("type") != "assistant":
+                continue
+            for _b in (_e.get("message") or {}).get("content") or []:
+                if not (isinstance(_b, dict) and _b.get("type") == "tool_use"):
+                    continue
+                _nm = _b.get("name", "")
+                _ip = json.dumps(_b.get("input", {}), default=str)
+                if "GATE_STATE" not in _ip:
+                    continue
+                if _nm in ("Read", "Grep") or (
+                    _nm == "Bash" and re.search(
+                        r"\b(cat|grep|rg|head|tail|sed|less|more)\b[^\n]*GATE_STATE(?![^\n]*>)", _ip)):
+                    resume_read_gatestate = True
 
     # ---- resident footprint (S3): bytes / est-tokens of the always-loaded set in this sandbox ----
     # Stable per skill-version, so Phase-2 cuts can be MEASURED (not asserted). Read from the GREEN
@@ -295,6 +319,7 @@ def main(run_dir):
         "pipe_written": pipe_written,
         "gate_state_written": gate_state_written,
         "gate_state_read": gate_state_read,
+        "resume_read_gatestate": resume_read_gatestate,
         "resident_bytes": resident_bytes,
         "resident_total_bytes": resident_total_bytes,
         "resident_est_tokens": resident_est_tokens,

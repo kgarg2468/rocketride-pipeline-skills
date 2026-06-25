@@ -64,8 +64,9 @@ Before handing off to run, estimate cost and gate it (GATE_PROTOCOL §5):
   (billed to the wallet) vs the user's own dev keys locally.
 - **Gate C.5:**
   > This run will cost ≈ $X (<basis>). Approve this run? (yes / no)
-  STOP and wait. "Just run it" earlier is not cost approval. A tiny local test on the user's own
-  key can be a one-line confirm; cloud/large runs always gate.
+  Then **Write `.context/GATE_STATE.md`** = `GATE C.5 | presented | status: AWAITING` (§2), and STOP
+  and wait. "Just run it" earlier is not cost approval. A tiny local test on the user's own key can
+  be a one-line confirm; cloud/large runs always gate.
 
 Hand the validated `.pipe` to `rocketride-running-pipelines`.
 
