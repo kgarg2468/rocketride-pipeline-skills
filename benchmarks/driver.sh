@@ -26,6 +26,9 @@ TURN_BUDGET="${SKILL_BENCH_TURN_BUDGET:-6}"
 
 ID=$(python3 -c "import json,sys; print(json.load(open(sys.argv[1]))['id'])" "$SCENARIO_FILE")
 NTURNS=$(python3 -c "import json,sys; d=json.load(open(sys.argv[1])); print(len(d.get('turns') or [d['prompt']]))" "$SCENARIO_FILE")
+# reset_turns: turn indices that start a FRESH claude session (no --resume) in the SAME sandbox —
+# simulates a context reset / compaction, where only on-disk state (GATE_STATE.md) carries over.
+RESET_TURNS=$(python3 -c "import json,sys; d=json.load(open(sys.argv[1])); print(' '.join(str(x) for x in (d.get('reset_turns') or [])))" "$SCENARIO_FILE")
 
 [ -d "$FIXTURES" ] || { echo "FATAL: catalog fixtures missing at $FIXTURES (run from a checkout)" >&2; exit 1; }
 
@@ -70,7 +73,12 @@ e = d.get('expect') or []
 i = int(sys.argv[1]) - 1
 print(e[i] if i < len(e) else '')" "$i")
   RESUME_OPT=""
-  [ -n "$SESSION_ID" ] && RESUME_OPT="--resume $SESSION_ID"
+  if [ -n "$SESSION_ID" ]; then
+    case " $RESET_TURNS " in
+      *" $i "*) echo "[pipe-bench] turn $i: FRESH session — no --resume (gate-state / compaction test)";;
+      *) RESUME_OPT="--resume $SESSION_ID";;
+    esac
+  fi
   echo "[pipe-bench] turn $i/$NTURNS: ${MSG:0:70}"
   set +e
   # shellcheck disable=SC2086
