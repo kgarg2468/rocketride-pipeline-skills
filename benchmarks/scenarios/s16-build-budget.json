@@ -1,0 +1,26 @@
+{
+  "id": "s16-build-budget",
+  "tier": 2,
+  "turns": [
+    "build me a chatbot that answers questions from my uploaded PDFs",
+    "go with your recommendation",
+    "wire it up",
+    "now configure every node and validate the pipeline"
+  ],
+  "expect": ["", "", "", ""],
+  "why": "Efficiency gate (Eff-M): a full build must stay CORRECT (schema-grounded + validate(), 0 mutations, >=4 roles) AND CHEAP — no GATE_STATE write thrash (Eff-L1), no schema re-read waste (Eff-L2), no file-discovery bootstrap (Eff-L3). Gates the orchestration-efficiency levers so cost is measured, not just correctness. RED on v0.5.0 by design (gate_state_writes ~17-19, schema_reads ~21 for 7 distinct, explore_bash ~16-21); GREEN once the levers land.",
+  "ground_truth": {
+    "required_nodes": {
+      "source": ["chat", "webhook", "filesys", "dropper"],
+      "embedding": ["embedding_transformer", "embedding_openai", "embedding"],
+      "store": ["qdrant", "chroma", "pinecone", "store"],
+      "llm": ["llm_openai", "llm_anthropic", "llm"]
+    }
+  },
+  "rubric": [
+    "build stays correct: schema-grounded, validate() called, 0 mutations, >=4 roles",
+    "GATE_STATE written ~once per gate, not re-written every turn (gate_state_write_count low)",
+    "schemas reused across phases (schema_read_count ~= distinct, not 3x)",
+    "reads the bundled index directly; minimal find/ls/generate-index bootstrap"
+  ]
+}

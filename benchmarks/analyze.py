@@ -182,19 +182,45 @@ def main(run_dir):
     )
 
     # ---- efficiency / scope signals (optimization tests) ----
-    # eager_fetch (FF#17 guard): agent BULK-loaded the schema catalog via a loop/glob/cat/listdir
-    # over the schema dir, instead of lazily reading the few selected nodes. Calibrated against real
-    # runs: a bare `ls` (listing names) or a handful of individual reads is normal exploration and
-    # must NOT count — only a bulk mechanism, or an extreme distinct-schema count (>=15), does.
-    schema_touched = set(re.findall(r"schema/([\w\-\+.]+)\.json", bash_all + reads_all + inputs_all))
+    # Count ACTUAL schema fetch/read ACTIONS per node (a fetch-node-schema call, or a Read/cat of a
+    # schema file) — NOT every schema-path MENTION. The old regex counted validate's catalog reads,
+    # `find` output, and assistant prose, which inflated the count and false-fired eager_fetch on a
+    # legit build (e.g. 7 selected nodes mis-counted as 24). schema_read_count includes RE-reads
+    # (the reuse-waste signal, Eff-L2); schema_distinct_count is the lazy-fetch-discipline signal.
+    schema_actions = []
+    for _n, _inp in tool_calls:
+        if _n == "Bash":
+            try:
+                _cmd = json.loads(_inp).get("command", "")
+            except json.JSONDecodeError:
+                _cmd = _inp
+            schema_actions += re.findall(r"fetch-node-schema\.py(?:\s+--cache-ok)?\s+([\w\-\+.]+)", _cmd)
+            schema_actions += [m for m in re.findall(r"\.rocketride/schema/([\w\-\+.]+)\.json", _cmd)]
+        elif _n == "Read":
+            try:
+                _fp = json.loads(_inp).get("file_path", "")
+            except json.JSONDecodeError:
+                _fp = _inp
+            _m = re.search(r"/schema/([\w\-\+.]+)\.json", _fp)
+            if _m:
+                schema_actions.append(_m.group(1))
+    schema_touched = set(schema_actions)                       # distinct nodes actually fetched/read
+    schema_read_count = len(schema_actions)                    # incl. re-reads (Eff-L2 waste signal)
+    schema_distinct_count = len(schema_touched)
     _bulk_schema = re.compile(
         r"\.rocketride/schema/?\*"                          # glob over the schema dir
         r"|cat\b[^\n]*\.rocketride/schema"                  # cat schema files in bulk
         r"|for\s+\w+\s+in\s+[^\n;]*\*\.json"                # shell loop: for f in *.json
         r"|os\.listdir\([^)]*schema|glob[^\n]*schema|os\.walk\([^)]*schema",  # python loop over schema dir
         re.I)
-    eager_fetch = bool(_bulk_schema.search(bash_all + inputs_all)) or len(schema_touched) >= 15
+    # eager = a bulk mechanism, OR genuinely fetching many DISTINCT nodes (>=15 of ~103) up front.
+    eager_fetch = bool(_bulk_schema.search(bash_all + inputs_all)) or schema_distinct_count >= 15
     schema_cache_used = "--cache-ok" in (bash_all + inputs_all)  # T1: reused a warm schema cache
+    # explore_bash_count (Eff-L3 waste signal): file-discovery calls the agent shouldn't need —
+    # generate-index / find / ls / glob over the bundled skill+catalog files it already knows the path of.
+    explore_bash_count = sum(
+        1 for c in bash_cmds
+        if re.search(r"\bgenerate-index\b|\bfind\b|\bls\b|\bglob\b|os\.listdir|os\.walk", c))
     # staleness_noted: agent surfaced the non-blocking index-freshness note (T2)
     staleness_noted = bool(re.search(
         r"days old|freshness|stale|generate-index|snapshot is|out of date|outdated index", all_lower))
@@ -220,6 +246,10 @@ def main(run_dir):
     # info_cheap_path: answered without spinning the full lifecycle (Tier-3 triage metric).
     _gs_write_bash = bool(re.search(r"(>>?|tee\b)[^\n|;&]*GATE_STATE", bash_all))
     gate_state_written = any("GATE_STATE" in str(p) for _, p in writes) or _gs_write_bash
+    # gate_state_write_count (Eff-L1 waste signal): how many times the agent (re)wrote GATE_STATE.md.
+    # The gate-state fix should make this ~1 per gate; 19 in one build = thrash to cut.
+    gate_state_write_count = (sum(1 for _, p in writes if "GATE_STATE" in str(p))
+                              + len(re.findall(r"(>>?|tee\b)[^\n|;&]*GATE_STATE", bash_all)))
     info_cheap_path = (not pipe_written and not gate_state_written
                        and "rocketride-designing-pipelines" not in skills_invoked
                        and "rocketride-configuring-pipelines" not in skills_invoked)
@@ -311,6 +341,9 @@ def main(run_dir):
         "doc_page_fetched": doc_page_fetched,
         "eager_fetch": eager_fetch,
         "schema_cache_used": schema_cache_used,
+        "schema_read_count": schema_read_count,
+        "schema_distinct_count": schema_distinct_count,
+        "explore_bash_count": explore_bash_count,
         "info_cheap_path": info_cheap_path,
         "staleness_noted": staleness_noted,
         "skills_invoked": skills_invoked,
@@ -318,6 +351,7 @@ def main(run_dir):
         "writes": writes,
         "pipe_written": pipe_written,
         "gate_state_written": gate_state_written,
+        "gate_state_write_count": gate_state_write_count,
         "gate_state_read": gate_state_read,
         "resume_read_gatestate": resume_read_gatestate,
         "resident_bytes": resident_bytes,
@@ -337,10 +371,11 @@ def main(run_dir):
     print(f"- gate_stop={gate_stop} cost_gate={cost_gate} polling={polling} count_line={count_line}")
     print(f"- doc: llms_full_fetched={llms_full_fetched} doc_page_fetched={doc_page_fetched} map_consulted={doc_map_consulted}")
     print(f"- eff: eager_fetch={eager_fetch} schema_cache_used={schema_cache_used} info_cheap_path={info_cheap_path} schemas_touched={len(schema_touched)} staleness_noted={staleness_noted}")
+    print(f"- cost-eff: schema_reads={schema_read_count} (distinct {schema_distinct_count}) | explore_bash={explore_bash_count} | gate_state_writes={gate_state_write_count} | turns={total_turns} | ${scorecard['cost_usd']}")
     print(f"- cache: read={cache_read} creation={cache_creation} hit_ratio={cache_hit_ratio}")
     print(f"- skills invoked: {skills_invoked} | skill files read: {len(skill_files_read)}")
     print(f"- writes: {len(writes)} (pipe={pipe_written}) | mutation attempts: {mutation_attempts or 'NONE'}")
-    print(f"- gate_state: written={gate_state_written} read={gate_state_read}")
+    print(f"- gate_state: written={gate_state_written} (x{gate_state_write_count}) read={gate_state_read}")
     print(f"- resident: ~{resident_est_tokens} tok ({resident_total_bytes} B) = "
           f"orch {resident_bytes['orchestrator']} + gate {resident_bytes['gate_protocol']} + "
           f"index {resident_bytes['node_index']} + docmap {resident_bytes['doc_map']}")

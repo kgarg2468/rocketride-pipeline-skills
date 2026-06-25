@@ -102,6 +102,18 @@ PREDS = {
         f"combined gate_state_read {c.get('gate_state_read')} is a turn-1 artifact), "
         f"schema_fetched {c.get('schema_fetched')} (must be False — must NOT advance past the gate), "
         f"pipe {c.get('pipe_written')}, mut {nmut(c)}"),
+    # Eff-M: a full build must stay CORRECT (floor) AND CHEAP (the discriminator). RED on v0.5.0
+    # (gate_state_writes ~17-19, schema_reads ~21 for 7 distinct, explore_bash ~16-21); GREEN once
+    # Eff-L1 (write-once) + L2 (schema reuse) + L3 (no discovery bootstrap) land.
+    "s16-build-budget": lambda c: (
+        c.get("validate_called") and nmut(c) == 0 and nodes(c) >= 3
+        and c.get("gate_state_write_count", 99) <= 4
+        and c.get("schema_read_count", 99) <= c.get("schema_distinct_count", 0) + 2
+        and c.get("explore_bash_count", 99) <= 6,
+        f"correct[validate {c.get('validate_called')}, nodes {c.get('nodes_score')}, mut {nmut(c)}] "
+        f"cheap[gate_state_writes {c.get('gate_state_write_count')}<=4, "
+        f"schema_reads {c.get('schema_read_count')}<=distinct+2 ({c.get('schema_distinct_count')}+2), "
+        f"explore_bash {c.get('explore_bash_count')}<=6]"),
 }
 
 
