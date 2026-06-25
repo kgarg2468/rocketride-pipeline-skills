@@ -5,6 +5,10 @@ CONSTRAINT (agent contract / future MCP tool description): run this before ANY p
 accept ONLY a zero-error result. On errors, show them verbatim, fix the offending node, and
 re-validate — never claim a pipeline is valid without a clean result in hand.
 
+Degrees of freedom: NONE. Run this command exactly as shown (the file path, optionally --static).
+Do not hand-roll the structural/lane/cycle checks in your own code or eyeball the JSON to declare it
+valid; this tool IS the validator the agent must call.
+
 Two modes:
   (default)  Engine validation via the SDK: client.validate(pipeline) -> {errors, warnings}.
              This is authoritative (real structural + connection + chain checks). Falls back to

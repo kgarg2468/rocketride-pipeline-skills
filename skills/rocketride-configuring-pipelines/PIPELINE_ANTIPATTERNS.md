@@ -1,5 +1,8 @@
 # Pipeline Anti-Patterns & Checklist
 
+**Load this when:** configuring a node or assembling the `.pipe` — run the 9-point checklist as a
+gate before `validate()`.
+
 The real, observed mistakes when building RocketRide pipelines (condensed from the RocketRide
 "Common Mistakes" reference). Treat the checklist at the bottom as a **gate**, not a reading.
 

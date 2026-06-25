@@ -38,12 +38,14 @@ and **negative/failure examples**.
 > `rrext_get_nodes` MCP resource is dead (no server handler) — discovery is `rrext_services`. The
 > obvious Tier-1 MCP work is to expose `rrext_services` + `rrext_validate` (+ async run) as tools.
 
-## The 15 forcing functions
-Canonical list in `skills/rocketride-building-pipelines/GATE_PROTOCOL.md`. Grouped: gate discipline
-(Waiting=STOP, deterministic wording, multi-turn persistence); anti-hallucination (cite-from-index,
+## The forcing functions
+Canonical numbered list in `skills/rocketride-building-pipelines/GATE_PROTOCOL.md` (the single
+source of truth for both the set and its count). Grouped: gate discipline (Waiting=STOP,
+deterministic wording, multi-turn persistence); anti-hallucination (cite-from-index,
 schema-before-config, count-lines, exhaustive archetypes); verification-by-tool (schema-in-design,
 checklist-as-gate, conditional constraints, validate+re-validate loop, real polling); cost & safety
-(cost gate, no literal secrets); weak-model priors (examples + anti-examples).
+(cost gate, no literal secrets); weak-model priors (examples + anti-examples); knowledge discipline
+(one-map-one-page docs, lazy per-node schema fetch).
 
 ## Why a weak model still wins
 Tools are the judge (the engine validates, not the model); checklists-as-grammar (Haiku is ~95%

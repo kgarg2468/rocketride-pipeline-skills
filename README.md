@@ -21,7 +21,7 @@ git pull               # updates installed skills in place (they're symlinks)
 
 | Skill | Role |
 |---|---|
-| `rocketride-building-pipelines` | **Orchestrator.** Owns gate discipline + the 17 forcing functions; routes the lifecycle. |
+| `rocketride-building-pipelines` | **Orchestrator.** Owns gate discipline + the forcing functions (canonical set in `GATE_PROTOCOL.md`); routes the lifecycle. |
 | `rocketride-designing-pipelines` | Phase 1 — discover nodes + wire the DAG (Gates A, B). |
 | `rocketride-configuring-pipelines` | Phase 2 — configure nodes + validate (Gates C, C.5). |
 | `rocketride-running-pipelines` | Phase 3 — submit, poll, report the result (Gate D). |

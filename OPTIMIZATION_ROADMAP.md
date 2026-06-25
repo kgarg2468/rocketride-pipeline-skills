@@ -109,5 +109,7 @@ Regression gate after **every** change: `regression.sh` (s1,s5,s6,s8,s9) GREEN o
 on any drop.
 
 ## Status
-Roadmap only. Test scaffolding added under `benchmarks/` (see `OPTIMIZATION_TESTS.md`). No skill
-behavior changed yet. Do-first batch implementation pending approval.
+Roadmap only at time of writing; test scaffolding added under `benchmarks/` (see
+`OPTIMIZATION_TESTS.md`). **Update:** the do-first batch (3A–3D) and the deferred items
+(P, T1, T3, T4) have since SHIPPED on `main` (tag `v0.4.0`); this document is retained as the
+original research record, not a description of current behavior.

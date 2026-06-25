@@ -1,5 +1,8 @@
 # Common Pipeline Patterns
 
+**Load this when:** starting design — to match a plain-language request to a known pipeline shape
+and its lane chain.
+
 A quick map of the shapes most requests reduce to. Match the request to a pattern, then adapt the
 matching worked example in `rocketride-designing-pipelines/examples/`. These are starting points —
 always verify node names + lanes against the live index and schemas.

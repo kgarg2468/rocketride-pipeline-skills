@@ -1,5 +1,8 @@
 # Pipeline Rules Summary
 
+**Load this when:** wiring the DAG — lane types, the lane-transform table, and the structural +
+control-plane rules.
+
 Condensed from the RocketRide pipeline/component reference. The authoritative source is the live
 engine (`validate()`); this is the design-time checklist.
 

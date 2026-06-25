@@ -8,7 +8,7 @@ description: Use when filling in a RocketRide pipeline's node configuration and 
 Takes an approved topology (from `rocketride-designing-pipelines`) to a **validated**
 `pipeline.pipe` ready to run. Reliability comes from tools and a checklist, not cleverness:
 fetch schema → fill only real fields → checklist gate → `validate()` → re-validate until clean.
-Gate rules + the 15 forcing functions: `../rocketride-building-pipelines/GATE_PROTOCOL.md`.
+Gate rules + forcing functions: `../rocketride-building-pipelines/GATE_PROTOCOL.md`.
 
 ## Step 1 — Configure each node (schema-driven, one at a time)
 
@@ -29,6 +29,15 @@ For every node in the approved topology, in order:
    ```
    Source nodes need the full source config, not `{}`:
    `{ "hideForm": true, "mode": "Source", "parameters": {}, "type": "<provider>" }`.
+
+   The block above is the `<Good>` shape. The `<Bad>` shape — guessed from memory — fails validation
+   and leaks a key:
+   ```json
+   "config": { "model": "gpt-5", "apikey": "sk-abc123...", "max_tokens": 4096 }
+   ```
+   Three bugs in one line: a **literal key** (must be `${ROCKETRIDE_*}`), **no `profile` wrapper**,
+   and **`max_tokens` is not a real field** (the schema calls it `modelTotalTokens`). Fetch the
+   schema, then copy the `<Good>` shape — never type config from memory.
 4. **Run the 9-point checklist as a gate** (full list in `PIPELINE_ANTIPATTERNS.md`). State each
    item yes/no for this node before moving on — do not skip and claim "applied":
    > Node `<id>`: 1 ext✓ 2 components-order✓ 3 literal-guid✓ 4 source-match✓ 5 unique-id✓

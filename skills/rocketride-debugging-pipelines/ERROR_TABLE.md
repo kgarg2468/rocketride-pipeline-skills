@@ -1,5 +1,8 @@
 # Error → Cause → Fix
 
+**Load this when:** a `validate()` error or a run failure needs diagnosing — every error → cause →
+fix in one place.
+
 **Single source of truth for RocketRide errors** (build-time + runtime). The configuring skill's
 `PIPELINE_ANTIPATTERNS.md` keeps only a 3-row TL;DR of the commonest build-time errors and points
 here for the full list.

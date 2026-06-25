@@ -5,6 +5,10 @@ CONSTRAINT (agent contract / future MCP tool description): configure a node usin
 this schema defines — never invent field names (e.g. it is `modelTotalTokens`, not `max_tokens`).
 Fetch ONE node at a time; never bulk-load the schema catalog (FF#17).
 
+Degrees of freedom: NONE. Run this command exactly as shown — one node name, optionally --cache-ok.
+Do not add other flags, pipe it through transforms, or hand-roll the schema fetch in your own code;
+the agent contract IS this one command.
+
 Order of preference:
   1. --cache-ok + a warm cache → serve .rocketride/schema/<name>.json with NO reconnect (fast path)
   2. Live engine via the RocketRide SDK:  client.get_service(<name>) → write-through to the cache

@@ -7,7 +7,7 @@ description: Use when choosing which RocketRide nodes a task needs and wiring th
 
 Turns a plain-language request into an approved, lane-correct DAG — **before** any node is
 configured. Two outputs, two gates: a node selection (Gate A) and a wired topology (Gate B).
-The gate rules and the 15 forcing functions are in
+The gate rules and forcing functions are in
 `../rocketride-building-pipelines/GATE_PROTOCOL.md` — they apply here.
 
 You work from the **node index** (L1): `LAYER1_NODE_INDEX.json` (bundled), or the live
@@ -49,6 +49,9 @@ Only after Gate A is approved.
    its lane type: `chat_1 → embedding_1 (lane: questions)`. The output lane of `from` must be a
    real output of that node and a valid input of the target. If types don't match, insert a
    converter (cheat-sheet) — don't force it.
+   - `<Bad>`: `pdf_source_1 → store_1 (lane: text)` — wiring a raw document straight into a vector
+     store. It passes the eye test but fails validation: a store ingests **embeddings**, not text.
+   - `<Good>`: `pdf_source_1 → embedding_1 (lane: text)` then `embedding_1 → store_1 (lane: embeddings)`.
 3. **Apply the structural rules** (`PIPELINE_RULES_SUMMARY.md`): exactly one source; acyclic (no
    loops); no orphans (every node reachable from the source); embedding **before** any store;
    agents wire their `llm`/`tool`/`memory` via the **control plane** (the controlled node carries

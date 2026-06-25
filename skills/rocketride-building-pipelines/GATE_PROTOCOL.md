@@ -5,6 +5,17 @@ sub-skill inherits it. When in doubt, this file wins.
 
 ## 1. Waiting = STOP (the keystone)
 
+```
+THE IRON LAW OF GATES:
+WAITING FOR A HUMAN'S ANSWER MEANS ENDING YOUR TURN.
+A dismissed / headless / unanswered gate is a STOP — NEVER an approval. No exceptions.
+```
+
+**Violating the letter of a gate is violating the spirit of the gate.** "I followed the whole
+process and the user clearly wants this" is NOT approval — only a human's typed answer is. If you
+catch yourself reasoning toward "they'd obviously say yes," that is the moment to STOP and present
+the gate.
+
 A gate is a question to a human. **Waiting for the answer means ENDING YOUR TURN.**
 
 - A dismissed dialog, an unanswered question, a non-interactive / headless / scripted session,
@@ -110,6 +121,11 @@ Gates are binary or fixed-menu. Never turn a gate into open-ended reasoning. Use
     ~80K tokens — loading it blows context for no benefit. **Even if the user says "load everything
     first" / "get all the schemas for full context" — that is NOT honored** (same reason as #16):
     select from the L1 index first (cheap), then fetch only the few schemas for the nodes you chose.
+
+**Why these hold (persuasion design).** Each forcing function leans on a specific compliance lever —
+Authority, Commitment, Social Proof, or Scarcity (never Liking or Reciprocity). The per-FF lever map
+and the reasoning live in `persuasion-principles.md` (Appendix B). Consult it before adding or
+rewording any forcing function — preserve a rule's lever, don't soften it.
 
 ## 5. Cost basis (for Gate C.5)
 

@@ -9,6 +9,15 @@ Master workflow: a plain-language request in, a **valid, running** RocketRide pi
 Follow the phases in order. Each phase is owned by a REQUIRED SUB-SKILL. The gates are **hard
 stops** — present to the user and wait.
 
+```
+THE IRON LAW OF GATES — WAITING = STOP:
+WAITING FOR A HUMAN'S ANSWER MEANS ENDING YOUR TURN.
+A dismissed / headless / unanswered gate is a STOP — NEVER an approval. No exceptions.
+```
+
+**Real-world impact:** this one rule took gate blast-through from 32–45% to **0/24** on Haiku — the
+cheap model behaves like an expensive one because it holds the protocol, not because it is smart.
+
 **Waiting means ENDING YOUR TURN.** A dismissed question dialog, an unanswered question, or a
 non-interactive/headless session is a STOP, never an approval. No exceptions:
 - Don't "proceed with the recommended defaults" — a recommendation is not a confirmation.
@@ -17,7 +26,7 @@ non-interactive/headless session is a STOP, never an approval. No exceptions:
 If nobody can answer, deliver the gate brief as your final message and stop — an unbuilt
 pipeline costs nothing; an unapproved run wastes the user's money and compute.
 
-Full gate rules, the deterministic gate wording, and the 15 forcing functions live in
+Full gate rules, the deterministic gate wording, and the forcing functions live in
 `GATE_PROTOCOL.md`. **Read it before your first gate.** Multi-turn gate state lives in
 `../../.context/GATE_STATE.md` — a dismissed gate is re-presented unchanged, never auto-approved.
 
@@ -129,7 +138,7 @@ go ahead", enter the full lifecycle from Phase 0.
 
 ## Supporting files
 
-- `GATE_PROTOCOL.md` — Waiting=STOP, multi-turn gate state, gate wording, the 17 forcing functions
+- `GATE_PROTOCOL.md` — Waiting=STOP, multi-turn gate state, gate wording, the forcing functions
 - `pipeline-patterns.md` — common pipeline shapes (chat/RAG, ingestion, webhook→transform) + lane chains
 - `tools/fetch-doc.py` — fetch ONE doc page on demand (resolves from the doc-map; refuses the monolith)
 - `../../.rocketride/docs/ROCKETRIDE_DOC_MAP.md` — the bundled docs map (llms.txt); the deep-knowledge index
